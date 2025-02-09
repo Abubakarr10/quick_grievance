@@ -65,7 +65,7 @@ class _EntryPointScreenState extends State<EntryPointScreen>
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: false,
-      backgroundColor: backgroundColor2,
+      backgroundColor: secondaryColor,
       body: Stack(
         children: [
           AnimatedPositioned(
@@ -129,8 +129,11 @@ class _EntryPointScreenState extends State<EntryPointScreen>
               },
             ),
           ),
+
         ],
       ),
+
+      // Bottom Navigation Bar
       bottomNavigationBar: Transform.translate(
         offset: Offset(0, 100 * animation.value),
         child: SafeArea(
@@ -138,13 +141,13 @@ class _EntryPointScreenState extends State<EntryPointScreen>
             padding:
                 const EdgeInsets.only(left: 12, top: 12, right: 12, bottom: 12),
             margin: const EdgeInsets.symmetric(horizontal: 24),
-            decoration: BoxDecoration(
-              color: backgroundColor2.withValues(),
-              borderRadius: const BorderRadius.all(Radius.circular(24)),
+            decoration: const BoxDecoration(
+              color: secondaryColor,
+              borderRadius: BorderRadius.all(Radius.circular(24)),
               boxShadow: [
                 BoxShadow(
-                  color: backgroundColor2.withValues(),
-                  offset: const Offset(0, 20),
+                  color: secondaryColor,
+                  offset: Offset(0, 20),
                   blurRadius: 20,
                 ),
               ],

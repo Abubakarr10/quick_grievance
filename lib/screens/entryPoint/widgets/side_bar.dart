@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quick_grievance/conts/app_colors.dart';
 
 import '../../../model/menu.dart';
 import '../../../utils/rive_utils.dart';
@@ -21,7 +22,7 @@ class _SideBarState extends State<SideBar> {
         width: 288,
         height: double.infinity,
         decoration: const BoxDecoration(
-          color: Color(0xFF17203A),
+          color: secondaryColor,
           borderRadius: BorderRadius.all(
             Radius.circular(30),
           ),
@@ -31,9 +32,11 @@ class _SideBarState extends State<SideBar> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
+              // Top Name: Hostel Student Name
               const InfoCard(
-                name: "Abu Anwar",
-                bio: "YouTuber",
+                name: "Hiba Rashid",
+                bio: "BS Software Engineering",
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
@@ -54,8 +57,8 @@ class _SideBarState extends State<SideBar> {
                         selectedSideMenu = menu;
                       });
                     },
-                    riveOnInit: (artboard) {
-                      menu.rive.status = RiveUtils.getRiveInput(artboard,
+                    riveOnInit: (artBoard) {
+                      menu.rive.status = RiveUtils.getRiveInput(artBoard,
                           stateMachineName: menu.rive.stateMachineName);
                     },
                   )),
@@ -78,8 +81,8 @@ class _SideBarState extends State<SideBar> {
                         selectedSideMenu = menu;
                       });
                     },
-                    riveOnInit: (artboard) {
-                      menu.rive.status = RiveUtils.getRiveInput(artboard,
+                    riveOnInit: (artBoard) {
+                      menu.rive.status = RiveUtils.getRiveInput(artBoard,
                           stateMachineName: menu.rive.stateMachineName);
                     },
                   )),

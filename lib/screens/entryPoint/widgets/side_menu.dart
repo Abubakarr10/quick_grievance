@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quick_grievance/conts/app_colors.dart';
 import 'package:rive/rive.dart';
 
 import '../../../model/menu.dart';
@@ -33,8 +34,9 @@ class SideMenu extends StatelessWidget {
               height: 56,
               left: 0,
               child: Container(
+                margin: const EdgeInsets.only(left: 8),
                 decoration: const BoxDecoration(
-                  color: Color(0xFF6792FF),
+                  color: primaryColor,
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
               ),
