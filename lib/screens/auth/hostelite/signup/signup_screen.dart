@@ -106,7 +106,7 @@ class SignUpScreen extends GetView<SignUpController> {
 
                                         // Full Name
                                         AppTextFormFieldWidget(
-                                            ctrl: TextEditingController(),
+                                            ctrl: controller.fullNameController,
                                             keyType: TextInputType.name,
                                           mainColor: Colors.black.withAlpha(300),
                                           labelText: 'Full Name',

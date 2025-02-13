@@ -1,34 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:quick_grievance/screens/profile/profile_screen/ProfileController.dart';
 import '../../../conts/app_colors.dart';
 import '../../../conts/app_height_width.dart';
 import '../../../conts/images/app_images.dart';
 import '../../app_widgets/app_text_widget.dart';
 
-// class ProfileScreen extends StatefulWidget {
-//   const ProfileScreen({super.key});
-//
-//   @override
-//   State<ProfileScreen> createState() => _ProfileScreenState();
-// }
-//
-// class _ProfileScreenState extends State<ProfileScreen> {
-//
-//   // final authService = AuthService();
-//   //
-//   // EditUserController editUserController = Get.put(EditUserController());
-//
-//   // @override
-//   // void initState() {
-//   //   // TODO: implement initState
-//   //   super.initState();
-//   //   editUserController.fetchUserData();
-//   // }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ;
-//   }
-// }
 
 class IconTextWidget extends StatelessWidget {
   final String title;
@@ -69,11 +46,12 @@ class IconTextWidget extends StatelessWidget {
   }
 }
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends GetView<ProfileController> {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.put(ProfileController());
     return Scaffold(
       body: Column(
         children: [
@@ -90,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.only(top: heightX*.06, bottom: heightX*.02),
                   child: AppTextWidget(
-                      title: 'Settings',
+                      title: 'Profile',
                       fontSize: heightX*.03,
                       textColor: Colors.white,
                       fontWeight: FontWeight.w700),
@@ -175,14 +153,12 @@ class ProfileScreen extends StatelessWidget {
               width: 180,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColor,
+                    backgroundColor: accentColor,
                     elevation: 10,
                     shadowColor: secondaryColor,
                   ),
                   onPressed: () async{
-                    // await authService.logout();
-                    // await saveLoginStatus(false);
-                    // Get.off(()=> const LoginScreen());
+                    controller.logoutAccount();
                   },
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,

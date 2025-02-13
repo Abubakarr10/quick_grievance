@@ -1,6 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:quick_grievance/screens/entryPoint/EntryPointController.dart';
+import 'package:quick_grievance/screens/profile/profile_screen/profile_screen.dart';
 import 'package:rive/rive.dart';
 
 import '../../conts/app_colors.dart';
@@ -59,15 +62,18 @@ class _EntryPointScreenState extends State<EntryPointScreen>
     _animationController.dispose();
     super.dispose();
   }
-
+  
   @override
   Widget build(BuildContext context) {
+   var controller = Get.put(EntryPointController());
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: false,
       backgroundColor: secondaryColor,
       body: Stack(
         children: [
+
+          // Side Menu Bar
           AnimatedPositioned(
             width: 288,
             height: MediaQuery.of(context).size.height,
@@ -77,6 +83,8 @@ class _EntryPointScreenState extends State<EntryPointScreen>
             top: 0,
             child: const SideBar(),
           ),
+
+          // Main Page Content
           Transform(
             alignment: Alignment.center,
             transform: Matrix4.identity()
@@ -87,46 +95,50 @@ class _EntryPointScreenState extends State<EntryPointScreen>
               offset: Offset(animation.value * 265, 0),
               child: Transform.scale(
                 scale: scalAnimation.value,
-                child: const ClipRRect(
-                  borderRadius: BorderRadius.all(
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(24),
                   ),
-                  child: HomeScreen(),
+                  child: controller.bottomNavPages.elementAt(controller.pageNo.value),
                 ),
               ),
             ),
           ),
+          
           AnimatedPositioned(
             duration: const Duration(milliseconds: 200),
             curve: Curves.fastOutSlowIn,
             left: isSideBarOpen ? 220 : 0,
             top: 16,
-            child: MenuBtn(
-              press: () {
-                isMenuOpenInput.value = !isMenuOpenInput.value;
+            child: Visibility(
+              visible: controller.pageNo.value == 0 ? true : false,
+              child: MenuBtn(
+                press: () {
+                  isMenuOpenInput.value = !isMenuOpenInput.value;
 
-                if (_animationController.value == 0) {
-                  _animationController.forward();
-                } else {
-                  _animationController.reverse();
-                }
+                  if (_animationController.value == 0) {
+                    _animationController.forward();
+                  } else {
+                    _animationController.reverse();
+                  }
 
-                setState(
-                  () {
-                    isSideBarOpen = !isSideBarOpen;
-                  },
-                );
-              },
-              riveOnInit: (artBoard) {
-                final controller = StateMachineController.fromArtboard(
-                    artBoard, "State Machine");
+                  setState(
+                    () {
+                      isSideBarOpen = !isSideBarOpen;
+                    },
+                  );
+                },
+                riveOnInit: (artBoard) {
+                  final controller = StateMachineController.fromArtboard(
+                      artBoard, "State Machine");
 
-                artBoard.addController(controller!);
+                  artBoard.addController(controller!);
 
-                isMenuOpenInput =
-                    controller.findInput<bool>("isOpen") as SMIBool;
-                isMenuOpenInput.value = true;
-              },
+                  isMenuOpenInput =
+                      controller.findInput<bool>("isOpen") as SMIBool;
+                  isMenuOpenInput.value = true;
+                },
+              ),
             ),
           ),
 
@@ -164,6 +176,7 @@ class _EntryPointScreenState extends State<EntryPointScreen>
                       press: () {
                         RiveUtils.changeSMIBoolState(navBar.rive.status!);
                         updateSelectedBtmNav(navBar);
+                        controller.pageNo.value = index;
                       },
                       riveOnInit: (artBoard) {
                         navBar.rive.status = RiveUtils.getRiveInput(artBoard,

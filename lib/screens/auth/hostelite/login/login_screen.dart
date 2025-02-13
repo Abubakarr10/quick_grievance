@@ -4,16 +4,18 @@ import 'package:get/get.dart';
 import 'package:quick_grievance/conts/app_colors.dart';
 import 'package:quick_grievance/conts/images/app_images.dart';
 import 'package:quick_grievance/screens/app_widgets/widgets.dart';
+import 'package:quick_grievance/screens/auth/hostelite/login/LoginController.dart';
 
 import '../../../../conts/app_height_width.dart';
 import '../../../../conts/routes/screen_names.dart';
 import '../widgets/widgets.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends GetView<LoginController> {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.put(LoginController());
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
       floatingActionButton: FloatingActionButton(
@@ -92,48 +94,60 @@ class LoginScreen extends StatelessWidget {
 
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 15),
-                              child: Column(
-                                spacing: heightX*.01,
-                                children: [
+                              child: Form(
+                                key: controller.formKey,
+                                child: Column(
+                                  spacing: heightX*.01,
+                                  children: [
 
-                                  // Email
-                                  AppTextFormFieldWidget(
-                                    ctrl: TextEditingController(),
-                                    keyType: TextInputType.name,
-                                    mainColor: Colors.black.withAlpha(300),
-                                    labelText: 'Email',
-                                    borderRadius: 20,
-                                    textColor: accentColor,
-                                    showPrefixIcon: true,
-                                    prefixIcon: Icons.email,
-                                    iconColor: accentColor,
-                                  ),
-
-                                  // Password
-                                  AppTextFormFieldWidget(
-                                    ctrl: TextEditingController(),
-                                    keyType: TextInputType.name,
-                                    mainColor: Colors.black.withAlpha(300),
-                                    labelText: 'Password',
-                                    borderRadius: 20,
-                                    showSuffixIcon: true,
-                                    suffixIcon: Icons.visibility_off_rounded,
-                                    textColor: accentColor,
-                                    showPrefixIcon: true,
-                                    prefixIcon: Icons.lock,
-                                    iconColor: accentColor,
-                                  ),
-
-                                  Padding(
-                                    padding: EdgeInsets.only(top: heightX*.02),
-                                    child: ActionButtonWidget(label: 'Login',
-                                      onTap: (){},
-                                      height: heightX*.05,
-                                      width: widthX,
-
+                                    // Email
+                                    AppTextFormFieldWidget(
+                                      ctrl: controller.emailController,
+                                      keyType: TextInputType.name,
+                                      mainColor: Colors.black.withAlpha(300),
+                                      labelText: 'Email',
+                                      returnMessage: 'Enter correct email',
+                                      borderRadius: 20,
+                                      textColor: accentColor,
+                                      showPrefixIcon: true,
+                                      prefixIcon: Icons.email,
+                                      iconColor: accentColor,
                                     ),
-                                  )
-                                ],
+
+                                    // Password
+                                    Obx(()=>
+                                        AppTextFormFieldWidget(
+                                          onTap: (){
+                                            controller.changeVisibility();
+                                          },
+                                          ctrl: controller.passwordController,
+                                          keyType: TextInputType.visiblePassword,
+                                          mainColor: Colors.black.withAlpha(300),
+                                          labelText: 'Password',
+                                          returnMessage: 'Enter Password',
+                                          borderRadius: 20,
+                                          showSuffixIcon: true,
+                                          textColor: accentColor,
+                                          showPrefixIcon: true,
+                                          prefixIcon: Icons.lock,
+                                          iconColor: accentColor,
+                                          visiblePassword: controller.passwordVisible.value,
+                                        )
+                                    ),
+
+                                    Padding(
+                                      padding: EdgeInsets.only(top: heightX*.02),
+                                      child: ActionButtonWidget(label: 'Login',
+                                        onTap: (){
+                                        controller.login();
+                                        },
+                                        height: heightX*.05,
+                                        width: widthX,
+
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
 
