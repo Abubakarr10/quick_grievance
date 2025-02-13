@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "811773312896",
+    "project_id": "quick-grievance",
+    "storage_bucket": "quick-grievance.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811773312896:android:56403f8b773da225fb0b65",
+        "android_client_info": {
+          "package_name": "sidem.dev.quick_grievance"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1GLR4ILz2b5IIqoGsm_mk-kSkY0eQvEU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

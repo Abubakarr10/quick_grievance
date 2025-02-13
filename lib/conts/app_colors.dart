@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 
-//const Color primaryColor = Color(0XFFfc4494); // Pink Type
-const Color primaryColor = Color(0XFFC8A2C8); // Lilac
+
+
+//const Color primaryColor = Color(0XFFFFCC99); // Peach
+//const Color primaryColor = Color(0XFFF4C2C2); // Soft Pink
+//const Color primaryColor = Color(0XFFC8A2C8); // Lilac
 const Color secondaryColor = Color(0XFF34184d); // Dark Purple Blue Type
+
+ const Color primaryColor = Color(0XFFC7A6C6); // Lavender
+// const Color secondaryColor = Color(0XFFFFC0CB); // Soft Pink
+//const Color accentColor = Color(0XFF87CEEB); // Light Peach -- Color(0XFF2C3E50); // Midnight Blue
+const Color accentColor = Color(0XFFF4C2C2); // soft pink
+
+const Color borderColor = Color(0XFFB38EB4); //
 
 const Color pureBlack = Colors.black;
 const Color textColor = Colors.black;

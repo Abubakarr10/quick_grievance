@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
 import '../../conts/app_colors.dart';
-import '../../model/menu.dart';
+import '../../model/menu_model.dart';
 import '../../utils/rive_utils.dart';
 import '../home/home_screen.dart';
 import 'widgets/widgets.dart';

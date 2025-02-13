@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:quick_grievance/conts/app_colors.dart';
 import 'package:quick_grievance/conts/app_height_width.dart';
 import 'package:quick_grievance/conts/images/rive_images.dart';
 import 'package:quick_grievance/screens/app_widgets/app_text_widget.dart';
@@ -34,6 +35,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: secondaryColor,
       body: Stack(
         children: [
 
@@ -60,7 +62,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           Positioned.fill(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-              child: const SizedBox(),
+              child: Container(),
             ),
           ),
 
@@ -77,19 +79,27 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   children: [
                     const Spacer(),
 
-                    const SizedBox(
-                      width: 260,
+                     SizedBox(
+                      width: widthX,
                       child: Column(
-                        spacing: 16,
+                        spacing: heightX*.016,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Text: Title Text
-                          AppTextWidget(title: 'Exit complain & hostel',
-                          fontSize: 60,
-                            fontWeight: FontWeight.w700,
+                          FittedBox(
+                            child: AppTextWidget(title: 'Quick\nGrievance',
+                            fontSize: heightX*.070,
+                              textColor: primaryColor,
+                              fontWeight: FontWeight.w700,
+                              showShadows: true,
+                            ),
                           ),
                           AppTextWidget(
-                            title: "Don’t skip design. Learn design and code, by building real apps with Flutter and Swift. Complete courses about the best tools.",
-                            fontSize: 14,
+                            title: "Easily manage hostel complaints and permissions with our seamless online system. Submit mess complaints, request exit permissions, and generate exit slips—all in one place.",
+                            fontSize: heightX*.018,
+                            textColor: Colors.white,
+                            showShadows: true,
+                            fontWeight: FontWeight.w600,
                           ),
                         ],
                       ),
@@ -108,7 +118,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               isShowSignInDialog = true;
                             });
                             if (!context.mounted) return;
-                            showCustomDialog(
+                            showJoinDialog(
                               context,
                               onValue: (_) {},
                             );
@@ -116,10 +126,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         );
                       },
                     ),
+
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 24),
-                      child: Text(
-                          "Purchase includes access to 30+ courses, 240+ premium tutorials, 120+ hours of videos, source files and certificates."),
+                      child: AppTextWidget(title: 'Stay connected and resolve issues quickly for a better hostel experience.',
+                      textColor: Colors.white, showShadows: true,
+                      ),
                     )
                   ],
                 ),

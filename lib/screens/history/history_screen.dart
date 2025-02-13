@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:quick_grievance/conts/images/app_images.dart';
+import 'package:quick_grievance/conts/routes/screen_names.dart';
+import 'package:quick_grievance/screens/entryPoint/entry_point_screen.dart';
 
 import '../../conts/app_colors.dart';
 import '../../conts/app_height_width.dart';
@@ -12,6 +15,15 @@ class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Get.offNamed(entryPointScreen);
+        },
+        backgroundColor: accentColor,
+        mini: true,
+        child: const Icon(Icons.arrow_back_ios_new,color: secondaryColor,),
+      ),
       body: Column(
         children: [
 
@@ -97,7 +109,7 @@ class HistoryCardWidget extends StatelessWidget {
             child: Padding(
               padding:  EdgeInsets.only(right: heightX*.01),
               child: Icon(icon,color: iconColor.withValues(alpha: 50),
-              size: heightX*.1,
+              size: heightX*.08,
               ),
             ),
           ),

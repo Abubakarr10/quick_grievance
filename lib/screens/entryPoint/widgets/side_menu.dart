@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quick_grievance/conts/app_colors.dart';
 import 'package:rive/rive.dart';
 
-import '../../../model/menu.dart';
+import '../../../model/menu_model.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu(

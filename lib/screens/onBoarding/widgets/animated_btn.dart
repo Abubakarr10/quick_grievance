@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:quick_grievance/conts/app_colors.dart';
 import 'package:quick_grievance/conts/images/rive_images.dart';
+import 'package:quick_grievance/screens/app_widgets/app_text_widget.dart';
 import 'package:rive/rive.dart';
 
 class AnimatedButtonWidget extends StatelessWidget {
@@ -26,17 +28,18 @@ class AnimatedButtonWidget extends StatelessWidget {
               buttonRiveImage,
               controllers: [_btnAnimationController],
             ),
-            Positioned.fill(
+            const Positioned.fill(
               top: 8,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Icon(CupertinoIcons.arrow_right),
-                  const SizedBox(width: 8),
-                  Text(
-                    "Start the course",
-                    style: Theme.of(context).textTheme.labelLarge,
+                  Icon(Icons.arrow_right_outlined,size: 40,color: secondaryColor,),
+                  SizedBox(width: 4),
+                  AppTextWidget(title: 'Join Hostel',
+                  fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    textColor: secondaryColor,
                   )
                 ],
               ),

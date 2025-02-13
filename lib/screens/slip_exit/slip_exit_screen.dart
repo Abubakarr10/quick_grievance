@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:quick_grievance/conts/images/app_images.dart';
+import 'package:quick_grievance/conts/routes/screen_names.dart';
 
 import '../../conts/app_colors.dart';
 import '../../conts/app_height_width.dart';
@@ -12,6 +14,15 @@ class SlipExitScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Get.offNamed(entryPointScreen);
+        },
+        backgroundColor: accentColor,
+        mini: true,
+        child: const Icon(Icons.arrow_back_ios_new,color: secondaryColor,),
+      ),
       body: Column(
         children: [
 

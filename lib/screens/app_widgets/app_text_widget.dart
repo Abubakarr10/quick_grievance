@@ -9,13 +9,17 @@ class AppTextWidget extends StatelessWidget {
   final Color textColor;
   final FontWeight fontWeight;
   final TextAlign textAlign;
+  final bool showShadows;
+  final TextDecoration decoration;
 
   const AppTextWidget({super.key,
     required this.title,
     this.fontSize = 14,
     this.textColor = Colors.black,
     this.fontWeight = FontWeight.w500,
-    this.textAlign = TextAlign.start
+    this.textAlign = TextAlign.start,
+    this.showShadows = false,
+    this.decoration = TextDecoration.none
   });
 
   @override
@@ -24,8 +28,15 @@ class AppTextWidget extends StatelessWidget {
       textAlign: textAlign,
       style: GoogleFonts.poppins(
         fontSize: fontSize,
+        decoration: decoration,
+        decorationColor: textColor,
         fontWeight: fontWeight,
         color: textColor,
+        shadows: showShadows == true? [
+          const BoxShadow(
+            color: Colors.black, blurRadius: 100
+          )
+        ] : null
       ),);
   }
 }

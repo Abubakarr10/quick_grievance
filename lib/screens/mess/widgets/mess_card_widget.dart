@@ -8,16 +8,17 @@ class MessCardWidget extends StatelessWidget {
   final String mealTitle;
   final String description;
   final String price;
+  final String vote;
   final String image;
   const MessCardWidget({
-    super.key, required this.mealTitle, required this.description, required this.price, required this.image,
+    super.key, required this.mealTitle, required this.description, required this.price, required this.image, required this.vote,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: heightX*.3,
-      width: widthX*.44,
+      width: widthX,
       decoration: BoxDecoration(
         color: primaryColor,
         boxShadow: [BoxShadow(
@@ -34,6 +35,8 @@ class MessCardWidget extends StatelessWidget {
       child: Column(
         spacing: heightX*.02,
         children: [
+
+          // Image Container
           Container(
             height: heightX*.18,
             width: widthX,
@@ -49,6 +52,8 @@ class MessCardWidget extends StatelessWidget {
                 )]
             ),
           ),
+
+          // Content Container
           Container(
             height: heightX*.1,
             width: widthX,
@@ -68,15 +73,32 @@ class MessCardWidget extends StatelessWidget {
 
                   AppTextWidget(title: mealTitle,
                     textColor: Colors.white, fontWeight: FontWeight.bold,
-                    fontSize: heightX*.016,
+                    fontSize: heightX*.018,
                   ),
                   AppTextWidget(title: description,
-                    fontSize: heightX*.010, textColor: primaryColor,
+                    fontSize: heightX*.012, textColor: primaryColor,
                   ),
-                  SizedBox(height: heightX*.004,),
-                  AppTextWidget(title: 'Rs $price',
-                    textColor: primaryColor, fontWeight: FontWeight.bold,
-                    fontSize: heightX*.025,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      AppTextWidget(title: 'Rs $price',
+                        textColor: primaryColor, fontWeight: FontWeight.bold,
+                        fontSize: heightX*.026,
+                      ),
+                      AppTextWidget(title: '|',
+                        textColor: primaryColor, fontWeight: FontWeight.bold,
+                        fontSize: heightX*.026,
+                      ),
+                      Row(
+                        children: [
+                          const Icon(Icons.how_to_vote_outlined,color: primaryColor,),
+                          AppTextWidget(title: ' $vote Votes',
+                            textColor: primaryColor, fontWeight: FontWeight.bold,
+                            fontSize: heightX*.026,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),

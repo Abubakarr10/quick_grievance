@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../conts/app_colors.dart';
 import '../../../conts/app_height_width.dart';
+import '../../../conts/images/app_images.dart';
 import '../../app_widgets/app_text_widget.dart';
 
 // class ProfileScreen extends StatefulWidget {
@@ -77,15 +78,27 @@ class ProfileScreen extends StatelessWidget {
       body: Column(
         children: [
 
-          /// Text => Settings
-          Padding(
-            padding: EdgeInsets.only(top: heightX*.06, bottom: heightX*.02),
-            child: AppTextWidget(
-                title: 'Settings',
-                fontSize: heightX*.03,
-                textColor: textColor,
-                fontWeight: FontWeight.w700),
+          /// Text => Slip Exit
+          Stack(
+            children: [
+
+              Image.asset(appBarVector),
+
+              // Screen Title => Slip Exit
+              Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: EdgeInsets.only(top: heightX*.06, bottom: heightX*.02),
+                  child: AppTextWidget(
+                      title: 'Settings',
+                      fontSize: heightX*.03,
+                      textColor: Colors.white,
+                      fontWeight: FontWeight.w700),
+                ),
+              ),
+            ],
           ),
+
 
           const IconTextWidget(
             icon: Icons.person_2_outlined,
@@ -164,7 +177,7 @@ class ProfileScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: primaryColor,
                     elevation: 10,
-                    shadowColor: primaryColor,
+                    shadowColor: secondaryColor,
                   ),
                   onPressed: () async{
                     // await authService.logout();
