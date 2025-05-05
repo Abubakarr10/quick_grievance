@@ -4,6 +4,7 @@ import 'package:quick_grievance/screens/auth/hostelite/login/LoginController.dar
 import 'package:quick_grievance/screens/entryPoint/EntryPointController.dart';
 import 'package:quick_grievance/screens/entryPoint/entry_point_screen.dart';
 import 'package:quick_grievance/screens/profile/profile_screen/ProfileController.dart';
+import 'package:quick_grievance/screens/slip_exit/SlipExitController.dart';
 import 'package:quick_grievance/screens/splash/SplashController.dart';
 
 import '../../screens/auth/hostelite/signup/SignUpController.dart';
@@ -18,6 +19,7 @@ class AllBindings implements Bindings{
     Get.lazyPut(()=> LoginController());
     Get.lazyPut(()=> EntryPointController());
     Get.lazyPut(()=> ProfileController());
+    Get.lazyPut(()=> SlipExitController());
   }
 
 }
