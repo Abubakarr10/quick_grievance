@@ -12,3 +12,6 @@ const String slipExitScreen = '/slip_exit_screen';
 const String messScreen = '/mess_screen';
 const String voteScreen = '/vote_screen';
 const String profileScreen = '/profile_screen';
+const String userAccountScreen = '/user_account_screen';
+const String editUserAccountScreen = '/edit_user_account_screen';
+const String themeScreen = '/theme_screen';

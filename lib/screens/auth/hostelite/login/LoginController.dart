@@ -6,9 +6,17 @@ import 'package:quick_grievance/conts/routes/screen_names.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../repository/auth_service.dart';
+import '../../../../repository/share_preferences/sp_controller.dart';
 
 
 class LoginController extends GetxController{
+
+  @override
+  void onInit() {
+    super.onInit();
+    initSharedPrefs();
+  }
+
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -17,6 +25,7 @@ class LoginController extends GetxController{
 
   RxBool loading = false.obs;
   RxBool passwordVisible = true.obs;
+
 
   final authService = AuthService();
   late SharedPreferences prefs;
@@ -43,8 +52,8 @@ class LoginController extends GetxController{
 
         if(user != null) {
 
-          // prefs.setString('email', emailController.value.text.toString());
-          // await saveLoginStatus(true);
+          prefs.setString('email', emailController.value.text.toString());
+          await saveLoginStatus(true);
 
           Get.offAllNamed(entryPointScreen);
 

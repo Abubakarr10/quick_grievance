@@ -3,9 +3,14 @@ import 'package:get/get.dart';
 import 'package:quick_grievance/conts/routes/routes.dart';
 import 'package:quick_grievance/conts/routes/screen_names.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:quick_grievance/repository/share_preferences/sp_controller.dart';
 import 'firebase_options.dart';
 void main() async{
-  runApp(const MyApp());
+
+  WidgetsFlutterBinding.ensureInitialized();
+  bool isLoggedIn = await getLoginStatus();
+
+  runApp(MyApp(isLoggedIn: isLoggedIn));
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -13,7 +18,8 @@ void main() async{
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
+  const MyApp({super.key, required this.isLoggedIn});
 
   // This widget is the root of your application.
   @override
@@ -22,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'Quick Grievance',
       debugShowCheckedModeBanner: false,
       getPages: pages,
-      initialRoute: initialScreen,
+      initialRoute: isLoggedIn == true? entryPointScreen : initialScreen,
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xFFEEF1F8),
         primarySwatch: Colors.blue,

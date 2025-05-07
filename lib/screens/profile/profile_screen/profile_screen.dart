@@ -1,50 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quick_grievance/conts/routes/screen_names.dart';
+import 'package:quick_grievance/screens/app_widgets/widgets.dart';
 import 'package:quick_grievance/screens/profile/profile_screen/ProfileController.dart';
-import '../../../conts/app_colors.dart';
+import 'package:quick_grievance/screens/profile/profile_screen/widgets/widgets.dart';
 import '../../../conts/app_height_width.dart';
 import '../../../conts/images/app_images.dart';
-import '../../app_widgets/app_text_widget.dart';
-
-
-class IconTextWidget extends StatelessWidget {
-  final String title;
-  final IconData icon;
-
-  const IconTextWidget({
-    super.key,
-    required this.title,
-    required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, top: 30, right: 30),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                size: 30,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              AppTextWidget(
-                  title: title, fontSize: 20, fontWeight: FontWeight.w700)
-            ],
-          ),
-          const Divider(
-            thickness: 1, color: secondaryColor,
-          )
-        ],
-      ),
-    );
-  }
-}
 
 class ProfileScreen extends GetView<ProfileController> {
   const ProfileScreen({super.key});
@@ -83,109 +44,38 @@ class ProfileScreen extends GetView<ProfileController> {
             title: 'Account',
           ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 05),
-            child: ListTile(
-              onTap: () {
-                //  Get.to(()=> const EditProfileScreen());
-              },
-              title: AppTextWidget(
-                title: 'Edit profile',
-                fontSize: heightX*.018,
-                fontWeight: FontWeight.w500,
-                textColor: pureBlack,
-              ),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                color: secondaryColor,
-                size: heightX*.025,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 05),
-            child: ListTile(
-              onTap: () {
-                // Get.to(()=> const UserAddressScreen());
-              },
-              title: AppTextWidget(
-                title: 'Delivery address',
-                fontSize: heightX*.018,
-                fontWeight: FontWeight.w500,
-                textColor: pureBlack,
-              ),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                color: secondaryColor,
-                size: heightX*.025,
-              ),
-            ),
-          ),
+          IconTitleWidget(title: 'User account', onTap: () {
+            Get.toNamed(userAccountScreen);
+          },),
+          IconTitleWidget(title: 'Edit User account', onTap: () {
+            Get.toNamed(editUserAccountScreen);
+          },),
+
 
           const IconTextWidget(
             icon: Icons.light_mode_outlined,
             title: 'Themes',
           ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 05),
-            child: ListTile(
-              onTap: () {
-                // Get.to(()=>const ThemeScreen());
-              },
-              title: AppTextWidget(
-                title: 'Light mode',
-                fontSize: heightX*.018,
-                fontWeight: FontWeight.w500,
-                textColor: pureBlack,
-              ),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                color: secondaryColor,
-                size: heightX*.025,
-              ),
-            ),
-          ),
+          IconTitleWidget(title: 'Light mode', onTap: () {
+            Get.toNamed(themeScreen);
+          },),
 
           Padding(
-            padding: const EdgeInsets.only(top: 60),
-            child: SizedBox(
-              width: 180,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: accentColor,
-                    elevation: 10,
-                    shadowColor: secondaryColor,
-                  ),
-                  onPressed: () async{
-                    controller.logoutAccount();
-                  },
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.logout_outlined,
-                        color: pureBlack,
-                        size: 22,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      AppTextWidget(
-                          title: 'Logout',
-                          fontSize: 20,
-                          textColor: pureBlack,
-                          fontWeight: FontWeight.w700)
-                    ],
-                  )),
-            ),
-          ),
+            padding: EdgeInsets.only(top: heightX*.04),
+            child: ActionButtonWidget(
+                width: widthX*.4,
+                label: 'Logout',
+                onTap: (){
+                  controller.logoutAccount();
+                }),
+          )
 
         ],
       ),
     );
   }
 }
+
 
 

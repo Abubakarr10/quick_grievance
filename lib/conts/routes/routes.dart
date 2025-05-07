@@ -10,6 +10,9 @@ import 'package:quick_grievance/screens/mess/mess_screen.dart';
 import 'package:quick_grievance/screens/mess/vote/vote_screen.dart';
 import 'package:quick_grievance/screens/onBoarding/onboarding_screen.dart';
 import 'package:quick_grievance/screens/profile/profile_screen/profile_screen.dart';
+import 'package:quick_grievance/screens/profile/profile_screen/settings/edit_user_account/edit_user_account_screen.dart';
+import 'package:quick_grievance/screens/profile/profile_screen/settings/theme/theme_screen.dart';
+import 'package:quick_grievance/screens/profile/profile_screen/settings/user_account/user_account_screen.dart';
 import 'package:quick_grievance/screens/slip_exit/slip_exit_screen.dart';
 import 'package:quick_grievance/screens/splash/splash_screen.dart';
 
@@ -52,4 +55,7 @@ final pages = [
 
   ///========================== Profile Routes =================================
   GetPage(name: profileScreen, page: () => const ProfileScreen()),
+  GetPage(name: userAccountScreen, page: () => const UserAccountScreen()),
+  GetPage(name: editUserAccountScreen, page: () => const EditUserAccountScreen()),
+  GetPage(name: themeScreen, page: () => const ThemeScreen()),
 ];

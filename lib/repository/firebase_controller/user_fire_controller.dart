@@ -32,4 +32,31 @@ class UserFireController{
     }
     return null; // Return an empty map if data is not found or an error occurs.
   }
+
+  // Future<void> fetchUserData() async {
+  //   // Get the current user
+  //   final user = FirebaseAuth.instance.currentUser;
+  //
+  //   if (user != null) {
+  //     // Reference to the user's document in Firestore
+  //     final userDoc = FirebaseFirestore.instance.collection('users').doc(user.uid);
+  //
+  //     // Fetch data from Firestore and update text controllers
+  //     final userData = await userDoc.get();
+  //     final data = userData.data(); // Retrieve all fields and values as a Map
+  //
+  //     if (data != null) {
+  //
+  //       fullNameController.value.text = data['fullName'] ?? '';
+  //       emailController.value.text = data['email'] ?? '';
+  //       passwordController.value.text = data['password'] ?? '';
+  //       phoneNumberController.value.text = data['phoneNumber'] ?? '';
+  //
+  //       addressController.value.text = data['address'] ?? '';
+  //       cityController.value.text = data['city'] ?? '';
+  //       provinceController.value.text = data['province'] ?? '';
+  //       postelCodeController.value.text = data['postelCode'] ?? '';
+  //     }
+  //   }
+  // }
 }
