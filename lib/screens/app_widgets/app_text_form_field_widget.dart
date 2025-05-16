@@ -31,6 +31,8 @@ class AppTextFormFieldWidget extends StatelessWidget {
   final Color? iconColor;
   final bool? noneBorder;
   final Color? textColor;
+  final bool customValidator;
+  final dynamic validator;
 
   const AppTextFormFieldWidget({super.key,
     required this.ctrl,
@@ -58,12 +60,15 @@ class AppTextFormFieldWidget extends StatelessWidget {
     this.prefixIcon,
     this.noneBorder = false,
     this.textColor = accentColor,
+    this.customValidator = false,
+    this.validator = const (),
   });
 
   @override
   Widget build(BuildContext context) {
 
     return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: ctrl,
       cursorColor: accentColor,
       maxLength: maxLength,
@@ -74,7 +79,7 @@ class AppTextFormFieldWidget extends StatelessWidget {
     ),
       cursorHeight: height/2.2,
       keyboardType: keyType,
-      validator: (value) {
+      validator: customValidator == true? validator : (value) {
         if (value!.isEmpty) {
           return returnMessage;
         }

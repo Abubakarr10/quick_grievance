@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:quick_grievance/conts/images/app_images.dart';
 import 'package:quick_grievance/conts/images/rive_images.dart';
 import 'package:quick_grievance/conts/routes/screen_names.dart';
+import 'package:quick_grievance/conts/validator/validator.dart';
 import 'package:quick_grievance/screens/entryPoint/EntryPointController.dart';
 import 'package:quick_grievance/screens/slip_exit/SlipExitController.dart';
 import 'package:quick_grievance/screens/slip_exit/widgets/widgets.dart';
@@ -59,264 +60,248 @@ class SlipExitScreen extends GetView<SlipExitController> {
                       ),
 
                       // Guardian Information Box
-                      Container(
-                        height: heightX*.655,
-                        width: widthX,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: secondaryColor,
-                                  blurRadius: 10, offset: Offset(0, heightX*.01)
-                              )
-                            ]
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                      Form(
+                        key: controller.formKey,
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 10,
+                              color: Colors.white,
+                              shadowColor: secondaryColor,
+                              child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
 
-                              AppTextWidget(title: 'Guardian Information',
-                                fontSize: heightX*.018,
-                                textColor: primaryColor,
-                                fontWeight: FontWeight.bold,
-                              ),
+                                    AppTextWidget(title: 'Guardian Information',
+                                      fontSize: heightX*.018,
+                                      textColor: primaryColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
 
-                              TitleTextFieldWidget(title: 'Name of Person Visiting/Receiving:',
-                                fieldText: 'Name of person',
-                                textEditingController: controller.guardianNameController,),
+                                    TitleTextFieldWidget(title: 'Name of Person Receiving:',
+                                      fieldText: 'Name of person',
+                                      textEditingController: controller.guardianNameController,
+                                      validator: (value){
+                                        return emptyValidator(value,'Please mention person name');
+                                      },),
 
-                              SizedBox(height: heightX*.01,),
+                                    SizedBox(height: heightX*.01,),
 
-                              TitleTextFieldWidget(
-                                  title: 'Relation with Student:',
-                                  fieldText: 'Relation',
-                                textEditingController: controller.relationController,),
+                                    TitleTextFieldWidget(
+                                        title: 'Relation with Student:',
+                                        fieldText: 'Relation',
+                                      textEditingController: controller.relationController,
+                                      validator: (value){
+                                         return emptyValidator(value,'Mention your relation with Him/Her');
+                                      },),
 
-                              SizedBox(height: heightX*.01,),
+                                    SizedBox(height: heightX*.01,),
 
-                              TitleTextFieldWidget(
-                                  title: 'Guardian Contact.No:',
-                                  fieldText: '+92 123456789',
-                                textEditingController: controller.guardianPhoneNoController,),
+                                    TitleTextFieldWidget(
+                                        title: 'Guardian Contact.No:',
+                                        fieldText: '+92 123456789',
+                                      textEditingController: controller.guardianPhoneNoController,
+                                      keyType: TextInputType.number,
+                                      validator: (value){
+                                       //   emptyValidator(value, 'Mention Phone number');
+                                        if (value!.isEmpty) {
+                                          return 'Mention Phone number';
+                                        }
+                                          phoneNumberValidator(value);
+                                      }),
 
-                              SizedBox(height: heightX*.01,),
+                                    SizedBox(height: heightX*.01,),
 
-                              AppTextWidget(title: 'Address:',
-                                fontSize: heightX*.014, fontWeight: FontWeight.w500,
-                              ),
+                                    AppTextWidget(title: 'Address:',
+                                      fontSize: heightX*.014, fontWeight: FontWeight.w500,
+                                    ),
 
-                              SizedBox(height: heightX*.005,),
+                                    SizedBox(height: heightX*.005,),
 
-                              // Text => Address Box
-                              TextField(
-                                maxLines: 2,
-                                controller: controller.addressController,
-                                keyboardType: TextInputType.multiline, // Enables multi-line input from keyboard
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    borderSide: const BorderSide(color: secondaryColor)
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                      borderSide: const BorderSide(color: secondaryColor)
-                                  ),
-                                  labelText: 'Contact, Address',
-                                  labelStyle: const TextStyle(color: secondaryColor),
-                                  alignLabelWithHint: false,
+                                    // Text => Address Box
+                                    TextFormField(
+                                      maxLines: 2,
+                                      controller: controller.addressController,
+                                      validator: (value){
+                                        return emptyValidator(value, 'Mention Destination (i.e Home,Hospital,Shopping');
+                                      },
+                                      keyboardType: TextInputType.multiline, // Enables multi-line input from keyboard
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(20),
+                                          borderSide: const BorderSide(color: secondaryColor)
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(20),
+                                            borderSide: const BorderSide(color: secondaryColor)
+                                        ),
+                                        labelText: 'Address of destination',
+                                        labelStyle: const TextStyle(color: secondaryColor),
+                                        alignLabelWithHint: false,
+                                      ),
+                                    ),
+
+                                    SizedBox(height: heightX*.01,),
+
+                                    const Row(
+                                      children: [
+                                        Flexible(child: Divider()),
+                                        AppTextWidget(title: '(  OR  )'),
+                                        Flexible(child: Divider()),
+                                      ],
+                                    ),
+
+                                    // CheckBox => By Self
+                                    Obx(()=>
+                                        CheckboxListTile(
+                                          checkboxScaleFactor: 1.5,
+                                      contentPadding: const EdgeInsets.all(0),
+                                      checkColor: secondaryColor,
+                                      activeColor: accentColor,
+                                      value: controller.isBySelf.value,
+                                      onChanged: (value){
+                                        controller.isBySelf.value = value ?? false;
+                                      },
+                                      title:  AppTextWidget(title: 'By Self',fontWeight: FontWeight.bold,
+                                      fontSize: heightX*.018, textColor: primaryColor,
+                                      ),
+                                    )),
+
+                                    TitleTextFieldWidget(
+                                        title: 'Destination:',
+                                        fieldText: 'Place, Home or Hospital',
+                                      textEditingController: controller.destinationController,
+                                      validator: (value){
+                                        return emptyValidator(value, 'Mention Destination (i.e Home,Hospital,Shopping');
+                                      },),
+
+                                  ],
                                 ),
                               ),
+                            ),
 
-                              SizedBox(height: heightX*.01,),
+                            SizedBox(height: heightX*.03,),
 
-                              const Row(
-                                children: [
-                                  Flexible(child: Divider()),
-                                  AppTextWidget(title: '(  OR  )'),
-                                  Flexible(child: Divider()),
-                                ],
-                              ),
+                            // Purpose of Leave Box
+                            Card(
+                              elevation: 10,
+                              color: Colors.white,
+                              shadowColor: secondaryColor,
+                              child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
 
-                              // CheckBox => By Self
-                              Obx(()=>
-                                  CheckboxListTile(
-                                    checkboxScaleFactor: 1.5,
-                                contentPadding: const EdgeInsets.all(0),
-                                checkColor: secondaryColor,
-                                activeColor: accentColor,
-                                value: controller.isBySelf.value,
-                                onChanged: (value){
-                                  controller.isBySelf.value = value ?? false;
-                                },
-                                title:  AppTextWidget(title: 'By Self',fontWeight: FontWeight.bold,
-                                fontSize: heightX*.018, textColor: primaryColor,
+                                    AppTextWidget(title: 'Purpose of Leave',
+                                      fontSize: heightX*.018,
+                                      textColor: primaryColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+
+                                    TitleTextFieldWidget(title: 'Reason:',
+                                      fieldText: 'Give proper reason',
+                                      textEditingController: controller.reasonController,
+                                      validator: (value){
+                                      return  emptyValidator(value, 'Please give proper reason');
+                                      },),
+
+                                  ],
                                 ),
-                              )),
-
-                              TitleTextFieldWidget(
-                                  title: 'Destination:',
-                                  fieldText: 'Place, Home or Hospital',
-                                textEditingController: controller.destinationController,),
-
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(height: heightX*.03,),
-
-                      // Purpose of Leave Box
-                      Container(
-                        height: heightX*.175,
-                        width: widthX,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: secondaryColor,
-                                  blurRadius: 10, offset: Offset(0, heightX*.01)
-                              )
-                            ]
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-
-                              AppTextWidget(title: 'Purpose of Leave',
-                                fontSize: heightX*.018,
-                                textColor: primaryColor,
-                                fontWeight: FontWeight.bold,
                               ),
+                            ),
 
-                              TitleTextFieldWidget(title: 'Reason:',
-                                fieldText: 'Give proper reason',
-                                textEditingController: controller.reasonController,),
+                            SizedBox(height: heightX*.03,),
 
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(height: heightX*.03,),
-
-                      // Travel Information
-                      Container(
-                        height: heightX*.36,
-                        width: widthX,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: secondaryColor,
-                                  blurRadius: 10, offset: Offset(0, heightX*.01)
-                              )
-                            ]
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-
-                              AppTextWidget(title: 'Travel Information',
-                                fontSize: heightX*.018,
-                                textColor: primaryColor,
-                                fontWeight: FontWeight.bold,
+                            // Travel Information
+                            Container(
+                              height: heightX*.36,
+                              width: widthX,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: secondaryColor,
+                                        blurRadius: 10, offset: Offset(0, heightX*.01)
+                                    )
+                                  ]
                               ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
 
-
-
-                              // BoardDateTimeInputField(
-                              //   controller: controller.textController.value,
-                              //   pickerType: DateTimePickerType.datetime,
-                              //   options: const BoardDateTimeOptions(
-                              //     languages: BoardPickerLanguages.en(),
-                              //   ),
-                              //   onChanged: (date) {
-                              //     if (kDebugMode) {
-                              //       print('onChanged: $date');
-                              //     }
-                              //   },
-                              //   onFocusChange: (val, date, text) {
-                              //     if (kDebugMode) {
-                              //       print('on focus changed date: $val, $date, $text');
-                              //     }
-                              //   },
-                              // ),
-                              //
-                              // Obx(()=>
-                              //     Flexible(
-                              //       child: BoardDateTimeBuilder(
-                              //       pickerType: DateTimePickerType.datetime,
-                              //       controller: controller.dateTimeController.value,
-                              //       builder: (context){
-                              //         return Text(BoardDateFormat('dd/MM/yyyy').format(controller.date.value));
-                              //       },
-                              //       onChange: (val) {
-                              //         controller.date.value = val;
-                              //         if (kDebugMode) {
-                              //           print('Touch hora ha');
-                              //         }
-                              //       }),
-                              //     )
-                              // ),
-
-                              Column(
-                                children: [
-                                  // From DateTime
-                                  const Text("From", style: TextStyle(fontWeight: FontWeight.bold)),
-                                  BoardDateTimeInputField(
-                                    controller: controller.fromTextController.value,
-                                    pickerType: DateTimePickerType.datetime,
-                                    options: const BoardDateTimeOptions(
-                                      languages: BoardPickerLanguages.en(),
+                                    AppTextWidget(title: 'Travel Information',
+                                      fontSize: heightX*.018,
+                                      textColor: primaryColor,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    onChanged: (date) {
-                                      controller.fromDate.value = date;
-                                    },
-                                    onFocusChange: (val, date, text) {
-                                      if (kDebugMode) {
-                                        print('From focus changed: $val, $date, $text');
-                                      }
-                                    },
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Obx(() => Text("Selected From: ${BoardDateFormat('dd/MM/yyyy HH:mm').format(controller.fromDate.value)}")),
 
-                                  const SizedBox(height: 30),
+                                    // Card: Travel Information
+                                    Column(
+                                      children: [
+                                        // From DateTime
+                                        const AppTextWidget(title: 'From',
+                                        fontWeight: FontWeight.bold,
+                                        ),
+                                        BoardDateTimeInputField(
+                                          controller: controller.fromTextController.value,
+                                          pickerType: DateTimePickerType.datetime,
+                                          options: const BoardDateTimeOptions(
+                                            languages: BoardPickerLanguages.en(),
+                                          ),
+                                          onChanged: (date) {
+                                            controller.fromDate.value = date;
+                                          },
+                                          onFocusChange: (val, date, text) {
+                                            if (kDebugMode) {
+                                              print('From focus changed: $val, $date, $text');
+                                            }
+                                          },
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Obx(() => AppTextWidget(title: "Selected From: ${BoardDateFormat('dd/MM/yyyy HH:mm').format(controller.fromDate.value)}",
+                                        fontWeight: FontWeight.w400,
+                                        )),
 
-                                  // To DateTime
-                                  const Text("To", style: TextStyle(fontWeight: FontWeight.bold)),
-                                  BoardDateTimeInputField(
-                                    controller: controller.toTextController.value,
-                                    pickerType: DateTimePickerType.datetime,
-                                    options: const BoardDateTimeOptions(
-                                      languages: BoardPickerLanguages.en(),
+                                        const SizedBox(height: 30),
+
+                                        // To DateTime
+                                        const AppTextWidget(title: 'To',
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        BoardDateTimeInputField(
+                                          controller: controller.toTextController.value,
+                                          pickerType: DateTimePickerType.datetime,
+                                          options: const BoardDateTimeOptions(
+                                            languages: BoardPickerLanguages.en(),
+                                          ),
+                                          onChanged: (date) {
+                                            controller.toDate.value = date;
+                                          },
+                                          onFocusChange: (val, date, text) {
+                                            if (kDebugMode) {
+                                              print('To focus changed: $val, $date, $text');
+                                            }
+                                          },
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Obx(() => AppTextWidget(title: "Selected To: ${BoardDateFormat('dd/MM/yyyy HH:mm').format(controller.toDate.value)}",
+                                        fontWeight: FontWeight.w400,
+                                        )),
+                                      ],
                                     ),
-                                    onChanged: (date) {
-                                      controller.toDate.value = date;
-                                    },
-                                    onFocusChange: (val, date, text) {
-                                      if (kDebugMode) {
-                                        print('To focus changed: $val, $date, $text');
-                                      }
-                                    },
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Obx(() => Text("Selected To: ${BoardDateFormat('dd/MM/yyyy HH:mm').format(controller.toDate.value)}")),
-                                ],
+
+
+                                  ],
+                                ),
                               ),
-
-
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
 
@@ -325,12 +310,13 @@ class SlipExitScreen extends GetView<SlipExitController> {
                       ActionButtonWidget(label: 'Submit',
                           onTap: (){
                             SlipExitModel slipExitData = SlipExitModel(
-                                uid: 'uid',
-                                fullName: 'fullName',
-                                regNo: 'regNo',
-                                phoneNo: 'phoneNo',
-                                roomNo: 'roomNo',
-                                departmentName: 'departmentName',
+                                uid: controller.userAccountController.user.value!.uid,
+                                fullName: controller.userAccountController.user.value!.fullName,
+                                regNo: controller.userAccountController.user.value!.regNo,
+                                phoneNo: controller.userAccountController.user.value!.phoneNo,
+                                roomNo: controller.userAccountController.user.value!.roomNo,
+                                departmentName: controller.userAccountController.user.value!.departmentName,
+                                batch: 'NULL',
                                 guardianName: controller.guardianNameController.text.trim(),
                                 relation: controller.relationController.text.trim(),
                                 guardianPhoneNo: controller.guardianPhoneNoController.text.trim(),
@@ -338,7 +324,7 @@ class SlipExitScreen extends GetView<SlipExitController> {
                                 destination: controller.destinationController.text.trim(),
                                 reason: controller.reasonController.text.trim(),
                                 fromDate: controller.fromDate.value,
-                                toDate: controller.toDate.value
+                                toDate: controller.toDate.value,
                             );
 
                             controller.submitSlipExit(slipExitData);

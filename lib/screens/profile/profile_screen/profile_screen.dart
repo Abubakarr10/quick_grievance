@@ -67,7 +67,8 @@ class ProfileScreen extends GetView<ProfileController> {
                 width: widthX*.4,
                 label: 'Logout',
                 onTap: (){
-                  controller.logoutAccount();
+                 // controller.logoutAccount();
+                  Get.toNamed(logoutScreen);
                 }),
           )
 

@@ -19,3 +19,7 @@ const String mixVegetable = 'assets/images/mix_vegetable_roti.jpg';
 const String hosteliteIcon = 'assets/icons/girl.png';
 const String wardenIcon = 'assets/icons/women.png';
 const String microsoftIcon = 'assets/icons/microsoft.png';
+
+// GIF Images
+const String logoutGif = 'assets/images/logoutGif.gif';
+

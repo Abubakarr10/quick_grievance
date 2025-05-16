@@ -15,6 +15,7 @@ const Color accentColor = Color(0XFFF4C2C2); // soft pink
 const Color borderColor = Color(0XFFB38EB4); //
 
 const Color pureBlack = Colors.black;
+const Color pureWhite = Colors.white;
 const Color textColor = Colors.black;
 const Color midTextColor = Colors.grey;
 

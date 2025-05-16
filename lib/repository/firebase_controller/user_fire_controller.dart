@@ -18,20 +18,21 @@ class UserFireController{
     }
   }
 
-  Future<UserModel?> getUserData(String uid) async {
-    try {
-      final userDataDoc = await userCollection.doc(uid).get();
-      if (userDataDoc.exists) {
-        UserModel userModel = UserModel.fromJson(userDataDoc.data() as Map<String, dynamic>);
-        return userModel;
-      }
-    } catch (error) {
-      if (kDebugMode) {
-        print('Error fetching user data: $error');
-      }
-    }
-    return null; // Return an empty map if data is not found or an error occurs.
-  }
+  // Future<UserModel> getUserData(String uid) async {
+  //   try {
+  //     final userDataDoc = await userCollection.doc(uid).get();
+  //     if (userDataDoc.exists) {
+  //       UserModel userModel = UserModel.fromJson(userDataDoc.data() as Map<String, dynamic>);
+  //       return userModel;
+  //     }
+  //   } catch (error) {
+  //     if (kDebugMode) {
+  //       print('Error fetching user data: $error');
+  //     }
+  //   }
+  //   return const UserModel(uid: '', email: '', fullName: '', password: '', regNo: '', phoneNo: '',
+  //       roomNo: '', departmentName: ''); // Return an empty map if data is not found or an error occurs.
+  // }
 
   // Future<void> fetchUserData() async {
   //   // Get the current user

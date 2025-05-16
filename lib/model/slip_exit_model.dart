@@ -1,6 +1,6 @@
 
 class SlipExitModel{
-  final String uid,fullName,regNo,phoneNo,roomNo,departmentName;
+  final String uid,fullName,regNo,phoneNo,roomNo,departmentName,batch;
   final String guardianName,relation,guardianPhoneNo,address,destination;
   final String reason;
   final DateTime fromDate,toDate;
@@ -12,6 +12,7 @@ class SlipExitModel{
         required this.phoneNo,
         required this.roomNo,
         required this.departmentName,
+        required this.batch,
 
         required this.guardianName,
         required this.relation,
@@ -32,6 +33,7 @@ class SlipExitModel{
       'phone_no' : phoneNo,
       'room_no' : roomNo,
       'department_name' : departmentName,
+      'batch' : batch,
 
       'guardianName' : guardianName,
       'relation' : relation,
@@ -63,6 +65,7 @@ class SlipExitModel{
       reason: json['reason'],
       fromDate: json['fromDate'],
       toDate: json['toDate'],
+      batch: json['batch'],
     );
   }
 }
