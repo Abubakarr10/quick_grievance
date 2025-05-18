@@ -50,7 +50,7 @@ class AppTextFormFieldWidget extends StatelessWidget {
     this.floatingLabelBehavior = FloatingLabelBehavior.never,
     this.disabledBorderRadius = 0,
     this.enabledBorderRadius = 0,
-    this.maxLength=60,
+    this.maxLength,
     this.showSuffixIcon = false,
     this.visiblePassword = false,
     this.onTap,

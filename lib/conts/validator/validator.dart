@@ -1,16 +1,16 @@
 import 'package:flutter/foundation.dart';
 
-String emptyValidator(value, returnMessage){
+String? emptyValidator(value, returnMessage){
   if (kDebugMode) {
     print('Value empty: $value');
   }
   if (value!.isEmpty) {
     return returnMessage;
   }
-  return 'null';
+  return null;
 }
 
-String phoneNumberValidator(value){
+String? phoneNumberValidator(value){
 // Check if it starts with +92
 if (kDebugMode) {
   print('Value Phone: $value');
@@ -25,5 +25,5 @@ if (kDebugMode) {
     return 'Phone number must be 10 digits after +92';
   }
 
-  return 'null';
+  return null;
 }

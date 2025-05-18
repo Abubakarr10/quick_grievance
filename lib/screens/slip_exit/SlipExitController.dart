@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:quick_grievance/conts/app_colors.dart';
 import 'package:quick_grievance/model/slip_exit_model.dart';
@@ -27,6 +28,7 @@ class SlipExitController extends GetxController{
   }
 
   RxBool isBySelf = false.obs;
+  RxBool isDateConfirm = false.obs;
 
   TextEditingController guardianNameController = TextEditingController();
   TextEditingController relationController = TextEditingController();
@@ -55,31 +57,49 @@ class SlipExitController extends GetxController{
   final CollectionReference userCollection = FirebaseFirestore.instance.collection('request_slip_exit');
 
 
-
   // Submitting Slip Exit
   Future<void> submitSlipExit(SlipExitModel slipExitData) async {
     try {
 
       if(formKey.currentState!.validate()){
 
-        await userCollection.doc().set(slipExitData.toJson());
+        if(isDateConfirm.value == true && fromDate.value != toDate.value){
 
-        Get.snackbar(
-            ' Successfully!', ' Your Exit Slip is submitted to Warden Admin',
-            icon: const Padding(
-              padding: EdgeInsets.all(10),
-              child: Icon(
-                Icons.done,
-                size: 50,
-                color: accentColor,
+          await userCollection.doc().set(slipExitData.toJson());
+
+          Get.snackbar(
+              ' Successfully!', ' Your Exit Slip is submitted to Warden Admin',
+              icon: const Padding(
+                padding: EdgeInsets.all(10),
+                child: Icon(
+                  Icons.done,
+                  size: 50,
+                  color: accentColor,
+                ),
               ),
-            ),
-            colorText: primaryColor,
-            backgroundColor: secondaryColor
-        );
+              colorText: primaryColor,
+              backgroundColor: secondaryColor);
 
-        Get.offNamed(entryPointScreen);
+          Get.offNamed(entryPointScreen);
+        }else{
+          Get.snackbar(
+              ' Missing!', ' Please confirm your dates before submission',
+              icon: const Padding(
+                padding: EdgeInsets.all(10),
+                child: Icon(
+                  Icons.date_range,
+                  size: 50,
+                  color: secondaryColor,
+                ),
+              ),
+              colorText: Colors.white,
+              backgroundColor: Colors.red);
 
+          if (kDebugMode) {
+            print('>>>> Please confirm date, same DateTime');
+          }
+
+        }
 
       }else{
         Get.snackbar(

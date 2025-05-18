@@ -10,6 +10,7 @@ class AppTextWidget extends StatelessWidget {
   final FontWeight fontWeight;
   final TextAlign textAlign;
   final bool showShadows;
+  final bool overflow;
   final TextDecoration decoration;
 
   const AppTextWidget({super.key,
@@ -19,13 +20,16 @@ class AppTextWidget extends StatelessWidget {
     this.fontWeight = FontWeight.w500,
     this.textAlign = TextAlign.start,
     this.showShadows = false,
-    this.decoration = TextDecoration.none
+    this.decoration = TextDecoration.none,
+    this.overflow = false
   });
 
   @override
   Widget build(BuildContext context) {
     return Text(title,
       textAlign: textAlign,
+      maxLines: overflow == false? null : 1,
+      overflow: overflow == false? null : TextOverflow.ellipsis,
       style: GoogleFonts.poppins(
         fontSize: fontSize,
         decoration: decoration,

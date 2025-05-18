@@ -2,6 +2,7 @@ import 'package:board_datetime_picker/board_datetime_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:quick_grievance/conts/images/app_images.dart';
 import 'package:quick_grievance/conts/images/rive_images.dart';
@@ -59,13 +60,54 @@ class SlipExitScreen extends GetView<SlipExitController> {
                         ),
                       ),
 
-                      // Guardian Information Box
                       Form(
                         key: controller.formKey,
                         child: Column(
                           children: [
+
+                            // Emergency
+                            // Card(
+                            //   elevation: 15,
+                            //   shadowColor: secondaryColor,
+                            //   color: Colors.red,
+                            //   child: Padding(
+                            //     padding: const EdgeInsets.all(10),
+                            //     child: Column(
+                            //       children: [
+                            //
+                            //         AppTextWidget(title: 'Emergency',
+                            //           fontSize: heightX*.022,
+                            //           textColor: pureBlack,
+                            //           fontWeight: FontWeight.bold,
+                            //         ),
+                            //
+                            //         // CheckBox => By Self
+                            //         Obx(()=>
+                            //             CheckboxListTile(
+                            //               checkboxScaleFactor: 1.5,
+                            //               contentPadding: const EdgeInsets.all(0),
+                            //               checkColor: secondaryColor,
+                            //               activeColor: accentColor,
+                            //               value: controller.isBySelf.value,
+                            //               onChanged: (value){
+                            //                 controller.isBySelf.value = value ?? false;
+                            //               },
+                            //               title:  AppTextWidget(title: 'Emergency Case',fontWeight: FontWeight.bold,
+                            //                 fontSize: heightX*.018, textColor: secondaryColor,
+                            //               ),
+                            //             )),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
+                            //
+                            // SizedBox(height: heightX*.02,),
+
+                            // Guardian Information Box
+
+                            // Guardian Information Box
                             Card(
-                              elevation: 10,
+                              elevation: 15,
                               color: Colors.white,
                               shadowColor: secondaryColor,
                               child: Padding(
@@ -84,7 +126,11 @@ class SlipExitScreen extends GetView<SlipExitController> {
                                       fieldText: 'Name of person',
                                       textEditingController: controller.guardianNameController,
                                       validator: (value){
-                                        return emptyValidator(value,'Please mention person name');
+                                        if(controller.isBySelf.value == true){
+                                          return null;
+                                        }else{
+                                          return emptyValidator(value,'Please mention person name');
+                                        }
                                       },),
 
                                     SizedBox(height: heightX*.01,),
@@ -94,22 +140,31 @@ class SlipExitScreen extends GetView<SlipExitController> {
                                         fieldText: 'Relation',
                                       textEditingController: controller.relationController,
                                       validator: (value){
-                                         return emptyValidator(value,'Mention your relation with Him/Her');
+                                        if(controller.isBySelf.value == true){
+                                          return null;
+                                        }else {
+                                          return emptyValidator(value,
+                                              'Mention your relation with Him/Her');
+                                        }
                                       },),
 
                                     SizedBox(height: heightX*.01,),
 
                                     TitleTextFieldWidget(
                                         title: 'Guardian Contact.No:',
-                                        fieldText: '+92 123456789',
+                                        fieldText: '+92123456789',
+                                      maxLength: 13,
                                       textEditingController: controller.guardianPhoneNoController,
                                       keyType: TextInputType.number,
                                       validator: (value){
-                                       //   emptyValidator(value, 'Mention Phone number');
-                                        if (value!.isEmpty) {
-                                          return 'Mention Phone number';
+                                        if(controller.isBySelf.value == true){
+                                          return null;
+                                        }else {
+                                          if (value!.isEmpty) {
+                                            return 'Mention Phone number';
+                                          }
+                                          return phoneNumberValidator(value);
                                         }
-                                          phoneNumberValidator(value);
                                       }),
 
                                     SizedBox(height: heightX*.01,),
@@ -125,7 +180,12 @@ class SlipExitScreen extends GetView<SlipExitController> {
                                       maxLines: 2,
                                       controller: controller.addressController,
                                       validator: (value){
-                                        return emptyValidator(value, 'Mention Destination (i.e Home,Hospital,Shopping');
+                                        if(controller.isBySelf.value == true){
+                                          return null;
+                                        }else {
+                                          return emptyValidator(value,
+                                              'Mention Destination (i.e Home,Hospital,Shopping');
+                                        }
                                       },
                                       keyboardType: TextInputType.multiline, // Enables multi-line input from keyboard
                                       decoration: InputDecoration(
@@ -174,6 +234,9 @@ class SlipExitScreen extends GetView<SlipExitController> {
                                         fieldText: 'Place, Home or Hospital',
                                       textEditingController: controller.destinationController,
                                       validator: (value){
+                                        if(controller.isBySelf.value == false){
+                                          return null;
+                                        }
                                         return emptyValidator(value, 'Mention Destination (i.e Home,Hospital,Shopping');
                                       },),
 
@@ -186,7 +249,7 @@ class SlipExitScreen extends GetView<SlipExitController> {
 
                             // Purpose of Leave Box
                             Card(
-                              elevation: 10,
+                              elevation: 15,
                               color: Colors.white,
                               shadowColor: secondaryColor,
                               child: Padding(
@@ -216,19 +279,10 @@ class SlipExitScreen extends GetView<SlipExitController> {
                             SizedBox(height: heightX*.03,),
 
                             // Travel Information
-                            Container(
-                              height: heightX*.36,
-                              width: widthX,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: secondaryColor,
-                                        blurRadius: 10, offset: Offset(0, heightX*.01)
-                                    )
-                                  ]
-                              ),
+                            Card(
+                              elevation: 15,
+                              shadowColor: secondaryColor,
+                              color: Colors.white,
                               child: Padding(
                                 padding: const EdgeInsets.all(20),
                                 child: Column(
@@ -245,8 +299,8 @@ class SlipExitScreen extends GetView<SlipExitController> {
                                     Column(
                                       children: [
                                         // From DateTime
-                                        const AppTextWidget(title: 'From',
-                                        fontWeight: FontWeight.bold,
+                                        AppTextWidget(title: 'From',
+                                        fontWeight: FontWeight.bold, fontSize: heightX*.016,
                                         ),
                                         BoardDateTimeInputField(
                                           controller: controller.fromTextController.value,
@@ -268,11 +322,11 @@ class SlipExitScreen extends GetView<SlipExitController> {
                                         fontWeight: FontWeight.w400,
                                         )),
 
-                                        const SizedBox(height: 30),
+                                        SizedBox(height: heightX*.01),
 
                                         // To DateTime
-                                        const AppTextWidget(title: 'To',
-                                          fontWeight: FontWeight.bold,
+                                        AppTextWidget(title: 'To',
+                                          fontWeight: FontWeight.bold, fontSize: heightX*.016,
                                         ),
                                         BoardDateTimeInputField(
                                           controller: controller.toTextController.value,
@@ -293,6 +347,22 @@ class SlipExitScreen extends GetView<SlipExitController> {
                                         Obx(() => AppTextWidget(title: "Selected To: ${BoardDateFormat('dd/MM/yyyy HH:mm').format(controller.toDate.value)}",
                                         fontWeight: FontWeight.w400,
                                         )),
+
+                                        // CheckBox => Confirm Date and Time
+                                        Obx(()=>
+                                            CheckboxListTile(
+                                              checkboxScaleFactor: 1.5,
+                                              contentPadding: const EdgeInsets.all(0),
+                                              checkColor: secondaryColor,
+                                              activeColor: accentColor,
+                                              value: controller.isDateConfirm.value,
+                                              onChanged: (value){
+                                                controller.isDateConfirm.value = value ?? false;
+                                              },
+                                              title:  AppTextWidget(title: 'Confirm Date and Time',fontWeight: FontWeight.bold,
+                                                fontSize: heightX*.018, textColor: primaryColor,
+                                              ),
+                                            )),
                                       ],
                                     ),
 
@@ -317,17 +387,20 @@ class SlipExitScreen extends GetView<SlipExitController> {
                                 roomNo: controller.userAccountController.user.value!.roomNo,
                                 departmentName: controller.userAccountController.user.value!.departmentName,
                                 batch: 'NULL',
-                                guardianName: controller.guardianNameController.text.trim(),
-                                relation: controller.relationController.text.trim(),
-                                guardianPhoneNo: controller.guardianPhoneNoController.text.trim(),
-                                address: controller.addressController.text.trim(),
-                                destination: controller.destinationController.text.trim(),
+                                guardianName: controller.isBySelf.value? 'none' : controller.guardianNameController.text.trim(),
+                                relation: controller.isBySelf.value? 'none' : controller.relationController.text.trim(),
+                                guardianPhoneNo: controller.isBySelf.value? 'none' : controller.guardianPhoneNoController.text.trim(),
+                                address: controller.isBySelf.value? 'none' : controller.addressController.text.trim(),
+                                destination: controller.isBySelf.value? controller.destinationController.text.trim() : 'none',
                                 reason: controller.reasonController.text.trim(),
                                 fromDate: controller.fromDate.value,
                                 toDate: controller.toDate.value,
                             );
 
                             controller.submitSlipExit(slipExitData);
+
+
+
                           })
 
                     ],

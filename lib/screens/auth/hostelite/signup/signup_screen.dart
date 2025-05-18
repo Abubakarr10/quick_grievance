@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_grievance/conts/app_colors.dart';
 import 'package:quick_grievance/conts/images/app_images.dart';
 import 'package:quick_grievance/screens/app_widgets/widgets.dart';
 import 'package:quick_grievance/screens/auth/hostelite/signup/SignUpController.dart';
 
 import '../../../../conts/app_height_width.dart';
+import '../../../../conts/app_lists/department_name_list.dart';
 import '../../../../conts/routes/screen_names.dart';
 import '../widgets/widgets.dart';
 
@@ -174,19 +176,78 @@ class SignUpScreen extends GetView<SignUpController> {
                                           iconColor: accentColor,
                                         ),
 
-                                        // Department Name
+                                        // Batch Year
                                         AppTextFormFieldWidget(
                                           ctrl: controller.departmentNameController,
-                                          keyType: TextInputType.name,
+                                          keyType: TextInputType.text,
                                           mainColor: Colors.black.withAlpha(300),
-                                          labelText: 'Department Name',
-                                          returnMessage: 'Enter University Department Name',
+                                          labelText: 'Batch Year',
+                                          returnMessage: 'Enter Batch year (i.e 21-25)',
                                           borderRadius: 20,
                                           textColor: accentColor,
                                           showPrefixIcon: true,
-                                          prefixIcon: Icons.location_city,
+                                          prefixIcon: Icons.school,
                                           iconColor: accentColor,
                                         ),
+
+
+                                        // Department Name
+                                  DropdownButtonFormField<String>(
+                                    dropdownColor: secondaryColor,
+                                    decoration: InputDecoration(
+                                        labelText: 'Select Department',
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(12),
+                                          borderSide: const BorderSide(
+                                            color: Colors.grey, // Default border color
+                                            width: 1.5,
+                                          ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(12),
+                                          borderSide: const BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1.5,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(12),
+                                          borderSide: const BorderSide(
+                                            color: primaryColor,
+                                            width: 2.0,
+                                          ),
+                                        ),
+                                      labelStyle: GoogleFonts.poppins(
+                                          fontSize: heightX*.014,
+                                          fontWeight: FontWeight.w500,
+                                          color: primaryColor,
+                                      ),
+                                      fillColor: Colors.black.withAlpha(300),
+                                      prefixIcon: const Icon(Icons.location_city,
+                                      color: accentColor,
+                                      ),
+                                      suffixIconColor: primaryColor
+                                    ),
+                                    items: ntuDepartments.map((dept) {
+                                      return DropdownMenuItem<String>(
+                                        value: dept,
+                                        child: Flexible(
+                                          child: SizedBox(
+                                            width: widthX*.5,
+                                            child: AppTextWidget(
+                                              title: dept,
+                                            overflow: true,
+                                            textColor: primaryColor,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                         // handle value
+                                    },
+                                  ),
+
 
                                         // Password
                                          Obx(()=>
