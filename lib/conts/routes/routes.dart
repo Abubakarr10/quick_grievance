@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:quick_grievance/conts/routes/screen_names.dart';
 import 'package:quick_grievance/screens/auth/hostelite/signup/signup_screen.dart';
 import 'package:quick_grievance/screens/auth/warden/warden_join_screen.dart';
+import 'package:quick_grievance/screens/complain/complain_screen.dart';
 import 'package:quick_grievance/screens/entryPoint/entry_point_screen.dart';
 import 'package:quick_grievance/screens/history/history_screen.dart';
 import 'package:quick_grievance/screens/mess/mess_screen.dart';
@@ -44,12 +45,12 @@ final pages = [
   ///======================== Slip Exit Routes =================================
   GetPage(name: slipExitScreen, page: () => const SlipExitScreen()),
 
+  ///======================== Complain Routes =================================
+  GetPage(name: complainScreen, page: () => const ComplainScreen()),
+
   ///========================== Mess Routes ====================================
   GetPage(name: messScreen, page: () => const MessScreen()),
   GetPage(name: voteScreen, page: () => const VoteScreen()),
-
-  ///========================== Complain Routes=================================
- // GetPage(name: homeScreen, page: () => const HomeScreen()),
 
   ///========================== History Routes =================================
   GetPage(name: historyScreen, page: () => const HistoryScreen()),

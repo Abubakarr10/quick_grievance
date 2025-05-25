@@ -33,9 +33,10 @@ class SignUpController extends GetxController{
   TextEditingController regNoController = TextEditingController();
   TextEditingController phoneNoController = TextEditingController();
   TextEditingController roomNoController = TextEditingController();
-  TextEditingController departmentNameController = TextEditingController();
+  TextEditingController batchController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  RxString departmentName = ''.obs;
 
   void changeVisibility(){
     passwordVisible.value = !passwordVisible.value;
@@ -63,16 +64,17 @@ class SignUpController extends GetxController{
             regNo: regNoController.text.toString(),
             phoneNo: phoneNoController.text.toString().trim(),
             roomNo: roomNoController.text.toString().trim(),
-            departmentName: departmentNameController.text.toString().trim(),
+            departmentName: departmentName.value,
+            batch: batchController.text.toString().trim(),
+            isAuthorized: false,
           );
 
           userFireController.createUser(userModel);
 
           Get.snackbar(
               'Yahoo!', 'Account Created Successfully',
-              icon: const Padding(
-                padding: EdgeInsets.only(right: 10),
-              ),
+              icon: const Icon(Icons.celebration_outlined,
+                color: secondaryColor,),
               backgroundColor: accentColor
           );
 

@@ -22,7 +22,7 @@ class IconTextCardWidget extends StatelessWidget {
     return Container(
       width: widthX,
       height: heightX*.14,
-      margin: EdgeInsets.symmetric(vertical: heightX*.010,horizontal: 20),
+      margin: EdgeInsets.symmetric(vertical: heightX*.015,horizontal: 20),
       decoration: BoxDecoration(
           color: bgColor,
           borderRadius: BorderRadius.circular(25),

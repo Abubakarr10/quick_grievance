@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_grievance/conts/app_colors.dart';
 import 'package:quick_grievance/conts/images/app_images.dart';
+import 'package:quick_grievance/conts/validator/validator.dart';
 import 'package:quick_grievance/screens/app_widgets/widgets.dart';
 import 'package:quick_grievance/screens/auth/hostelite/signup/SignUpController.dart';
+import 'package:quick_grievance/screens/auth/hostelite/signup/widgets/widgets.dart';
 
 import '../../../../conts/app_height_width.dart';
 import '../../../../conts/app_lists/department_name_list.dart';
@@ -126,7 +128,10 @@ class SignUpScreen extends GetView<SignUpController> {
                                             keyType: TextInputType.emailAddress,
                                           mainColor: Colors.black.withAlpha(300),
                                           labelText: 'Email',
-                                          returnMessage: 'Enter Email',
+                                          customValidator: true,
+                                          validator: (value){
+                                            return  emailValidator(value);
+                                          },
                                           borderRadius: 20,
                                           textColor: accentColor,
                                           showPrefixIcon: true,
@@ -140,7 +145,10 @@ class SignUpScreen extends GetView<SignUpController> {
                                             keyType: TextInputType.text,
                                           mainColor: Colors.black.withAlpha(300),
                                           labelText: 'Reg.no',
-                                          returnMessage: 'Enter University Reg.Number',
+                                          customValidator: true,
+                                          validator: (value){
+                                            return  regNumberValidator(value);
+                                          },
                                           borderRadius: 20,
                                           textColor: accentColor,
                                           showPrefixIcon: true,
@@ -154,7 +162,16 @@ class SignUpScreen extends GetView<SignUpController> {
                                           keyType: TextInputType.phone,
                                           mainColor: Colors.black.withAlpha(300),
                                           labelText: 'Phone.no',
-                                          returnMessage: 'Enter Phone Number',
+                                          customValidator: true,
+                                          validator: (value){
+                                            if(value == null){
+                                              return emptyValidator(value,
+                                                  'Enter Phone.no');
+                                            }
+                                            else{
+                                              return phoneNumberValidator(value);
+                                            }
+                                          },
                                           borderRadius: 20,
                                           textColor: accentColor,
                                           showPrefixIcon: true,
@@ -168,7 +185,10 @@ class SignUpScreen extends GetView<SignUpController> {
                                           keyType: TextInputType.number,
                                           mainColor: Colors.black.withAlpha(300),
                                           labelText: 'Room.no',
-                                          returnMessage: 'Enter Room Number',
+                                          customValidator: true,
+                                          validator: (value){
+                                            return roomNumberValidator(value);
+                                          },
                                           borderRadius: 20,
                                           textColor: accentColor,
                                           showPrefixIcon: true,
@@ -178,11 +198,19 @@ class SignUpScreen extends GetView<SignUpController> {
 
                                         // Batch Year
                                         AppTextFormFieldWidget(
-                                          ctrl: controller.departmentNameController,
+                                          ctrl: controller.batchController,
                                           keyType: TextInputType.text,
                                           mainColor: Colors.black.withAlpha(300),
-                                          labelText: 'Batch Year',
-                                          returnMessage: 'Enter Batch year (i.e 21-25)',
+                                          labelText: 'Batch Year (i.e 2021-25)',
+                                          customValidator: true,
+                                          validator: (value){
+                                            if(value == null){
+                                              return emptyValidator(value,
+                                                  'Enter Batch Year (i.e 2021-25');
+                                            }else{
+                                              return batchYearValidator(value);
+                                            }
+                                          },
                                           borderRadius: 20,
                                           textColor: accentColor,
                                           showPrefixIcon: true,
@@ -192,61 +220,13 @@ class SignUpScreen extends GetView<SignUpController> {
 
 
                                         // Department Name
-                                  DropdownButtonFormField<String>(
-                                    dropdownColor: secondaryColor,
-                                    decoration: InputDecoration(
-                                        labelText: 'Select Department',
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(12),
-                                          borderSide: const BorderSide(
-                                            color: Colors.grey, // Default border color
-                                            width: 1.5,
-                                          ),
+                                        DropdownButtonFFWidget(
+                                          onChanged: (value){
+                                            controller.departmentName.value = value;
+                                          }, listName: ntuDepartments,
+                                          icon: Icons.location_city_outlined,
                                         ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(12),
-                                          borderSide: const BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1.5,
-                                          ),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(12),
-                                          borderSide: const BorderSide(
-                                            color: primaryColor,
-                                            width: 2.0,
-                                          ),
-                                        ),
-                                      labelStyle: GoogleFonts.poppins(
-                                          fontSize: heightX*.014,
-                                          fontWeight: FontWeight.w500,
-                                          color: primaryColor,
-                                      ),
-                                      fillColor: Colors.black.withAlpha(300),
-                                      prefixIcon: const Icon(Icons.location_city,
-                                      color: accentColor,
-                                      ),
-                                      suffixIconColor: primaryColor
-                                    ),
-                                    items: ntuDepartments.map((dept) {
-                                      return DropdownMenuItem<String>(
-                                        value: dept,
-                                        child: Flexible(
-                                          child: SizedBox(
-                                            width: widthX*.5,
-                                            child: AppTextWidget(
-                                              title: dept,
-                                            overflow: true,
-                                            textColor: primaryColor,
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
-                                    onChanged: (value) {
-                                         // handle value
-                                    },
-                                  ),
+
 
 
                                         // Password
@@ -259,7 +239,15 @@ class SignUpScreen extends GetView<SignUpController> {
                                               keyType: TextInputType.visiblePassword,
                                               mainColor: Colors.black.withAlpha(300),
                                               labelText: 'Password',
-                                              returnMessage: 'Enter Password',
+                                              customValidator: true,
+                                              validator: (value){
+                                                if(value == null){
+                                                  return emptyValidator(value,
+                                                      'Please set your password');
+                                                }else{
+                                                  return passwordValidator(value);
+                                                }
+                                              },
                                               borderRadius: 20,
                                               showSuffixIcon: true,
                                               textColor: accentColor,
