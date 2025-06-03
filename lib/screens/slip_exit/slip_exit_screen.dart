@@ -106,7 +106,6 @@ class SlipExitScreen extends GetView<SlipExitController> {
                             // Guardian Information Box
 
                             // Guardian Information Box
-
                             Card(
                               elevation: 15,
                               color: Colors.white,

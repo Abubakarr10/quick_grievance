@@ -63,9 +63,7 @@ class UserAccountScreen extends GetView<UserAccountController> {
                       // Bio
                       Center(
                         child: Card(
-                          elevation: 15,
-                          shadowColor: secondaryColor,
-                          color: pureWhite,
+                          elevation: 6,
                           margin: const EdgeInsets.all(16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
@@ -105,9 +103,7 @@ class UserAccountScreen extends GetView<UserAccountController> {
                       // University Details
                       Center(
                         child: Card(
-                          elevation: 15,
-                          color: pureWhite,
-                          shadowColor: secondaryColor,
+                          elevation: 6,
                           margin: const EdgeInsets.all(16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
@@ -127,24 +123,9 @@ class UserAccountScreen extends GetView<UserAccountController> {
                                 Column(
                                   spacing: heightX*.008,
                                   children: [
-                                  //  InfoRowWidget(title: 'Department', icon: Icons.apartment, info: controller.user.value!.departmentName,),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.apartment, color: secondaryColor,size: heightX*.028,),
-                                        const SizedBox(width: 8),
-                                        AppTextWidget(title: 'Department',fontSize: heightX*.018,
-                                          fontWeight: FontWeight.bold, textColor: secondaryColor,
-                                        ),
-                                      ],
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: AppTextWidget(title: controller.user.value!.departmentName,fontSize: heightX*.018,
-                                      overflow: true,),
-                                    ),
-
+                                    InfoRowWidget(title: 'Department', icon: Icons.apartment, info: controller.user.value!.departmentName,),
                                     const InfoRowWidget(title: 'Degree', icon: Icons.school, info: 'Software Engineering',),
-                                    InfoRowWidget(title: 'Batch', icon: Icons.batch_prediction, info: controller.user.value!.batch,),
+                                    const InfoRowWidget(title: 'Batch', icon: Icons.batch_prediction, info: '21-25',),
                                   ],
                                 ),
                               ],

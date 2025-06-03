@@ -117,4 +117,3 @@ class SignUpController extends GetxController{
 
 
 }
-

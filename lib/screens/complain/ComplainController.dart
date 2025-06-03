@@ -5,17 +5,29 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:quick_grievance/conts/app_colors.dart';
+import 'package:quick_grievance/model/complaint_model.dart';
 import 'package:quick_grievance/model/slip_exit_model.dart';
+import 'package:quick_grievance/repository/share_preferences/sp_controller.dart';
+import 'package:quick_grievance/screens/complain/ComplainProvider.dart';
 import 'package:quick_grievance/screens/profile/profile_screen/settings/user_account/UserAccountController.dart';
 
+import '../../conts/images/image_picker.dart';
 import '../../conts/routes/screen_names.dart';
+import '../../model/response_model.dart';
 
 class ComplainController extends GetxController{
 
   final UserAccountController userAccountController = Get.put(UserAccountController());
+  ComplainProvider complainProvider = ComplainProvider();
 
   final formKey = GlobalKey<FormState>();
+
+  RxString formattedDate = DateFormat('dd MMM yyyy hh:mm a').format(DateTime.now()).obs;
+
 
   @override
   void onInit() async{
@@ -27,32 +39,10 @@ class ComplainController extends GetxController{
     }
   }
 
-  RxBool isBySelf = false.obs;
-  RxBool isDateConfirm = false.obs;
-
-  TextEditingController guardianNameController = TextEditingController();
-  TextEditingController relationController = TextEditingController();
-  TextEditingController guardianPhoneNoController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
-
-  TextEditingController destinationController = TextEditingController();
-  TextEditingController reasonController = TextEditingController();
-
-
-  // Controllers for input fields
-  Rx<BoardDateTimeTextController> fromTextController = BoardDateTimeTextController().obs;
-  Rx<BoardDateTimeTextController> toTextController = BoardDateTimeTextController().obs;
-
-  // BoardDateTimeControllers for both fields
-  Rx<BoardDateTimeController> fromPickerController = BoardDateTimeController().obs;
-  Rx<BoardDateTimeController> toPickerController = BoardDateTimeController().obs;
-
-  // Selected DateTime values
-  Rx<DateTime> fromDate = DateTime.now().obs;
-  Rx<DateTime> toDate = (DateTime.now().add(const Duration(days: 10))).obs;
-
+  TextEditingController descriptionController = TextEditingController();
 
   RxString complaintType = ''.obs;
+  RxString priorityLevel = ''.obs;
 
   List<String> complaintTypes = [
     'Mess',
@@ -64,23 +54,125 @@ class ComplainController extends GetxController{
     'Others',
   ];
 
+  List<String> priorityLevels = [
+    'None',
+    'Low',
+    'Medium',
+    'High',
+    'Emergency',
+  ];
+
+  // Image Picker Variables 🌄
+  final fileX = Rx<XFile?>(null);
+  final croppedFile = Rx<CroppedFile?>(null);
+  RxString pickImage = ''.obs;
+  ImagePickerUtils imagePickerUtils = ImagePickerUtils();
+
+  // Image Picker Functions ⚙️
+  void cameraCapture() async {
+    XFile? file = await imagePickerUtils.cameraCapture();
+    fileX.value = file!;
+  }
+
+  void galleryImage() async {
+    XFile? file = await imagePickerUtils.pickImageGallery();
+    fileX.value = file!;
+  }
+
+  Future<void> cropImage() async {
+
+    if (fileX.value != null) {
+      croppedFile.value = await ImageCropper().cropImage(
+        sourcePath: fileX.value!.path,
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: primaryColor,
+            toolbarWidgetColor: primaryColor,
+            aspectRatioPresets: [
+              CropAspectRatioPreset.original,
+              CropAspectRatioPreset.square,
+            ],
+          ),
+          IOSUiSettings(
+            title: 'Cropper',
+            aspectRatioPresets: [
+              CropAspectRatioPreset.original,
+              CropAspectRatioPreset.square,
+            ],
+          ),
+        ],
+      ) ?? CroppedFile(pickImage.value);
+
+      if (croppedFile.value!.path == '') {
+        // Do something with the cropped image
+        if (kDebugMode) {
+          print('Cropped file path: ${croppedFile.value!.path}');
+        }
+      }
+    }
+  }
+
+  void cancelImage(){
+    fileX.value = null;
+    croppedFile.value = null;
+  }
+
+  void settingProfileImage(){
+    if(fileX.value != null){
+      pickImage.value = fileX.value!.path.toString();
+      debugPrint('Setting Profile Image => File Image ha!');
+      if(croppedFile.value != null) {
+        pickImage.value = croppedFile.value!.path.toString();
+        debugPrint('Setting Profile Image => Cropped Image ha!');
+      }
+    }else{
+      pickImage.value = '';
+      debugPrint('Setting Profile Image => Default Image ha!');
+    }
+  }
+
 
   // Firebase 🔥
-  final CollectionReference userCollection = FirebaseFirestore.instance.collection('request_slip_exit');
+  final CollectionReference userCollection = FirebaseFirestore.instance.collection('complaint');
 
 
-  // Submitting Slip Exit
-  Future<void> submitSlipExit(SlipExitModel slipExitData) async {
+  // Submitting Complaint to Warden (Admin)
+  Future<void> submitComplain() async {
     try {
 
-      if(formKey.currentState!.validate()){
+      if(formKey.currentState!.validate() && complaintType.value != ''){
 
-        if(isDateConfirm.value == true && fromDate.value != toDate.value){
+         final response = await complainProvider.submitComplain(
+            complaintType,
+            descriptionController.text.trim(),
+            priorityLevel.value,
+            ).timeout(const Duration(seconds: 25));
 
-          await userCollection.doc().set(slipExitData.toJson());
+         if (kDebugMode) {
+           print('User ha ===> ${currentUser!.uid}');
+           print('User Controller ===> ${userAccountController.user.value!.fullName}');
+           print('User ka DATA ===> $currentUser');
+         }
+
+         ComplaintModel complaintData = ComplaintModel(
+             uid: currentUser!.uid,
+             fullName: userAccountController.user.value!.fullName,
+             regNo: userAccountController.user.value!.regNo,
+             phoneNo: userAccountController.user.value!.phoneNo,
+             roomNo: userAccountController.user.value!.roomNo,
+             complaintType: complaintType.value,
+             description: descriptionController.text.trim(),
+             priority: priorityLevel.value,
+             assistantMessage: response,
+             submitDate: formattedDate.value
+         );
+
+
+          await userCollection.doc().set(complaintData.toJson());
 
           Get.snackbar(
-              ' Successfully!', ' Your Exit Slip is submitted to Warden Admin',
+              ' Successfully!', ' Your complain is forwarded to Warden Admin',
               icon: const Padding(
                 padding: EdgeInsets.all(10),
                 child: Icon(
@@ -93,25 +185,6 @@ class ComplainController extends GetxController{
               backgroundColor: secondaryColor);
 
           Get.offNamed(entryPointScreen);
-        }else{
-          Get.snackbar(
-              ' Missing!', ' Please confirm your dates before submission',
-              icon: const Padding(
-                padding: EdgeInsets.all(10),
-                child: Icon(
-                  Icons.date_range,
-                  size: 50,
-                  color: secondaryColor,
-                ),
-              ),
-              colorText: Colors.white,
-              backgroundColor: Colors.red);
-
-          if (kDebugMode) {
-            print('>>>> Please confirm date, same DateTime');
-          }
-
-        }
 
       }else{
         Get.snackbar(
@@ -131,7 +204,7 @@ class ComplainController extends GetxController{
 
     } catch (e) {
       if (kDebugMode) {
-        print('Failed to submit slip exit: $e');
+        print('Failed to submit complain: $e');
       }
     }
   }

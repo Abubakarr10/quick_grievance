@@ -13,11 +13,9 @@ class DropdownButtonFFWidget extends StatelessWidget {
   final bool isFillColor;
   final Color fillColor;
   final String valueName;
-  final String hintText;
   const DropdownButtonFFWidget({
     super.key, required this.onChanged, required this.listName, required this.icon,
     this.fillColor = secondaryColor,  this.isFillColor = false, this.valueName = 'department',
-    this.hintText = '',
   });
 
   @override
@@ -31,13 +29,12 @@ class DropdownButtonFFWidget extends StatelessWidget {
         return null;
       },
       decoration: InputDecoration(
-          labelText: hintText == ''? 'Select $valueName' : null,
-          hintText: hintText,
-          labelStyle: hintText == ''? GoogleFonts.poppins(
+          labelText: 'Select $valueName',
+          labelStyle: GoogleFonts.poppins(
             fontSize: heightX*.014,
             fontWeight: FontWeight.w500,
             color: primaryColor,
-          ) : null,
+          ),
           hintStyle: GoogleFonts.poppins(
             fontSize: heightX*.014,
             fontWeight: FontWeight.w500,

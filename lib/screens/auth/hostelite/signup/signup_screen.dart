@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,7 +34,7 @@ class SignUpScreen extends GetView<SignUpController> {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          
+
           // Background Image
           Positioned(
             child: Container(
@@ -45,7 +46,7 @@ class SignUpScreen extends GetView<SignUpController> {
                   )),
             ),
           ),
-          
+
           // Gradient Colors top of the Background Image Layer
           Positioned(
             child: Container(
@@ -59,7 +60,7 @@ class SignUpScreen extends GetView<SignUpController> {
                       end: Alignment.bottomCenter)),
             ),
           ),
-          
+
           // Middle Box => Main Content
           Positioned(
             child: Align(
@@ -84,18 +85,18 @@ class SignUpScreen extends GetView<SignUpController> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                      
+
                             // ===== Main Content =====
-                      
+
                             SizedBox(height: heightX*.08,),
-                      
+
                             AppTextWidget(title: 'Register as Hostelite',
-                            textColor: Colors.white, fontWeight: FontWeight.bold,
+                              textColor: Colors.white, fontWeight: FontWeight.bold,
                               fontSize: heightX*.024,
                             ),
-                      
+
                             SizedBox(height: heightX*.02,),
-                      
+
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 15),
                               child: Column(
@@ -110,8 +111,8 @@ class SignUpScreen extends GetView<SignUpController> {
 
                                         // Full Name
                                         AppTextFormFieldWidget(
-                                            ctrl: controller.fullNameController,
-                                            keyType: TextInputType.name,
+                                          ctrl: controller.fullNameController,
+                                          keyType: TextInputType.name,
                                           mainColor: Colors.black.withAlpha(300),
                                           labelText: 'Full Name',
                                           returnMessage: 'Enter Full Name',
@@ -124,8 +125,8 @@ class SignUpScreen extends GetView<SignUpController> {
 
                                         // Email
                                         AppTextFormFieldWidget(
-                                            ctrl: controller.emailController,
-                                            keyType: TextInputType.emailAddress,
+                                          ctrl: controller.emailController,
+                                          keyType: TextInputType.emailAddress,
                                           mainColor: Colors.black.withAlpha(300),
                                           labelText: 'Email',
                                           customValidator: true,
@@ -141,8 +142,8 @@ class SignUpScreen extends GetView<SignUpController> {
 
                                         // Reg.no
                                         AppTextFormFieldWidget(
-                                            ctrl: controller.regNoController,
-                                            keyType: TextInputType.text,
+                                          ctrl: controller.regNoController,
+                                          keyType: TextInputType.text,
                                           mainColor: Colors.black.withAlpha(300),
                                           labelText: 'Reg.no',
                                           customValidator: true,
@@ -230,7 +231,7 @@ class SignUpScreen extends GetView<SignUpController> {
 
 
                                         // Password
-                                         Obx(()=>
+                                        Obx(()=>
                                             AppTextFormFieldWidget(
                                               onTap: (){
                                                 controller.changeVisibility();
@@ -264,9 +265,9 @@ class SignUpScreen extends GetView<SignUpController> {
                                   Padding(
                                     padding: EdgeInsets.only(top: heightX*.02),
                                     child: ActionButtonWidget(label: 'SignUp',
-                                        onTap: (){
-                                      controller.signUp();
-                                        },
+                                      onTap: (){
+                                        controller.signUp();
+                                      },
                                       height: heightX*.05,
                                       width: widthX,
 
@@ -275,19 +276,19 @@ class SignUpScreen extends GetView<SignUpController> {
                                 ],
                               ),
                             ),
-                      
+
                             const DividerTextWidget(color: accentColor,),
-                      
+
 
 
                             DuelText(firstText: 'Already have an account?',
                               secondText: ' Login',
                               onTap: () {
-                              Get.offNamed(loginScreen);
+                                Get.offNamed(loginScreen);
                               },
                             )
 
-                      
+
                           ],
                         ),
                       ),
@@ -319,4 +320,3 @@ class SignUpScreen extends GetView<SignUpController> {
     );
   }
 }
-
