@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:quick_grievance/conts/routes/screen_names.dart';
 import 'package:quick_grievance/screens/auth/hostelite/signup/signup_screen.dart';
 import 'package:quick_grievance/screens/auth/warden/warden_join_screen.dart';
+import 'package:quick_grievance/screens/community/add_post/add_post_screen.dart';
+import 'package:quick_grievance/screens/community/community_screen.dart';
 import 'package:quick_grievance/screens/complain/complain_screen.dart';
 import 'package:quick_grievance/screens/entryPoint/entry_point_screen.dart';
 import 'package:quick_grievance/screens/history/history_screen.dart';
@@ -54,6 +56,10 @@ final pages = [
 
   ///========================== History Routes =================================
   GetPage(name: historyScreen, page: () => const HistoryScreen()),
+
+  ///========================== Community Routes =================================
+  GetPage(name: communityScreen, page: () => const CommunityScreen()),
+  GetPage(name: addPostScreen, page: () => const AddPostScreen()),
 
   ///========================== Profile Routes =================================
   GetPage(name: profileScreen, page: () => const ProfileScreen()),

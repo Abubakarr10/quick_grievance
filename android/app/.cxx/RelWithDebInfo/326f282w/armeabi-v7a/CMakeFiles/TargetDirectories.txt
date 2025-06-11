@@ -1,0 +1,2 @@
+D:/Documents 2.0/FlutterProjects/quick_grievance/android/app/.cxx/RelWithDebInfo/326f282w/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/Documents 2.0/FlutterProjects/quick_grievance/android/app/.cxx/RelWithDebInfo/326f282w/armeabi-v7a/CMakeFiles/rebuild_cache.dir

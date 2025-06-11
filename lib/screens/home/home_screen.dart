@@ -67,9 +67,12 @@ class HomeScreen extends GetView<HomeController> {
                           ),
                         ),
 
-                        const IconTextCardWidget(
+                        IconTextCardWidget(
                             title: 'Community', subtitle: 'feedback',
-                            icon: Icons.feedback_outlined),
+                            icon: Icons.feedback_outlined,
+                          onTap: () {
+                              Get.toNamed(communityScreen);
+                          },),
 
                         SizedBox(height: heightX*.015),
 
@@ -95,9 +98,9 @@ class HomeScreen extends GetView<HomeController> {
                           ],
                         ),
 
-                        const IconTextCardWidget(
+                        IconTextCardWidget(
                             title: 'Track', subtitle: 'complain status',
-                            icon: Icons.track_changes_outlined),
+                            icon: Icons.track_changes_outlined, onTap: () {  },),
 
                         const SizedBox(height: 60,),
                       ],

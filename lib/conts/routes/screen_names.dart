@@ -17,3 +17,5 @@ const String editUserAccountScreen = '/edit_user_account_screen';
 const String themeScreen = '/theme_screen';
 const String logoutScreen = '/logout_screen';
 const String complainScreen = '/complain_screen';
+const String communityScreen = '/community_screen';
+const String addPostScreen = '/add_post_screen';

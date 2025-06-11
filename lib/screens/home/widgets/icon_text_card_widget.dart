@@ -10,52 +10,56 @@ class IconTextCardWidget extends StatelessWidget {
   final IconData icon;
   final Color bgColor;
   final Color contentColor;
+  final VoidCallback onTap;
   const IconTextCardWidget({
     super.key,
     required this.title, required this.subtitle, required this.icon,
     this.bgColor = secondaryColor,
-    this.contentColor = Colors.white,
+    this.contentColor = Colors.white, required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: widthX,
-      height: heightX*.14,
-      margin: EdgeInsets.symmetric(vertical: heightX*.015,horizontal: 20),
-      decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: BorderRadius.circular(25),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 10, offset: Offset(0, heightX*.01),
-            )]
-      ),
-      child: Padding(
-        padding:  EdgeInsets.all(heightX*.014),
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AppTextWidget(title: title.toUpperCase(),
-                  fontWeight: FontWeight.bold, textColor: contentColor,
-                  fontSize: fontSizeX*.024,
-                ),
-                AppTextWidget(title: subtitle.toUpperCase(),
-                  fontWeight: FontWeight.bold, textColor: contentColor,
-                  fontSize: fontSizeX*.018,
-                ),
-              ],
-            ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: widthX,
+        height: heightX*.14,
+        margin: EdgeInsets.symmetric(vertical: heightX*.015,horizontal: 20),
+        decoration: BoxDecoration(
+            color: bgColor,
+            borderRadius: BorderRadius.circular(25),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black,
+                blurRadius: 10, offset: Offset(0, heightX*.01),
+              )]
+        ),
+        child: Padding(
+          padding:  EdgeInsets.all(heightX*.014),
+          child: Stack(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppTextWidget(title: title.toUpperCase(),
+                    fontWeight: FontWeight.bold, textColor: contentColor,
+                    fontSize: fontSizeX*.024,
+                  ),
+                  AppTextWidget(title: subtitle.toUpperCase(),
+                    fontWeight: FontWeight.bold, textColor: contentColor,
+                    fontSize: fontSizeX*.018,
+                  ),
+                ],
+              ),
 
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Icon(icon,color: contentColor,
-                size: heightX*.07,),
-            )
-          ],
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Icon(icon,color: contentColor,
+                  size: heightX*.07,),
+              )
+            ],
+          ),
         ),
       ),
     );
