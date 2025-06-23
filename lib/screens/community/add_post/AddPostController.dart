@@ -3,7 +3,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -93,14 +92,19 @@ class AddPostController extends GetxController{
   final CollectionReference userCollection = FirebaseFirestore.instance.collection('post');
 
 
-  Future<String> uploadImageToCloud(XFile xFile) async {
+  Future<String> uploadImageToCloud(XFile? xFile) async {
     try {
 
-      // Assuming `xFile` is your XFile instance
-      final File imageFile = File(xFile.path);
-      final String imageUrl = await addPostProvider.uploadImage(imageFile);
+      if(xFile == null){
+        return '';
+      }else{
+        // Assuming `xFile` is your XFile instance
+        final File imageFile = File(xFile.path);
+        final String imageUrl = await addPostProvider.uploadImage(imageFile);
 
-      return imageUrl;
+        return imageUrl;
+      }
+
     } catch (e) {
       if (kDebugMode) {
         print("Error uploading image: $e");
@@ -113,9 +117,9 @@ class AddPostController extends GetxController{
   Future<void> createPost() async {
     try {
 
-      if(formKey.currentState!.validate()){
+      if(formKey.currentState!.validate() && fileX.value == null){
 
-        String imageUrl = await uploadImageToCloud(fileX.value!);
+        String imageUrl = await uploadImageToCloud(fileX.value);
 
         if (kDebugMode) {
           print('User ha ===> ${currentUser!.uid}');
@@ -130,7 +134,8 @@ class AddPostController extends GetxController{
             departmentName: userAccountController.user.value!.departmentName,
             captions: captionController.text.trim(),
             postDate: formattedDate.value,
-            postImage: imageUrl
+            postImage: imageUrl,
+            likes: []
         );
 
 

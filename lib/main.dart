@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:quick_grievance/conts/routes/routes.dart';
 import 'package:quick_grievance/conts/routes/screen_names.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,6 +12,15 @@ void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
   bool isLoggedIn = await getLoginStatus();
+
+  var directory = await getApplicationDocumentsDirectory();
+  Hive.init(directory.path);
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(FoodModelAdapter());
+  // await Hive.openBox<FoodModel>('Food');
+  // await Hive.openBox<FoodModel>('Favourite');
+
 
   runApp(MyApp(isLoggedIn: isLoggedIn));
   WidgetsFlutterBinding.ensureInitialized();

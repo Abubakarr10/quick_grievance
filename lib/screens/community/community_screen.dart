@@ -1,24 +1,17 @@
-import 'package:board_datetime_picker/board_datetime_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:quick_grievance/screens/community/CommunityController.dart';
 import 'package:quick_grievance/screens/community/widgets/widgets.dart';
-import 'package:quick_grievance/screens/complain/ComplainController.dart';
-import 'package:quick_grievance/screens/complain/widgets/widgets.dart';
-import 'package:quick_grievance/screens/profile/profile_screen/ProfileController.dart';
 
 import '../../../conts/app_height_width.dart';
 import '../../../conts/images/app_images.dart';
 
 import '../../conts/app_colors.dart';
 import '../../conts/routes/screen_names.dart';
-import '../../conts/validator/validator.dart';
-import '../../model/slip_exit_model.dart';
+import '../../model/post_model.dart';
 import '../app_widgets/widgets.dart';
-import '../auth/hostelite/signup/widgets/drop_down_button_ff_widget.dart';
-import '../slip_exit/widgets/widgets.dart';
 
 class CommunityScreen extends GetView<CommunityController> {
   const CommunityScreen({super.key});
@@ -59,22 +52,68 @@ class CommunityScreen extends GetView<CommunityController> {
             children: [
 
 
-              SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10,),
-                  child: Column(
-                    children: [
+              Column(
+                children: [
 
-                      SizedBox(height: heightX*.2,),
+                 SizedBox(height: heightX*.1,),
 
-                      PostWidget(controller: controller),
-                      PostWidget(controller: controller),
 
-                      SizedBox(height: heightX*.1,),
+                  StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('post')
+                          .orderBy('post_date', descending: true)
+                          .snapshots(),
+                      builder: (context,AsyncSnapshot<QuerySnapshot> snapshot){
 
-                    ],
-                  ),
-                ),
+                        if(snapshot.connectionState == ConnectionState.waiting){
+                          return  Padding(
+                            padding: EdgeInsets.only(top: heightX*.4),
+                            child: const Align(
+                                alignment: Alignment.center,
+                                child: SpinKitWidget()),
+                          );
+                        }
+                        if (snapshot.hasError) {
+                          return Center(child: Text('Error: ${snapshot.error}'));
+                        }
+                        if(!snapshot.hasData || snapshot.data!.docs.isEmpty){
+                          return const Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Align(
+                                alignment: Alignment.center,
+                                child:AppTextWidget(title: 'None Post', fontSize: 20, fontWeight: FontWeight.w700),
+                              ),
+                            ],
+                          );
+                        }
+
+                        final postListData = snapshot.data!.docs;
+                        return Expanded(
+                          flex: 10,
+                          child: ListView.builder(
+                              itemCount: postListData.length,
+                              itemBuilder: (context,index){
+                                final doc = snapshot.data!.docs[index];
+                                final postId = doc.id;
+                                final postData = PostModel.fromJson(doc.data() as Map<String, dynamic>);
+                                if (kDebugMode) {
+                                  print('Post Data>>>> ${postData.postImage}');
+                                }
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  child: PostCardWidget(
+                                      controller: controller,
+                                      postData: postData,
+                                    postId: postId,
+                                  ),
+                                );
+                              }),
+                        );
+                      }),
+
+                ],
               ),
 
               // Top AppBar bg vector
@@ -105,7 +144,6 @@ class CommunityScreen extends GetView<CommunityController> {
             ],
           ),
 
-          const SizedBox(height: 30,),
 
         ],
       ),

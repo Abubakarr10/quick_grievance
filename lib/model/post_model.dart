@@ -3,15 +3,19 @@ class PostModel{
   final String captions;
   final String postImage;
   final String postDate;
+  final List<dynamic> likes;
   const PostModel(
       {
         required this.uid,
         required this.fullName,
         required this.regNo,
         required this.departmentName,
+
         required this.captions,
         required this.postDate,
         required this.postImage,
+
+        required this.likes
       });
 
   Map<String,dynamic> toJson(){
@@ -22,7 +26,8 @@ class PostModel{
       'department_name' : departmentName,
       'captions' : captions,
       'post_date' : postDate,
-      'post_image' : postImage
+      'post_image' : postImage,
+      'likes' : likes
     };
   }
 
@@ -35,6 +40,7 @@ class PostModel{
       captions: json['captions'],
       postDate: json['post_date'],
       postImage: json['post_image'],
+      likes: json['likes'] ?? [],
     );
   }
 }

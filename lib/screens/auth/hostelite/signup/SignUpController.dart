@@ -67,6 +67,7 @@ class SignUpController extends GetxController{
             departmentName: departmentName.value,
             batch: batchController.text.toString().trim(),
             isAuthorized: false,
+            degree: '',
           );
 
           userFireController.createUser(userModel);

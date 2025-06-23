@@ -28,10 +28,7 @@ class UserAccountScreen extends GetView<UserAccountController> {
       body: Obx(()=>
           Center(
         child: controller.isLoading.value == true?
-        const CircularProgressIndicator(
-          color: secondaryColor,
-          strokeWidth: 8,
-        )
+        const SpinKitWidget()
             :
         Column(
           children: [
@@ -123,9 +120,15 @@ class UserAccountScreen extends GetView<UserAccountController> {
                                 Column(
                                   spacing: heightX*.008,
                                   children: [
-                                    InfoRowWidget(title: 'Department', icon: Icons.apartment, info: controller.user.value!.departmentName,),
-                                    const InfoRowWidget(title: 'Degree', icon: Icons.school, info: 'Software Engineering',),
-                                    const InfoRowWidget(title: 'Batch', icon: Icons.batch_prediction, info: '21-25',),
+                                    const InfoRowWidget(title: 'Department', icon: Icons.apartment, info: '',),
+                                    Align(
+                                        alignment: Alignment.centerRight,
+                                        child: AppTextWidget(title: controller.user.value!.departmentName,
+                                        fontSize: heightX*.018,
+                                        )),
+                                    InfoRowWidget(title: 'Degree', icon: Icons.school,
+                                      info: controller.user.value!.degree == ''? 'Add Degree Program' : controller.user.value!.degree,),
+                                    InfoRowWidget(title: 'Batch', icon: Icons.batch_prediction, info: controller.user.value!.batch,),
                                   ],
                                 ),
                               ],
