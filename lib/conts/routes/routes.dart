@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:get/get.dart';
 import 'package:quick_grievance/conts/routes/screen_names.dart';
+import 'package:quick_grievance/screens/admin/admin_dashboard/dashboard_screen.dart';
 import 'package:quick_grievance/screens/auth/hostelite/signup/signup_screen.dart';
 import 'package:quick_grievance/screens/auth/warden/warden_join_screen.dart';
 import 'package:quick_grievance/screens/community/add_post/add_post_screen.dart';
@@ -20,6 +21,9 @@ import 'package:quick_grievance/screens/profile/profile_screen/settings/user_acc
 import 'package:quick_grievance/screens/slip_exit/slip_exit_screen.dart';
 import 'package:quick_grievance/screens/splash/splash_screen.dart';
 
+import '../../screens/admin/admin_dashboard/admin_screen.dart';
+
+import '../../screens/admin/mess/admin_mess_screen.dart';
 import '../../screens/auth/hostelite/login/login_screen.dart';
 import '../../screens/home/home_screen.dart';
 
@@ -67,4 +71,7 @@ final pages = [
   GetPage(name: editUserAccountScreen, page: () => const EditUserAccountScreen()),
   GetPage(name: themeScreen, page: () => const ThemeScreen()),
   GetPage(name: logoutScreen, page: () => const LogoutScreen()),
+
+  ///========================== Admin Routes =================================
+  GetPage(name: adminScreen, page: () => const AdminScreen()),
 ];

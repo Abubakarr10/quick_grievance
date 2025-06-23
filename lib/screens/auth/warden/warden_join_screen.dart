@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quick_grievance/conts/app_colors.dart';
@@ -70,15 +71,23 @@ class WardenJoinScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
 
-                          const Icon(Icons.work_outline,
-                          color: Colors.white,
-                            size: 60,
+                          InkWell(
+                            onTap: (){
+                              if (kDebugMode) {
+                                print('======== Click hora hai Gee =====');
+                              }
+                              Get.offAllNamed(adminScreen);
+                            },
+                            child: const Icon(Icons.work_outline,
+                            color: Colors.white,
+                              size: 60,
+                            ),
                           ),
                           
-                          AppTextWidget(title: 'Coming Soon!',
-                            textColor: Colors.white, fontWeight: FontWeight.bold,
-                            fontSize: heightX*.03,
-                          ),
+                          ActionButtonWidget(label: 'Login',
+                              onTap: (){
+                                Get.offAllNamed(adminScreen);
+                              })
 
                         ],
                       ),

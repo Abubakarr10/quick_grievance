@@ -17,7 +17,7 @@ void main() async{
   Hive.init(directory.path);
 
   await Hive.initFlutter();
-  Hive.registerAdapter(FoodModelAdapter());
+ // Hive.registerAdapter(FoodModelAdapter());
   // await Hive.openBox<FoodModel>('Food');
   // await Hive.openBox<FoodModel>('Favourite');
 

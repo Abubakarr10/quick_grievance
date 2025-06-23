@@ -19,3 +19,4 @@ const String logoutScreen = '/logout_screen';
 const String complainScreen = '/complain_screen';
 const String communityScreen = '/community_screen';
 const String addPostScreen = '/add_post_screen';
+const String adminScreen = '/admin_screen';

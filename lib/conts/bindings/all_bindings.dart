@@ -1,5 +1,6 @@
 
 import 'package:get/get.dart';
+import 'package:quick_grievance/screens/admin/admin_dashboard/AdminController.dart';
 import 'package:quick_grievance/screens/auth/hostelite/login/LoginController.dart';
 import 'package:quick_grievance/screens/community/add_post/AddPostController.dart';
 import 'package:quick_grievance/screens/complain/ComplainController.dart';
@@ -33,6 +34,7 @@ class AllBindings implements Bindings{
     Get.lazyPut(()=> ComplainController());
     Get.lazyPut(()=> CommunityController());
     Get.lazyPut(()=> AddPostController());
+    Get.lazyPut(()=> AdminController());
   }
 
 }
