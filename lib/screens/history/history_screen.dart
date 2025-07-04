@@ -10,19 +10,23 @@ import '../../conts/app_height_width.dart';
 import '../app_widgets/widgets.dart';
 
 class HistoryScreen extends StatelessWidget {
-  const HistoryScreen({super.key});
+  final bool backoff;
+  const HistoryScreen({super.key, this.backoff = false});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Get.offNamed(entryPointScreen);
-        },
-        backgroundColor: accentColor,
-        mini: true,
-        child: const Icon(Icons.arrow_back_ios_new,color: secondaryColor,),
+      floatingActionButton: Visibility(
+        visible: backoff == true ? false : true,
+        child: FloatingActionButton(
+          onPressed: (){
+            Get.offNamed(entryPointScreen);
+          },
+          backgroundColor: accentColor,
+          mini: true,
+          child: const Icon(Icons.arrow_back_ios_new,color: secondaryColor,),
+        ),
       ),
       body: Column(
         children: [
@@ -40,7 +44,7 @@ class HistoryScreen extends StatelessWidget {
                   child: AppTextWidget(
                       title: 'History',
                       fontSize: heightX*.03,
-                      textColor: Colors.white,
+                      color: Colors.white,
                       fontWeight: FontWeight.w700),
                 ),
               ),
@@ -135,7 +139,7 @@ class HistoryCardWidget extends StatelessWidget {
 
                 // Text => Complain Title
                 AppTextWidget(title: complainTitle,
-                textColor: Colors.white, fontSize: heightX*.026,
+                color: Colors.white, fontSize: heightX*.026,
                   fontWeight: FontWeight.bold,
                 ),
 
@@ -145,7 +149,7 @@ class HistoryCardWidget extends StatelessWidget {
                   children: [
                     Icon(Icons.date_range,color: Colors.white,size: heightX*.016,),
                     AppTextWidget(title: "01-Feb-2025 To 05-Feb-2025",
-                    textColor: Colors.white, fontSize: heightX*.014,
+                    color: Colors.white, fontSize: heightX*.014,
                       fontWeight: FontWeight.w500,
                     ),
                   ],
@@ -156,11 +160,11 @@ class HistoryCardWidget extends StatelessWidget {
                   spacing: heightX*.01,
                   children: [
                     AppTextWidget(title: "Status:",
-                    textColor: Colors.white, fontSize: heightX*.016,
+                    color: Colors.white, fontSize: heightX*.016,
                       fontWeight: FontWeight.bold,
                     ),
                     AppTextWidget(title: status,
-                    textColor: Colors.white, fontSize: heightX*.016,
+                    color: Colors.white, fontSize: heightX*.016,
                       fontWeight: FontWeight.w500,
                     ),
                   ],

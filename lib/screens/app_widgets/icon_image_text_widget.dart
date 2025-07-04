@@ -46,7 +46,7 @@ class IconImageTextWidget extends StatelessWidget {
           children: [
             Image.asset(iconImage,color: contentColor,),
             AppTextWidget(title: label,
-              textColor: contentColor, fontSize: fontSize, fontWeight: FontWeight.bold,
+              color: contentColor, fontSize: fontSize, fontWeight: FontWeight.bold,
             )
           ],
         ),

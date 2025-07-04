@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quick_grievance/conts/app_colors.dart';
+import 'package:quick_grievance/screens/app_widgets/widgets.dart';
 import 'package:rive/rive.dart';
 
 import '../../../model/menu_model.dart';
@@ -52,9 +53,8 @@ class SideMenu extends StatelessWidget {
                   onInit: riveOnInit,
                 ),
               ),
-              title: Text(
-                menu.title,
-                style: const TextStyle(color: Colors.white),
+              title: AppTextWidget(title: menu.title,
+              color: pureWhite, fontWeight: FontWeight.w700,
               ),
             ),
           ],

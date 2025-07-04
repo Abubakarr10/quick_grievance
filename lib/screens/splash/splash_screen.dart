@@ -34,7 +34,7 @@ class SplashScreen extends GetView<SplashController> {
                         BoxShadow(color: primaryColor,blurRadius: 20,offset: Offset(0, -10)),
                         BoxShadow(color: accentColor,blurRadius: 20,offset: Offset(0, 10)),
                       ],
-                      image: const DecorationImage(image: AssetImage(appLogoImage),
+                      image: const DecorationImage(image: AssetImage(appIconImage),
                           fit: BoxFit.cover,
                           filterQuality: FilterQuality.high
                       )

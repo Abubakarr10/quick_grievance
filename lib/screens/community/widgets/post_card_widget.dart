@@ -71,7 +71,7 @@ class PostCardWidget extends StatelessWidget {
 
                 // Text>> Posted Date
                 AppTextWidget(title: timeAgoText,
-                  textColor: midTextColor, fontSize: heightX*.012,
+                  color: midTextColor, fontSize: heightX*.012,
                 ),
 
               ],
@@ -245,7 +245,7 @@ class PostCardWidget extends StatelessWidget {
                                 AppTextWidget(title: comment.fullName, fontWeight: FontWeight.w700,),
                                 const SizedBox(width: 10,),
                                 AppTextWidget(title: timestamp,
-                                  fontWeight: FontWeight.w400, textColor: midTextColor,
+                                  fontWeight: FontWeight.w400, color: midTextColor,
                                   fontSize: 10,
                                 ),
                               ],

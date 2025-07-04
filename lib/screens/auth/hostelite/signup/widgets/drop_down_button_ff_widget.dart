@@ -75,7 +75,7 @@ class DropdownButtonFFWidget extends StatelessWidget {
             child: AppTextWidget(
               title: dept,
               overflow: true,
-              textColor: primaryColor,
+              color: primaryColor,
             ),
           ),
         );

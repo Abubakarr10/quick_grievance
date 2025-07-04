@@ -51,7 +51,7 @@ class AddPostScreen extends GetView<AddPostController> {
                           child: AppTextWidget(
                               title: 'Add New Post',
                               fontSize: heightX*.03,
-                              textColor: Colors.white,
+                              color: Colors.white,
                               fontWeight: FontWeight.w700),
                         ),
                       ),
@@ -75,7 +75,7 @@ class AddPostScreen extends GetView<AddPostController> {
 
                                     AppTextWidget(title: 'Captions',
                                       fontSize: heightX*.018,
-                                      textColor: secondaryColor,
+                                      color: secondaryColor,
                                       fontWeight: FontWeight.bold,
                                     ),
 
@@ -142,7 +142,7 @@ class AddPostScreen extends GetView<AddPostController> {
                                   padding: const EdgeInsets.only(left: 10),
                                   child: AppTextWidget(title: 'Upload Image (Optional)',
                                     fontSize: heightX*.02,
-                                    textColor: secondaryColor,
+                                    color: secondaryColor,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

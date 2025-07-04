@@ -7,31 +7,30 @@ import 'package:quick_grievance/conts/routes/routes.dart';
 import 'package:quick_grievance/conts/routes/screen_names.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:quick_grievance/repository/share_preferences/sp_controller.dart';
+import 'package:quick_grievance/screens/profile/profile_screen/settings/user/UserController.dart';
+import 'conts/bindings/all_bindings.dart';
 import 'firebase_options.dart';
-void main() async{
 
+// var directory = await getApplicationDocumentsDirectory();
+// Hive.init(directory.path);
+
+// await Hive.initFlutter();
+// Hive.registerAdapter(FoodModelAdapter());
+// await Hive.openBox<FoodModel>('Food');
+// await Hive.openBox<FoodModel>('Favourite');
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  bool isLoggedIn = await getLoginStatus();
 
-  var directory = await getApplicationDocumentsDirectory();
-  Hive.init(directory.path);
-
-  await Hive.initFlutter();
- // Hive.registerAdapter(FoodModelAdapter());
-  // await Hive.openBox<FoodModel>('Food');
-  // await Hive.openBox<FoodModel>('Favourite');
-
-
-  runApp(MyApp(isLoggedIn: isLoggedIn));
-  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final bool isLoggedIn;
-  const MyApp({super.key, required this.isLoggedIn});
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -39,8 +38,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Quick Grievance',
       debugShowCheckedModeBanner: false,
+      initialBinding: AllBindings(),
       getPages: pages,
-      initialRoute: isLoggedIn == true? entryPointScreen : initialScreen,
+      initialRoute: initialScreen,
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xFFEEF1F8),
         primarySwatch: Colors.blue,

@@ -33,32 +33,51 @@ class VoteCardWidget extends StatelessWidget {
         )],
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Container(
-            height: heightX*.2,
-            width: widthX,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [BoxShadow(
-                    color: secondaryColor,
-                    blurRadius: 10, offset: Offset(0, heightX*.01)
-                )],
-                image: DecorationImage(image: AssetImage(image),
-                    fit: BoxFit.cover, filterQuality: FilterQuality.high)
+      child: InkWell(
+        onTap: onTap,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              height: heightX*.2,
+              width: widthX,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  boxShadow: [BoxShadow(
+                      color: secondaryColor,
+                      blurRadius: 10, offset: Offset(0, heightX*.01)
+                  )],
+              ),
+              child: Stack(
+                children: [
+
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: CachedNetworkImageWidget(
+                        networkImage: image,
+                        width: widthX,
+                        height: heightX*.2),
+                  ),
+
+                  Visibility(
+                    visible: isVote == true? true:false,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Icon(
+                        shadows: const [BoxShadow(color: Colors.black,blurRadius: 30,spreadRadius: 26)],
+                        Icons.verified_outlined,color: Colors.white,size: heightX*.14,),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            child: isVote == true? Icon(
-              shadows: const [BoxShadow(color: Colors.black,blurRadius: 30,spreadRadius: 26)],
-              Icons.done_outline,color: Colors.white,size: heightX*.14,) : null,
-          ),
-          AppTextWidget(title: label,textColor: Colors.white,
-            showShadows: true,
-            fontWeight: FontWeight.bold,
-            fontSize: isVote == true? heightX*.03 :  heightX*.028,
-          ),
-        ],
+            AppTextWidget(title: label,color: Colors.white,
+              showShadows: true,
+              fontWeight: FontWeight.bold,
+              fontSize: isVote == true? heightX*.03 :  heightX*.028,
+            ),
+          ],
+        ),
       ),
     );
   }

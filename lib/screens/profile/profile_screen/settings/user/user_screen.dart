@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quick_grievance/conts/routes/screen_names.dart';
-import 'package:quick_grievance/screens/profile/profile_screen/settings/user_account/UserAccountController.dart';
-import 'package:quick_grievance/screens/profile/profile_screen/settings/user_account/widgets/widgets.dart';
+import 'package:quick_grievance/screens/profile/profile_screen/settings/user/widgets/widgets.dart';
 
 import '../../../../../conts/app_colors.dart';
 import '../../../../../conts/app_height_width.dart';
 import '../../../../../conts/images/app_images.dart';
 import '../../../../app_widgets/widgets.dart';
+import 'UserController.dart';
 
-class UserAccountScreen extends GetView<UserAccountController> {
-  const UserAccountScreen({super.key});
+class UserScreen extends GetView<UserController> {
+  const UserScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.put(UserAccountController());
+    Get.put(UserController());
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Get.offNamed(entryPointScreen);
+          Get.offNamed(entryPointScreen,arguments: {
+            'index': 4,
+            'isBackUse' : true
+          });
         },
         backgroundColor: accentColor,
         mini: true,
@@ -47,7 +50,7 @@ class UserAccountScreen extends GetView<UserAccountController> {
                     child: AppTextWidget(
                         title: 'User Account',
                         fontSize: heightX*.03,
-                        textColor: Colors.white,
+                        color: Colors.white,
                         fontWeight: FontWeight.w700),
                   ),
                 ),
@@ -71,9 +74,13 @@ class UserAccountScreen extends GetView<UserAccountController> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 const CircleAvatar(
-                                  radius: 45,
-                                  backgroundColor: accentColor,
-                                  foregroundImage: AssetImage(hosteliteIcon),
+                                  backgroundColor: secondaryColor,
+                                  radius: 50,
+                                  child: CircleAvatar(
+                                    radius: 45,
+                                    backgroundColor: accentColor,
+                                    foregroundImage: AssetImage(hosteliteIcon),
+                                  ),
                                 ),
                                 SizedBox(height: heightX*.009),
                                 AppTextWidget(title: controller.user.value!.fullName,
@@ -112,7 +119,7 @@ class UserAccountScreen extends GetView<UserAccountController> {
                               children: [
                                 AppTextWidget(title: 'University Details',
                                   fontSize: heightX*.026, fontWeight: FontWeight.bold,
-                                  textColor: primaryColor,
+                                  color: primaryColor,
                                 ),
 
                                 SizedBox(height: heightX*.005,),
@@ -120,12 +127,8 @@ class UserAccountScreen extends GetView<UserAccountController> {
                                 Column(
                                   spacing: heightX*.008,
                                   children: [
-                                    const InfoRowWidget(title: 'Department', icon: Icons.apartment, info: '',),
-                                    Align(
-                                        alignment: Alignment.centerRight,
-                                        child: AppTextWidget(title: controller.user.value!.departmentName,
-                                        fontSize: heightX*.018,
-                                        )),
+                                    InfoRowWidget(title: 'Department', icon: Icons.apartment,
+                                      info: controller.user.value!.departmentName,),
                                     InfoRowWidget(title: 'Degree', icon: Icons.school,
                                       info: controller.user.value!.degree == ''? 'Add Degree Program' : controller.user.value!.degree,),
                                     InfoRowWidget(title: 'Batch', icon: Icons.batch_prediction, info: controller.user.value!.batch,),

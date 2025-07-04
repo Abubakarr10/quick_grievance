@@ -39,7 +39,7 @@ class EditUserAccountScreen extends StatelessWidget {
                   child: AppTextWidget(
                       title: 'Edit User Account',
                       fontSize: heightX*.03,
-                      textColor: Colors.white,
+                      color: Colors.white,
                       fontWeight: FontWeight.w700),
                 ),
               ),

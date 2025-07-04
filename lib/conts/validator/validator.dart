@@ -32,13 +32,14 @@ String? passwordValidator(String? value) {
     return 'Password is required';
   }
 
-  // Regular expression for strong password
+  // Must contain at least:
+  // 1 lowercase letter, 1 uppercase letter, 1 number, 1 special character
   final RegExp passwordRegExp = RegExp(
-    r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,;:#^_+=()\-]).{8,}$',
+    r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%^&*(),.?":{}|<>_\-+=/\\[\]]).{8,}$',
   );
 
   if (!passwordRegExp.hasMatch(value)) {
-    return 'Password must be at least 8 characters,\ninclude upper & lower case letters,\na number and a special character.';
+    return 'Password must be at least 8 characters long\nand include upper/lowercase letters,\na number, and a special character.';
   }
 
   return null;

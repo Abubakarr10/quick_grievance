@@ -39,7 +39,7 @@ class AnimatedButtonWidget extends StatelessWidget {
                   AppTextWidget(title: 'Join Hostel',
                   fontWeight: FontWeight.bold,
                     fontSize: 18,
-                    textColor: secondaryColor,
+                    color: secondaryColor,
                   )
                 ],
               ),

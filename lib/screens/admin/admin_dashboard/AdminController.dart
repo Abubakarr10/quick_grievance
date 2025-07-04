@@ -10,5 +10,11 @@ class AdminController extends GetxController {
 
   void toggleTheme() => isDarkMode.value = !isDarkMode.value;
 
-  List<String> get navTitles => ['Dashboard', 'Slip Requests', 'Complaints', 'Mess'];
+  List<String> get navTitles => [
+    'Dashboard',
+    'Slip Requests',
+    'Complaints',
+    'Mess',
+    'Settings',
+  ];
 }

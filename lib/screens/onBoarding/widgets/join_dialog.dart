@@ -53,7 +53,7 @@ void showJoinDialog(BuildContext context, {required ValueChanged onValue}) {
                       // Text: Login
                       AppTextWidget(title: 'Join Hostel',
                         fontSize: heightX*.036,
-                        textColor: secondaryColor,
+                        color: secondaryColor,
                         fontWeight: FontWeight.w700,),
 
                       // Text: description
@@ -62,7 +62,7 @@ void showJoinDialog(BuildContext context, {required ValueChanged onValue}) {
                         child: AppTextWidget(
                           title: "Easily manage hostel affairs. Log in as a Hostelite or Warden to submit complaints, approve requests, and stay updated",
                           textAlign: TextAlign.center,
-                          textColor: Colors.white,
+                          color: Colors.white,
                           showShadows: true,
                         ),
                       ),

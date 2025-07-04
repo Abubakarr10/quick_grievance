@@ -5,16 +5,19 @@ import 'package:quick_grievance/conts/app_colors.dart';
 import 'package:quick_grievance/conts/images/app_images.dart';
 import 'package:quick_grievance/conts/routes/screen_names.dart';
 import 'package:quick_grievance/screens/app_widgets/widgets.dart';
+import 'package:quick_grievance/screens/auth/warden/WardenJoinController.dart';
 
 import '../../../conts/app_height_width.dart';
+import '../../../conts/validator/validator.dart';
 
-class WardenJoinScreen extends StatelessWidget {
+class WardenJoinScreen extends GetView<WardenJoinController> {
   const WardenJoinScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.put(WardenJoinController());
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       floatingActionButton: FloatingActionButton(
           onPressed: (){
             Get.offNamed(onBoardingScreen);
@@ -55,39 +58,101 @@ class WardenJoinScreen extends StatelessWidget {
                 height: heightX*.8,
                 margin: const EdgeInsets.only(top: 10),
                 child: Stack(
-                  alignment: Alignment.center,
+                  alignment: Alignment.topCenter,
                   children: [
 
-                    Container(
-                      height: heightX *.75,
-                      width: widthX,
+                    Card(
+                      color: secondaryColor.withAlpha(440),
+                      elevation: 0,
                       margin: EdgeInsets.symmetric(
-                        horizontal: widthX * .1, vertical: 60,
+                        horizontal: widthX * .1, vertical: heightX*.06,
                       ),
-                      decoration: BoxDecoration(
-                          color: secondaryColor.withAlpha(440),
-                          borderRadius: BorderRadius.circular(20)),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
 
-                          InkWell(
-                            onTap: (){
-                              if (kDebugMode) {
-                                print('======== Click hora hai Gee =====');
-                              }
-                              Get.offAllNamed(adminScreen);
-                            },
-                            child: const Icon(Icons.work_outline,
-                            color: Colors.white,
-                              size: 60,
+                          // ===== Main Content =====
+
+                          SizedBox(height: heightX*.08,),
+
+                          AppTextWidget(title: 'Register as Warden',
+                            color: Colors.white, fontWeight: FontWeight.bold,
+                            fontSize: heightX*.024,
+                          ),
+
+                          SizedBox(height: heightX*.02,),
+
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Column(
+                              spacing: heightX*.01,
+                              children: [
+
+                                Form(
+                                  key: controller.formKey,
+                                  child: Column(
+                                    spacing: heightX*.01,
+                                    children: [
+
+
+                                      // Email
+                                      AppTextFormFieldWidget(
+                                        ctrl: controller.emailController,
+                                        keyType: TextInputType.emailAddress,
+                                        mainColor: Colors.black.withAlpha(300),
+                                        labelText: 'Email',
+                                        customValidator: true,
+                                        validator: (value){
+                                          return  emailValidator(value);
+                                        },
+                                        borderRadius: 20,
+                                        textColor: accentColor,
+                                        showPrefixIcon: true,
+                                        prefixIcon: Icons.email,
+                                        iconColor: accentColor,
+                                      ),
+
+                                      // Password
+                                      Obx(()=>
+                                          AppTextFormFieldWidget(
+                                            onTap: (){
+                                              controller.changeVisibility();
+                                            },
+                                            ctrl: controller.passwordController,
+                                            keyType: TextInputType.visiblePassword,
+                                            mainColor: Colors.black.withAlpha(300),
+                                            labelText: 'Password',
+                                            returnMessage: 'Enter Password',
+                                            borderRadius: 20,
+                                            showSuffixIcon: true,
+                                            textColor: accentColor,
+                                            showPrefixIcon: true,
+                                            prefixIcon: Icons.lock,
+                                            iconColor: accentColor,
+                                            visiblePassword: controller.passwordVisible.value,
+                                          )
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                Padding(
+                                  padding: EdgeInsets.only(top: heightX*.02),
+                                  child: ActionButtonWidget(label: 'Login',
+                                    onTap: (){
+                                      controller.login();
+                                    },
+                                    height: heightX*.05,
+                                    width: widthX,
+
+                                  ),
+                                )
+                              ],
                             ),
                           ),
-                          
-                          ActionButtonWidget(label: 'Login',
-                              onTap: (){
-                                Get.offAllNamed(adminScreen);
-                              })
+
+
+
 
                         ],
                       ),

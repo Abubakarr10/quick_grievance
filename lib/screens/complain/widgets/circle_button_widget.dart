@@ -32,7 +32,7 @@ class CircleButtonWidget extends StatelessWidget {
           ),
           SizedBox(height: heightX*.01,),
 
-          AppTextWidget(title: title, textColor: secondaryColor,
+          AppTextWidget(title: title, color: secondaryColor,
             fontSize: heightX*.018, fontWeight: FontWeight.w400,
           )
         ],

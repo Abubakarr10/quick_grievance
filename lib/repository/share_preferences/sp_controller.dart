@@ -13,3 +13,13 @@ Future<bool> getLoginStatus() async {
   final prefs = await SharedPreferences.getInstance();
   return prefs.getBool('isLoggedIn') ?? false;
 }
+
+Future<void> saveWardenLoginStatus(bool isLoggedIn) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setBool('isWardenLoggedIn', isLoggedIn);
+}
+
+Future<bool> getWardenLoginStatus() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getBool('isWardenLoggedIn') ?? false;
+}

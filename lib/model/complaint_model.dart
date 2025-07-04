@@ -4,6 +4,9 @@ class ComplaintModel{
   final String complaintType,description,priority;
   final String assistantMessage;
   final String submitDate;
+  final String image;
+  final String status;
+
   const ComplaintModel(
       {
         required this.uid,
@@ -16,7 +19,10 @@ class ComplaintModel{
         required this.description,
         required this.priority,
 
+        required this.image,
+
         required this.assistantMessage,
+        required this.status,
 
         required this.submitDate,
       });
@@ -28,11 +34,13 @@ class ComplaintModel{
       'reg_no' : regNo,
       'phone_no' : phoneNo,
       'room_no' : roomNo,
+      'image' : image,
 
       'complaintType' : complaintType,
       'description' : description,
       'priority' : priority,
       'assistantMessage' : assistantMessage,
+      'status' : status,
 
       'submitDate' : submitDate,
 
@@ -47,11 +55,13 @@ class ComplaintModel{
       regNo: json['reg_no'],
       phoneNo: json['phone_no'],
       roomNo: json['room_no'],
-      complaintType: json['guardianName'],
-      description: json['relation'],
-      priority: json['guardianPhoneNo'],
+      complaintType: json['complaintType'],
+      description: json['description'],
+      priority: json['priority'],
       assistantMessage: json['assistantMessage'],
-      submitDate: json['fromDate'],
+      image: json['image'] ?? '',
+      status: json['status'] ?? '',
+      submitDate: json['submitDate'],
     );
   }
 }

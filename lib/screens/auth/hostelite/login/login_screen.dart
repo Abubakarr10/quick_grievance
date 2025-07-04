@@ -86,7 +86,7 @@ class LoginScreen extends GetView<LoginController> {
                             SizedBox(height: heightX*.08,),
 
                             AppTextWidget(title: 'Login as Hostelite',
-                              textColor: Colors.white, fontWeight: FontWeight.bold,
+                              color: Colors.white, fontWeight: FontWeight.bold,
                               fontSize: heightX*.024,
                             ),
 

@@ -14,7 +14,8 @@ import '../../model/post_model.dart';
 import '../app_widgets/widgets.dart';
 
 class CommunityScreen extends GetView<CommunityController> {
-  const CommunityScreen({super.key});
+  final bool backoff;
+  const CommunityScreen({super.key,this.backoff = false,});
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +25,16 @@ class CommunityScreen extends GetView<CommunityController> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          FloatingActionButton(
-            onPressed: (){
-              Get.offNamed(entryPointScreen);
-            },
-            backgroundColor: accentColor,
-            mini: true,
-            child: const Icon(Icons.arrow_back_ios_new,color: secondaryColor,),
+          Visibility(
+            visible: backoff == true ? false : true,
+            child: FloatingActionButton(
+              onPressed: (){
+                Get.offNamed(entryPointScreen);
+              },
+              backgroundColor: accentColor,
+              mini: true,
+              child: const Icon(Icons.arrow_back_ios_new,color: secondaryColor,),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 20),
@@ -131,7 +135,7 @@ class CommunityScreen extends GetView<CommunityController> {
                         child: AppTextWidget(
                             title: 'Community',
                             fontSize: heightX*.03,
-                            textColor: Colors.white,
+                            color: Colors.white,
                             fontWeight: FontWeight.w700),
                       ),
                     ),

@@ -5,23 +5,25 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:quick_grievance/conts/app_colors.dart';
 import 'package:quick_grievance/model/slip_exit_model.dart';
-import 'package:quick_grievance/screens/profile/profile_screen/settings/user_account/UserAccountController.dart';
+import 'package:quick_grievance/screens/profile/profile_screen/settings/user/UserController.dart';
 
 import '../../conts/routes/screen_names.dart';
 
 class SlipExitController extends GetxController{
 
-  final UserAccountController userAccountController = Get.put(UserAccountController());
+  final UserController userAccountController = Get.put(UserController());
 
   final formKey = GlobalKey<FormState>();
+
+  RxString formattedDate = DateFormat('dd MMM yyyy hh:mm a').format(DateTime.now()).obs;
 
   @override
   void onInit() async{
     super.onInit();
     final currentUser = FirebaseAuth.instance.currentUser;
-    userAccountController.fetchUserData(currentUser);
     if (kDebugMode) {
       print(currentUser);
     }
@@ -48,8 +50,8 @@ class SlipExitController extends GetxController{
   Rx<BoardDateTimeController> toPickerController = BoardDateTimeController().obs;
 
   // Selected DateTime values
-  Rx<DateTime> fromDate = DateTime.now().obs;
-  Rx<DateTime> toDate = (DateTime.now().add(const Duration(days: 10))).obs;
+  Rx<String> fromDate = DateFormat('dd MMM yyyy hh:mm a').format(DateTime.now()).obs;
+  Rx<String> toDate = (DateFormat('dd MMM yyyy hh:mm a').format(DateTime.now().add(const Duration(days: 10)))).obs;
 
 
 

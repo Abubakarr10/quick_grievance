@@ -60,7 +60,7 @@ class LogoutScreen extends GetView<LogoutController> {
                 child: AppTextWidget(title: 'No',
                   fontSize: fontSizeX*.018,
                   fontWeight: FontWeight.bold,
-                  textColor: Colors.black,),
+                  color: Colors.black,),
               ),
             ),
           )

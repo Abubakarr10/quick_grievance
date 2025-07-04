@@ -39,7 +39,7 @@ class ThemeScreen extends StatelessWidget {
                   child: AppTextWidget(
                       title: 'Themes',
                       fontSize: heightX*.03,
-                      textColor: Colors.white,
+                      color: Colors.white,
                       fontWeight: FontWeight.w700),
                 ),
               ),

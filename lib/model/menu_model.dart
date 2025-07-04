@@ -2,44 +2,51 @@ import 'rive_model.dart';
 
 class Menu {
   final String title;
+  final int index;
   final RiveModel rive;
 
-  Menu({required this.title, required this.rive});
+  Menu({required this.title, required this.rive, this.index = 0});
 }
 
 List<Menu> sidebarMenus = [
   Menu(
     title: "Home",
+    index: 0,
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "HOME",
         stateMachineName: "HOME_interactivity"),
   ),
   Menu(
-    title: "Search",
+    title: "Profile",
+    index: 1,
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
-        artboard: "SEARCH",
-        stateMachineName: "SEARCH_Interactivity"),
+        artboard: "USER",
+        stateMachineName: "USER_Interactivity"),
   ),
   Menu(
-    title: "Favorites",
+    title: "Accept Slips",
+    index: 2,
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "LIKE/STAR",
         stateMachineName: "STAR_Interactivity"),
   ),
   Menu(
-    title: "Complain",
+    title: "Community",
+    index: 3,
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "CHAT",
         stateMachineName: "CHAT_Interactivity"),
   ),
 ];
+
 List<Menu> sidebarMenus2 = [
   Menu(
     title: "History",
+    index: 4,
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "TIMER",
@@ -47,6 +54,7 @@ List<Menu> sidebarMenus2 = [
   ),
   Menu(
     title: "Notifications",
+    index: 5,
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "BELL",
@@ -73,8 +81,8 @@ List<Menu> bottomNavItems = [
     title: "Search",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
-        artboard: "SEARCH",
-        stateMachineName: "SEARCH_Interactivity"),
+        artboard: "BELL",
+        stateMachineName: "BELL_Interactivity"),
   ),
   Menu(
     title: "Timer",

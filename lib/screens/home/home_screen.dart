@@ -1,11 +1,13 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quick_grievance/conts/app_colors.dart';
 import 'package:quick_grievance/conts/app_height_width.dart';
 import 'package:quick_grievance/conts/images/app_images.dart';
 import 'package:quick_grievance/conts/routes/screen_names.dart';
+import 'package:quick_grievance/repository/share_preferences/sp_controller.dart';
 import 'package:quick_grievance/screens/app_widgets/widgets.dart';
 import 'package:quick_grievance/screens/home/HomeController.dart';
 import 'package:quick_grievance/screens/home/widgets/widgets.dart';
@@ -46,10 +48,37 @@ class HomeScreen extends GetView<HomeController> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  const GradientTextWidget(text: 'Salam Abubakar',
-                                      gradient: LinearGradient(colors: [
-                                        accentColor,primaryColor
-                                      ])),
+                                  StreamBuilder<DocumentSnapshot>(
+                                    stream: FirebaseFirestore.instance
+                                        .collection('users')
+                                        .doc(currentUserId)
+                                        .snapshots(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                        return const Text(''); // or SizedBox()
+                                      }
+
+                                      if (snapshot.hasError) {
+                                        return const Text('Error loading user');
+                                      }
+
+                                      if (!snapshot.hasData || !snapshot.data!.exists) {
+                                        return const Text('User not found');
+                                      }
+
+                                      final userData = snapshot.data!.data() as Map<String, dynamic>;
+                                      final fullName = userData['full_name'] ?? 'User';
+
+                                      return GradientTextWidget(
+                                        text: 'Salam! $fullName',
+                                        gradient: const LinearGradient(colors: [
+                                          accentColor,
+                                          primaryColor,
+                                        ]),
+                                      );
+                                    },
+                                  ),
+
                                   AppTextWidget(title: ' 👋🏼',
                                     fontSize: heightX*.024, fontWeight: FontWeight.bold,
                                   ),
@@ -59,13 +88,14 @@ class HomeScreen extends GetView<HomeController> {
                               SizedBox(height: heightX*.01,),
 
                               // Date and Day7
-                              Obx(()=> AppTextWidget(title: controller.formattedDate.value, textColor: accentColor,
+                              Obx(()=> AppTextWidget(title: controller.formattedDate.value, color: accentColor,
                                 fontSize: 16,)),
-                              Obx(()=> AppTextWidget(title: controller.dayOfWeek.value,textColor: primaryColor,
+                              Obx(()=> AppTextWidget(title: controller.dayOfWeek.value,color: primaryColor,
                                 fontSize: 18, fontWeight: FontWeight.w600,)),
                             ],
                           ),
                         ),
+
 
                         IconTextCardWidget(
                             title: 'Community', subtitle: 'feedback',
@@ -79,8 +109,8 @@ class HomeScreen extends GetView<HomeController> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            CardButtonWidget(label: 'Slip Exit', icon: Icons.exit_to_app_outlined,
-                              onTap: () { Get.toNamed(slipExitScreen); },),
+                            CardButtonWidget(label: 'Exit Slip', icon: Icons.exit_to_app_outlined,
+                              onTap: () { Get.toNamed(slipScreen); },),
                             CardButtonWidget(label: 'Mess Menu', icon: Icons.food_bank_outlined,
                               onTap: () { Get.toNamed(messScreen); },),
                           ],

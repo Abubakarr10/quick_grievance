@@ -1,9 +1,9 @@
 
 class SlipExitModel{
-  final String uid,fullName,regNo,phoneNo,roomNo,departmentName,batch;
+  final String uid,fullName,regNo,phoneNo,roomNo,batch,departmentName;
   final String guardianName,relation,guardianPhoneNo,address,destination;
-  final String reason;
-  final DateTime fromDate,toDate;
+  final String reason,token;
+  final String fromDate,toDate;
   const SlipExitModel(
       {
         required this.uid,
@@ -11,8 +11,9 @@ class SlipExitModel{
         required this.regNo,
         required this.phoneNo,
         required this.roomNo,
-        required this.departmentName,
+        required this.token,
         required this.batch,
+        required this.departmentName,
 
         required this.guardianName,
         required this.relation,
@@ -32,8 +33,9 @@ class SlipExitModel{
       'reg_no' : regNo,
       'phone_no' : phoneNo,
       'room_no' : roomNo,
-      'department_name' : departmentName,
+      'token' : token,
       'batch' : batch,
+      'departmentName' : departmentName,
 
       'guardianName' : guardianName,
       'relation' : relation,
@@ -56,7 +58,7 @@ class SlipExitModel{
       regNo: json['reg_no'],
       phoneNo: json['phone_no'],
       roomNo: json['room_no'],
-      departmentName: json['department_name'],
+      token: json['token'],
       guardianName: json['guardianName'],
       relation: json['relation'],
       guardianPhoneNo: json['guardianPhoneNo'],
@@ -66,6 +68,7 @@ class SlipExitModel{
       fromDate: json['fromDate'],
       toDate: json['toDate'],
       batch: json['batch'],
+      departmentName: json['departmentName'],
     );
   }
 }

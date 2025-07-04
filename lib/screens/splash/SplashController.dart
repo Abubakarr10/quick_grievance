@@ -4,14 +4,24 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:quick_grievance/conts/routes/screen_names.dart';
 
+import '../../repository/share_preferences/sp_controller.dart';
+
 
 class SplashController extends GetxController{
 
   @override
-  void onInit() {
+  void onInit() async{
     super.onInit();
+    bool isLoggedIn = await getLoginStatus();
+    bool isWardenLoggedIn = await getWardenLoginStatus();
     Timer(const Duration(seconds: 3), () {
-      Get.offNamed(onBoardingScreen);
+      if(isLoggedIn == true){
+        Get.offNamed(entryPointScreen);
+      }else if(isWardenLoggedIn == true){
+        Get.offNamed(adminScreen);
+      }else{
+       Get.offNamed(onBoardingScreen);
+      }
     });
   }
 

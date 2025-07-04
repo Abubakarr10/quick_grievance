@@ -89,7 +89,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           FittedBox(
                             child: AppTextWidget(title: 'Quick\nGrievance',
                             fontSize: heightX*.070,
-                              textColor: primaryColor,
+                              color: primaryColor,
                               fontWeight: FontWeight.w700,
                               showShadows: true,
                             ),
@@ -97,7 +97,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           AppTextWidget(
                             title: "Easily manage hostel complaints and permissions with our seamless online system. Submit mess complaints, request exit permissions, and generate exit slips—all in one place.",
                             fontSize: heightX*.018,
-                            textColor: Colors.white,
+                            color: Colors.white,
                             showShadows: true,
                             fontWeight: FontWeight.w600,
                           ),
@@ -130,7 +130,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 24),
                       child: AppTextWidget(title: 'Stay connected and resolve issues quickly for a better hostel experience.',
-                      textColor: Colors.white, showShadows: true,
+                      color: Colors.white, showShadows: true,
                       ),
                     )
                   ],

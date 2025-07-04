@@ -50,7 +50,7 @@ class MoreButtonIconWidget extends StatelessWidget {
             children: [
               Icon(Icons.edit, color: primaryColor),
               SizedBox(width: 8),
-              AppTextWidget(title: 'Edit',textColor: Colors.white,),
+              AppTextWidget(title: 'Edit',color: Colors.white,),
             ],
           ),
         ),
@@ -63,7 +63,7 @@ class MoreButtonIconWidget extends StatelessWidget {
               children: [
                 Icon(Icons.delete, color: pureWhite),
                 SizedBox(width: 8),
-                AppTextWidget(title: 'Delete', textColor: pureWhite,),
+                AppTextWidget(title: 'Delete', color: pureWhite,),
               ],
             ),
           ),

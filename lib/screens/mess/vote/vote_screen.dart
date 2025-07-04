@@ -4,12 +4,13 @@ import 'package:get/get.dart';
 import 'package:quick_grievance/conts/app_colors.dart';
 import 'package:quick_grievance/conts/images/app_images.dart';
 import 'package:quick_grievance/conts/routes/screen_names.dart';
+import 'package:quick_grievance/screens/mess/vote/VoteController.dart';
 import 'package:quick_grievance/screens/mess/vote/widgets/vote_card_widget.dart';
 
 import '../../../conts/app_height_width.dart';
 import '../../app_widgets/widgets.dart';
 
-class VoteScreen extends StatelessWidget {
+class VoteScreen extends GetView<VoteController> {
   const VoteScreen({super.key});
 
   @override
@@ -42,7 +43,7 @@ class VoteScreen extends StatelessWidget {
                   child: AppTextWidget(
                       title: 'Vote',
                       fontSize: heightX*.03,
-                      textColor: Colors.white,
+                      color: Colors.white,
                       fontWeight: FontWeight.w700),
                 ),
               ),
@@ -62,20 +63,31 @@ class VoteScreen extends StatelessWidget {
 
                 const SizedBox(height: 20,),
 
-                VoteCardWidget(label: 'Chicken Pulao',
-                    onTap: (){},
-                    isVote: true,
-                    image: chickenPulao),
+
+                Obx(()=> VoteCardWidget(label: controller.messModelData.optionA,
+                    onTap: (){
+                   controller.castingVoteA();
+                    },
+                    isVote: controller.isVoteA.value,
+                    image: controller.messModelData.optionImageA)),
                 SizedBox(height: heightX*.03,),
-                VoteCardWidget(label: 'Mix Vegetable',
-                    onTap: (){},
-                    isVote: false,
-                    image: mixVegetable),
+                Obx(()=> VoteCardWidget(label: controller.messModelData.optionB,
+                    onTap: (){
+                  controller.castingVoteB();
+                    },
+                    isVote: controller.isVoteB.value,
+                    image: controller.messModelData.optionImageB)),
 
                 SizedBox(height: heightX*.03,),
                 Align(
                     alignment: Alignment.center,
-                    child: ActionButtonWidget(label: 'Submit', onTap: (){}))
+                    child: ActionButtonWidget(label: 'Cast Vote',
+                        onTap: (){
+                      controller.castVote(
+                          messId: controller.messId.value,
+                          voteForA: controller.isVoteA.value,
+                          voteForB: controller.isVoteB.value);
+                        }))
               ],
             ),
           ),

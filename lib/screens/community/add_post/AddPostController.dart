@@ -11,17 +11,17 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:quick_grievance/model/post_model.dart';
 import 'package:quick_grievance/screens/community/add_post/AddPostProvider.dart';
+import 'package:quick_grievance/screens/profile/profile_screen/settings/user/UserController.dart';
 
 import '../../../conts/app_colors.dart';
 import '../../../conts/images/image_picker.dart';
 import '../../../conts/routes/screen_names.dart';
 import '../../../repository/share_preferences/sp_controller.dart';
-import '../../profile/profile_screen/settings/user_account/UserAccountController.dart';
 
 class AddPostController extends GetxController{
 
 
-  final UserAccountController userAccountController = Get.put(UserAccountController());
+  final UserController userAccountController = Get.put(UserController());
   AddPostProvider addPostProvider = AddPostProvider();
 
   final formKey = GlobalKey<FormState>();
@@ -49,39 +49,40 @@ class AddPostController extends GetxController{
     fileX.value = file!;
   }
 
-  Future<void> cropImage() async {
-
-    if (fileX.value != null) {
-      croppedFile.value = await ImageCropper().cropImage(
-        sourcePath: fileX.value!.path,
-        uiSettings: [
-          AndroidUiSettings(
-            toolbarTitle: 'Cropper',
-            toolbarColor: primaryColor,
-            toolbarWidgetColor: primaryColor,
-            aspectRatioPresets: [
-              CropAspectRatioPreset.original,
-              CropAspectRatioPreset.square,
-            ],
-          ),
-          IOSUiSettings(
-            title: 'Cropper',
-            aspectRatioPresets: [
-              CropAspectRatioPreset.original,
-              CropAspectRatioPreset.square,
-            ],
-          ),
-        ],
-      ) ?? CroppedFile(pickImage.value);
-
-      if (croppedFile.value!.path == '') {
-        // Do something with the cropped image
-        if (kDebugMode) {
-          print('Cropped file path: ${croppedFile.value!.path}');
-        }
-      }
-    }
-  }
+  //
+  // Future<void> cropImage() async {
+  //
+  //   if (fileX.value != null) {
+  //     croppedFile.value = await ImageCropper().cropImage(
+  //       sourcePath: fileX.value!.path,
+  //       uiSettings: [
+  //         AndroidUiSettings(
+  //           toolbarTitle: 'Cropper',
+  //           toolbarColor: primaryColor,
+  //           toolbarWidgetColor: primaryColor,
+  //           aspectRatioPresets: [
+  //             CropAspectRatioPreset.original,
+  //             CropAspectRatioPreset.square,
+  //           ],
+  //         ),
+  //         IOSUiSettings(
+  //           title: 'Cropper',
+  //           aspectRatioPresets: [
+  //             CropAspectRatioPreset.original,
+  //             CropAspectRatioPreset.square,
+  //           ],
+  //         ),
+  //       ],
+  //     ) ?? CroppedFile(pickImage.value);
+  //
+  //     if (croppedFile.value!.path == '') {
+  //       // Do something with the cropped image
+  //       if (kDebugMode) {
+  //         print('Cropped file path: ${croppedFile.value!.path}');
+  //       }
+  //     }
+  //   }
+  // }
 
   void cancelImage(){
     fileX.value = null;
@@ -117,7 +118,8 @@ class AddPostController extends GetxController{
   Future<void> createPost() async {
     try {
 
-      if(formKey.currentState!.validate() && fileX.value == null){
+      if(formKey.currentState!.validate()){
+
 
         String imageUrl = await uploadImageToCloud(fileX.value);
 
@@ -147,7 +149,7 @@ class AddPostController extends GetxController{
               padding: EdgeInsets.all(10),
               child: Icon(
                 Icons.done,
-                size: 50,
+                size: 30,
                 color: accentColor,
               ),
             ),
@@ -158,7 +160,7 @@ class AddPostController extends GetxController{
 
       }else{
         Get.snackbar(
-            ' Oops!', ' Please fill form.',
+            ' Oops!', ' Please write some captions.',
             icon: const Padding(
               padding: EdgeInsets.all(10),
               child: Icon(

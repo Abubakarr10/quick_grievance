@@ -34,9 +34,9 @@ class DashboardCardWidget extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppTextWidget(title: title, fontSize: heightX*.020,fontWeight: FontWeight.w600, textColor: color,),
+              AppTextWidget(title: title, fontSize: heightX*.020,fontWeight: FontWeight.w600, color: color,),
               const SizedBox(height: 6),
-              AppTextWidget(title: value, fontSize: heightX*.024,fontWeight: FontWeight.bold, textColor: color,)
+              AppTextWidget(title: value, fontSize: heightX*.024,fontWeight: FontWeight.bold, color: color,)
             ],
           ),
 

@@ -22,7 +22,7 @@ class IconTitleWidget extends StatelessWidget {
           title: title,
           fontSize: heightX*.018,
           fontWeight: FontWeight.w500,
-          textColor: pureBlack,
+          color: pureBlack,
         ),
         trailing: Icon(
           Icons.arrow_forward_ios,

@@ -45,7 +45,7 @@ class CardButtonWidget extends StatelessWidget {
               // Text: Label
               AppTextWidget(title: label,
                 fontSize: heightX*.022,
-                fontWeight: FontWeight.w600, textColor: secondaryColor,
+                fontWeight: FontWeight.w600, color: secondaryColor,
               )
             ],
           ),

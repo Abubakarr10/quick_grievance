@@ -91,7 +91,7 @@ class SignUpScreen extends GetView<SignUpController> {
                             SizedBox(height: heightX*.08,),
 
                             AppTextWidget(title: 'Register as Hostelite',
-                              textColor: Colors.white, fontWeight: FontWeight.bold,
+                              color: Colors.white, fontWeight: FontWeight.bold,
                               fontSize: heightX*.024,
                             ),
 

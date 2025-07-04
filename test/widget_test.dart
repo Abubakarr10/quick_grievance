@@ -16,7 +16,7 @@ void main() {
     // Build our app and trigger a frame.
 
     bool isLoggedIn = await getLoginStatus();
-    await tester.pumpWidget( MyApp(isLoggedIn: isLoggedIn,));
+    await tester.pumpWidget( const MyApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

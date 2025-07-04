@@ -12,17 +12,19 @@ import 'package:quick_grievance/conts/app_colors.dart';
 import 'package:quick_grievance/model/complaint_model.dart';
 import 'package:quick_grievance/model/slip_exit_model.dart';
 import 'package:quick_grievance/repository/share_preferences/sp_controller.dart';
+import 'package:quick_grievance/screens/community/add_post/AddPostController.dart';
 import 'package:quick_grievance/screens/complain/ComplainProvider.dart';
-import 'package:quick_grievance/screens/profile/profile_screen/settings/user_account/UserAccountController.dart';
 
 import '../../conts/images/image_picker.dart';
 import '../../conts/routes/screen_names.dart';
-import '../../model/response_model.dart';
+import '../profile/profile_screen/settings/user/UserController.dart';
 
 class ComplainController extends GetxController{
 
-  final UserAccountController userAccountController = Get.put(UserAccountController());
+  final UserController userAccountController = Get.put(UserController());
   ComplainProvider complainProvider = ComplainProvider();
+
+  AddPostController postController = AddPostController();
 
   final formKey = GlobalKey<FormState>();
 
@@ -33,7 +35,7 @@ class ComplainController extends GetxController{
   void onInit() async{
     super.onInit();
     final currentUser = FirebaseAuth.instance.currentUser;
-    userAccountController.fetchUserData(currentUser);
+
     if (kDebugMode) {
       print(currentUser);
     }
@@ -79,58 +81,58 @@ class ComplainController extends GetxController{
     fileX.value = file!;
   }
 
-  Future<void> cropImage() async {
-
-    if (fileX.value != null) {
-      croppedFile.value = await ImageCropper().cropImage(
-        sourcePath: fileX.value!.path,
-        uiSettings: [
-          AndroidUiSettings(
-            toolbarTitle: 'Cropper',
-            toolbarColor: primaryColor,
-            toolbarWidgetColor: primaryColor,
-            aspectRatioPresets: [
-              CropAspectRatioPreset.original,
-              CropAspectRatioPreset.square,
-            ],
-          ),
-          IOSUiSettings(
-            title: 'Cropper',
-            aspectRatioPresets: [
-              CropAspectRatioPreset.original,
-              CropAspectRatioPreset.square,
-            ],
-          ),
-        ],
-      ) ?? CroppedFile(pickImage.value);
-
-      if (croppedFile.value!.path == '') {
-        // Do something with the cropped image
-        if (kDebugMode) {
-          print('Cropped file path: ${croppedFile.value!.path}');
-        }
-      }
-    }
-  }
+  // Future<void> cropImage() async {
+  //
+  //   if (fileX.value != null) {
+  //     croppedFile.value = await ImageCropper().cropImage(
+  //       sourcePath: fileX.value!.path,
+  //       uiSettings: [
+  //         AndroidUiSettings(
+  //           toolbarTitle: 'Cropper',
+  //           toolbarColor: primaryColor,
+  //           toolbarWidgetColor: primaryColor,
+  //           aspectRatioPresets: [
+  //             CropAspectRatioPreset.original,
+  //             CropAspectRatioPreset.square,
+  //           ],
+  //         ),
+  //         IOSUiSettings(
+  //           title: 'Cropper',
+  //           aspectRatioPresets: [
+  //             CropAspectRatioPreset.original,
+  //             CropAspectRatioPreset.square,
+  //           ],
+  //         ),
+  //       ],
+  //     ) ?? CroppedFile(pickImage.value);
+  //
+  //     if (croppedFile.value!.path == '') {
+  //       // Do something with the cropped image
+  //       if (kDebugMode) {
+  //         print('Cropped file path: ${croppedFile.value!.path}');
+  //       }
+  //     }
+  //   }
+  // }
 
   void cancelImage(){
     fileX.value = null;
     croppedFile.value = null;
   }
 
-  void settingProfileImage(){
-    if(fileX.value != null){
-      pickImage.value = fileX.value!.path.toString();
-      debugPrint('Setting Profile Image => File Image ha!');
-      if(croppedFile.value != null) {
-        pickImage.value = croppedFile.value!.path.toString();
-        debugPrint('Setting Profile Image => Cropped Image ha!');
-      }
-    }else{
-      pickImage.value = '';
-      debugPrint('Setting Profile Image => Default Image ha!');
-    }
-  }
+  // void settingProfileImage(){
+  //   if(fileX.value != null){
+  //     pickImage.value = fileX.value!.path.toString();
+  //     debugPrint('Setting Profile Image => File Image ha!');
+  //     if(croppedFile.value != null) {
+  //       pickImage.value = croppedFile.value!.path.toString();
+  //       debugPrint('Setting Profile Image => Cropped Image ha!');
+  //     }
+  //   }else{
+  //     pickImage.value = '';
+  //     debugPrint('Setting Profile Image => Default Image ha!');
+  //   }
+  // }
 
 
   // Firebase 🔥
@@ -143,11 +145,24 @@ class ComplainController extends GetxController{
 
       if(formKey.currentState!.validate() && complaintType.value != ''){
 
+
+          String imageUrl = await postController.uploadImageToCloud(fileX.value);
+
+          if (kDebugMode) {
+            print('Image Url =====> $imageUrl');
+          }
+
+
          final response = await complainProvider.submitComplain(
-            complaintType,
+            complaintType.value,
             descriptionController.text.trim(),
             priorityLevel.value,
-            ).timeout(const Duration(seconds: 25));
+           imageUrl
+            ).timeout(const Duration(seconds: 30));
+
+          if (kDebugMode) {
+            print('Response from submitComplain ===> $response');
+          }
 
          if (kDebugMode) {
            print('User ha ===> ${currentUser!.uid}');
@@ -165,7 +180,9 @@ class ComplainController extends GetxController{
              description: descriptionController.text.trim(),
              priority: priorityLevel.value,
              assistantMessage: response,
-             submitDate: formattedDate.value
+             submitDate: formattedDate.value,
+             status: 'Pending',
+             image: imageUrl == ''? 'none' : imageUrl
          );
 
 
@@ -177,7 +194,7 @@ class ComplainController extends GetxController{
                 padding: EdgeInsets.all(10),
                 child: Icon(
                   Icons.done,
-                  size: 50,
+                  size: 30,
                   color: accentColor,
                 ),
               ),

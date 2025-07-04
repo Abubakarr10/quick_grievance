@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserModel{
   final String uid,email,fullName,password,regNo,phoneNo,roomNo,batch,departmentName,degree;
   final bool isAuthorized;
+
   const UserModel(
       {
         required this.uid,
@@ -51,4 +52,20 @@ class UserModel{
       degree: data['degree'] ?? '',
     );
   }
-}
+
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      uid: json['uid'],
+      fullName: json['full_name'],
+      email: json['email'],
+      password: json['password'],
+      regNo: json['regNo'],
+      phoneNo: json['phoneNo'],
+      roomNo: json['roomNo'],
+      batch: json['batch'],
+      departmentName: json['departmentName'],
+      isAuthorized: json['isAuthorized'],
+      degree: json['degree'],
+    );
+  }
+  }

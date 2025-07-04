@@ -170,7 +170,7 @@ class _LoginFormState extends State<LoginForm> {
                     CupertinoIcons.arrow_right,
                     color: Colors.white,
                   ),
-                  label: const AppTextWidget(title: 'Login',textColor: Colors.white,),
+                  label: const AppTextWidget(title: 'Login',color: Colors.white,),
                 ),
               ),
             ],

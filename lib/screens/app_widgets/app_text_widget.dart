@@ -6,7 +6,7 @@ import '../../conts/app_height_width.dart';
 class AppTextWidget extends StatelessWidget {
   final String title;
   final double fontSize;
-  final Color textColor;
+  final Color color;
   final FontWeight fontWeight;
   final TextAlign textAlign;
   final bool showShadows;
@@ -16,7 +16,7 @@ class AppTextWidget extends StatelessWidget {
   const AppTextWidget({super.key,
     required this.title,
     this.fontSize = 14,
-    this.textColor = Colors.black,
+    this.color = Colors.black,
     this.fontWeight = FontWeight.w500,
     this.textAlign = TextAlign.start,
     this.showShadows = false,
@@ -33,9 +33,9 @@ class AppTextWidget extends StatelessWidget {
       style: GoogleFonts.poppins(
         fontSize: fontSize,
         decoration: decoration,
-        decorationColor: textColor,
+        decorationColor: color,
         fontWeight: fontWeight,
-        color: textColor,
+        color: color,
         shadows: showShadows == true? [
           const BoxShadow(
             color: Colors.black, blurRadius: 100

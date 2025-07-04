@@ -34,7 +34,7 @@ class ActionButtonWidget extends StatelessWidget {
         child: AppTextWidget(title: label,
           fontSize: fontSizeX*.018,
           fontWeight: FontWeight.bold,
-          textColor: Colors.black,),
+          color: Colors.black,),
       ),
     );
   }

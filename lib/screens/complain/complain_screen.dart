@@ -55,7 +55,7 @@ class ComplainScreen extends GetView<ComplainController> {
                           child: AppTextWidget(
                               title: 'Complaint',
                               fontSize: heightX*.03,
-                              textColor: Colors.white,
+                              color: Colors.white,
                               fontWeight: FontWeight.w700),
                         ),
                       ),
@@ -79,7 +79,7 @@ class ComplainScreen extends GetView<ComplainController> {
 
                                         AppTextWidget(title: 'Complaint Type',
                                           fontSize: heightX*.02,
-                                          textColor: primaryColor,
+                                          color: primaryColor,
                                           fontWeight: FontWeight.bold,
                                         ),
 
@@ -116,7 +116,7 @@ class ComplainScreen extends GetView<ComplainController> {
 
                                         AppTextWidget(title: 'Description',
                                           fontSize: heightX*.018,
-                                          textColor: secondaryColor,
+                                          color: secondaryColor,
                                           fontWeight: FontWeight.bold,
                                         ),
 
@@ -178,7 +178,7 @@ class ComplainScreen extends GetView<ComplainController> {
 
                                   AppTextWidget(title: 'Priority (Optional)',
                                     fontSize: heightX*.02,
-                                    textColor: primaryColor,
+                                    color: primaryColor,
                                     fontWeight: FontWeight.bold,
                                   ),
 
@@ -215,7 +215,7 @@ class ComplainScreen extends GetView<ComplainController> {
                               padding: const EdgeInsets.only(left: 10),
                               child: AppTextWidget(title: 'Upload Image (Optional)',
                                 fontSize: heightX*.02,
-                                textColor: secondaryColor,
+                                color: secondaryColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

@@ -23,8 +23,8 @@ class GradientTextWidget extends StatelessWidget {
         return gradient
             .createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height));
       },
-      child: AppTextWidget(title: 'Salam! Abubakar',
-        textColor: Colors.white,
+      child: AppTextWidget(title: text,
+        color: Colors.white,
         fontSize: heightX*.024, fontWeight: FontWeight.bold,
       ),
     );

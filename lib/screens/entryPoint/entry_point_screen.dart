@@ -22,20 +22,12 @@ class EntryPointScreen extends StatefulWidget {
 
 class _EntryPointScreenState extends State<EntryPointScreen>
     with SingleTickerProviderStateMixin {
-  bool isSideBarOpen = false;
 
-  Menu selectedButtonNav = bottomNavItems.first;
+
   Menu selectedSideMenu = sidebarMenus.first;
 
   late SMIBool isMenuOpenInput;
 
-  void updateSelectedBtmNav(Menu menu) {
-    if (selectedButtonNav != menu) {
-      setState(() {
-        selectedButtonNav = menu;
-      });
-    }
-  }
 
   late AnimationController _animationController;
   late Animation<double> scalAnimation;
@@ -66,7 +58,10 @@ class _EntryPointScreenState extends State<EntryPointScreen>
   @override
   Widget build(BuildContext context) {
    var controller = Get.put(EntryPointController());
-    return Scaffold(
+   // int changeIndex = Get.arguments['index']?? 5;
+   // bool isBackUse = Get.arguments['isBackUse'] ?? false;
+
+   return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: false,
       backgroundColor: secondaryColor,
@@ -79,7 +74,7 @@ class _EntryPointScreenState extends State<EntryPointScreen>
             height: MediaQuery.of(context).size.height,
             duration: const Duration(milliseconds: 200),
             curve: Curves.fastOutSlowIn,
-            left: isSideBarOpen ? 0 : -288,
+            left: controller.isSideBarOpen.value ? 0 : -288,
             top: 0,
             child: const SideBar(),
           ),
@@ -95,11 +90,16 @@ class _EntryPointScreenState extends State<EntryPointScreen>
               offset: Offset(animation.value * 265, 0),
               child: Transform.scale(
                 scale: scalAnimation.value,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(24),
-                  ),
-                  child: controller.bottomNavPages.elementAt(controller.pageNo.value),
+                child: Obx(()=>
+                    ClipRRect(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(25)
+                      ),
+                      child: controller.isSideMenuOpen.value == true?
+                      controller.sideBarMenuPages.elementAt(controller.sidePageNo.value)
+                      :
+                      controller.bottomNavPages.elementAt(controller.pageNo.value),
+                    )
                 ),
               ),
             ),
@@ -108,13 +108,17 @@ class _EntryPointScreenState extends State<EntryPointScreen>
           AnimatedPositioned(
             duration: const Duration(milliseconds: 200),
             curve: Curves.fastOutSlowIn,
-            left: isSideBarOpen ? 220 : 0,
-            top: 16,
-            child: Visibility(
+            left: controller.isSideBarOpen.value ? 220 : 0,
+            top: 1,
+            child: Obx(()=>
+                Visibility(
               visible: controller.pageNo.value == 0 ? true : false,
               child: MenuBtn(
                 press: () {
+
                   isMenuOpenInput.value = !isMenuOpenInput.value;
+
+
 
                   if (_animationController.value == 0) {
                     _animationController.forward();
@@ -122,11 +126,9 @@ class _EntryPointScreenState extends State<EntryPointScreen>
                     _animationController.reverse();
                   }
 
-                  setState(
-                    () {
-                      isSideBarOpen = !isSideBarOpen;
-                    },
-                  );
+                  controller.isSideBarOpen.value = !controller.isSideBarOpen.value;
+
+
                 },
                 riveOnInit: (artBoard) {
                   final controller = StateMachineController.fromArtboard(
@@ -135,58 +137,66 @@ class _EntryPointScreenState extends State<EntryPointScreen>
                   artBoard.addController(controller!);
 
                   isMenuOpenInput =
-                      controller.findInput<bool>("isOpen") as SMIBool;
+                  controller.findInput<bool>("isOpen") as SMIBool;
                   isMenuOpenInput.value = true;
                 },
               ),
-            ),
+            )),
           ),
 
         ],
       ),
 
       // Bottom Navigation Bar
-      bottomNavigationBar: Transform.translate(
-        offset: Offset(0, 100 * animation.value),
-        child: SafeArea(
-          child: Container(
-            padding:
-                const EdgeInsets.only(left: 12, top: 12, right: 12, bottom: 12),
-            margin: const EdgeInsets.symmetric(horizontal: 24),
-            decoration: const BoxDecoration(
-              color: secondaryColor,
-              borderRadius: BorderRadius.all(Radius.circular(24)),
-              boxShadow: [
-                BoxShadow(
-                  color: secondaryColor,
-                  offset: Offset(0, 20),
-                  blurRadius: 20,
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ...List.generate(
-                  bottomNavItems.length,
-                  (index) {
-                    Menu navBar = bottomNavItems[index];
-                    return BtmNavItem(
-                      navBar: navBar,
-                      press: () {
-                        RiveUtils.changeSMIBoolState(navBar.rive.status!);
-                        updateSelectedBtmNav(navBar);
-                        controller.pageNo.value = index;
+      bottomNavigationBar: Visibility(
+        visible: controller.sidePageNo.value == 0? true : false,
+        child: Transform.translate(
+          offset: Offset(0, 100 * animation.value),
+          child: SafeArea(
+            child: Container(
+              padding:
+                  const EdgeInsets.only(left: 12, top: 12, right: 12, bottom: 12),
+              margin: const EdgeInsets.symmetric(horizontal: 24),
+              decoration: const BoxDecoration(
+                color: secondaryColor,
+                borderRadius: BorderRadius.all(Radius.circular(24)),
+                boxShadow: [
+                  BoxShadow(
+                    color: secondaryColor,
+                    offset: Offset(0, 20),
+                    blurRadius: 20,
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ...List.generate(
+                      bottomNavItems.length,
+                      (index) {
+                        Menu navBar = bottomNavItems[index];
+                        return Obx(()=>
+                            BtmNavItem(
+                              navBar: navBar,
+                              press: () {
+                                RiveUtils.changeSMIBoolState(navBar.rive.status!);
+                                controller.updateSelectedBtmNav(navBar);
+                                controller.pageNo.value = index;
+                              },
+                              riveOnInit: (artBoard) {
+                                navBar.rive.status = RiveUtils.getRiveInput(artBoard,
+                                    stateMachineName: navBar.rive.stateMachineName);
+                              },
+                              selectedNav: bottomNavItems[controller.pageNo.value],
+                            )
+                        );
                       },
-                      riveOnInit: (artBoard) {
-                        navBar.rive.status = RiveUtils.getRiveInput(artBoard,
-                            stateMachineName: navBar.rive.stateMachineName);
-                      },
-                      selectedNav: selectedButtonNav,
-                    );
-                  },
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

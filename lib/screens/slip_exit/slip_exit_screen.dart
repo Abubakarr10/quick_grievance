@@ -24,10 +24,10 @@ class SlipExitScreen extends GetView<SlipExitController> {
   Widget build(BuildContext context) {
     Get.put(SlipExitController());
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Get.offNamed(entryPointScreen);
+          Get.offNamed(slipScreen);
         },
         backgroundColor: accentColor,
         mini: true,
@@ -53,9 +53,9 @@ class SlipExitScreen extends GetView<SlipExitController> {
                         child: Padding(
                           padding: EdgeInsets.only(top: heightX*.06, bottom: heightX*.02),
                           child: AppTextWidget(
-                              title: 'Slip Exit',
+                              title: 'Your Slip Accepted',
                               fontSize: heightX*.03,
-                              textColor: Colors.white,
+                              color: Colors.white,
                               fontWeight: FontWeight.w700),
                         ),
                       ),
@@ -119,7 +119,7 @@ class SlipExitScreen extends GetView<SlipExitController> {
 
                                     AppTextWidget(title: 'Guardian Information',
                                       fontSize: heightX*.018,
-                                      textColor: primaryColor,
+                                      color: primaryColor,
                                       fontWeight: FontWeight.bold,
                                     ),
 
@@ -226,7 +226,7 @@ class SlipExitScreen extends GetView<SlipExitController> {
                                         controller.isBySelf.value = value ?? false;
                                       },
                                       title:  AppTextWidget(title: 'By Self',fontWeight: FontWeight.bold,
-                                      fontSize: heightX*.018, textColor: primaryColor,
+                                      fontSize: heightX*.018, color: primaryColor,
                                       ),
                                     )),
 
@@ -261,7 +261,7 @@ class SlipExitScreen extends GetView<SlipExitController> {
 
                                     AppTextWidget(title: 'Purpose of Leave',
                                       fontSize: heightX*.018,
-                                      textColor: primaryColor,
+                                      color: primaryColor,
                                       fontWeight: FontWeight.bold,
                                     ),
 
@@ -292,7 +292,7 @@ class SlipExitScreen extends GetView<SlipExitController> {
 
                                     AppTextWidget(title: 'Travel Information',
                                       fontSize: heightX*.018,
-                                      textColor: primaryColor,
+                                      color: primaryColor,
                                       fontWeight: FontWeight.bold,
                                     ),
 
@@ -310,7 +310,7 @@ class SlipExitScreen extends GetView<SlipExitController> {
                                             languages: BoardPickerLanguages.en(),
                                           ),
                                           onChanged: (date) {
-                                            controller.fromDate.value = date;
+                                            controller.fromDate.value = date as String;
                                           },
                                           onFocusChange: (val, date, text) {
                                             if (kDebugMode) {
@@ -319,7 +319,7 @@ class SlipExitScreen extends GetView<SlipExitController> {
                                           },
                                         ),
                                         const SizedBox(height: 10),
-                                        Obx(() => AppTextWidget(title: "Selected From: ${BoardDateFormat('dd/MM/yyyy HH:mm').format(controller.fromDate.value)}",
+                                        Obx(() => AppTextWidget(title: "Selected From: ${controller.fromDate.value}",
                                         fontWeight: FontWeight.w400,
                                         )),
 
@@ -336,7 +336,7 @@ class SlipExitScreen extends GetView<SlipExitController> {
                                             languages: BoardPickerLanguages.en(),
                                           ),
                                           onChanged: (date) {
-                                            controller.toDate.value = date;
+                                            controller.toDate.value = date as String;
                                           },
                                           onFocusChange: (val, date, text) {
                                             if (kDebugMode) {
@@ -345,7 +345,7 @@ class SlipExitScreen extends GetView<SlipExitController> {
                                           },
                                         ),
                                         const SizedBox(height: 10),
-                                        Obx(() => AppTextWidget(title: "Selected To: ${BoardDateFormat('dd/MM/yyyy HH:mm').format(controller.toDate.value)}",
+                                        Obx(() => AppTextWidget(title: "Selected To: ${controller.toDate.value}",
                                         fontWeight: FontWeight.w400,
                                         )),
 
@@ -361,7 +361,7 @@ class SlipExitScreen extends GetView<SlipExitController> {
                                                 controller.isDateConfirm.value = value ?? false;
                                               },
                                               title:  AppTextWidget(title: 'Confirm Date and Time',fontWeight: FontWeight.bold,
-                                                fontSize: heightX*.018, textColor: primaryColor,
+                                                fontSize: heightX*.018, color: primaryColor,
                                               ),
                                             )),
                                       ],
@@ -387,7 +387,8 @@ class SlipExitScreen extends GetView<SlipExitController> {
                                 phoneNo: controller.userAccountController.user.value!.phoneNo,
                                 roomNo: controller.userAccountController.user.value!.roomNo,
                                 departmentName: controller.userAccountController.user.value!.departmentName,
-                                batch: 'NULL',
+                                token: 'none',
+                                batch: controller.userAccountController.user.value!.batch,
                                 guardianName: controller.isBySelf.value? 'none' : controller.guardianNameController.text.trim(),
                                 relation: controller.isBySelf.value? 'none' : controller.relationController.text.trim(),
                                 guardianPhoneNo: controller.isBySelf.value? 'none' : controller.guardianPhoneNoController.text.trim(),

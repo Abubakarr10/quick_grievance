@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quick_grievance/conts/app_colors.dart';
 import 'package:quick_grievance/conts/routes/screen_names.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../repository/auth_service.dart';
 import '../../../../repository/share_preferences/sp_controller.dart';
+import '../../../profile/profile_screen/settings/user/UserController.dart';
 
 
 class LoginController extends GetxController{
@@ -55,7 +57,24 @@ class LoginController extends GetxController{
           prefs.setString('email', emailController.value.text.toString());
           await saveLoginStatus(true);
 
+         // await Get.find<UserController>().loadUserData();
+         // final user = Get.find<UserController>().currentUser.value;
+
           Get.offAllNamed(entryPointScreen);
+
+          Get.snackbar(
+              'Welcome Back!', 'Quick Grievance',
+              icon: const Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: Icon(
+                  Icons.celebration,
+                  size: 30,
+                  color: Colors.white,
+                ),
+              ),
+              colorText: Colors.white,
+              backgroundColor: secondaryColor
+          );
 
         } else {
           Get.snackbar(

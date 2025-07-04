@@ -43,11 +43,11 @@ class IconTextCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppTextWidget(title: title.toUpperCase(),
-                    fontWeight: FontWeight.bold, textColor: contentColor,
+                    fontWeight: FontWeight.bold, color: contentColor,
                     fontSize: fontSizeX*.024,
                   ),
                   AppTextWidget(title: subtitle.toUpperCase(),
-                    fontWeight: FontWeight.bold, textColor: contentColor,
+                    fontWeight: FontWeight.bold, color: contentColor,
                     fontSize: fontSizeX*.018,
                   ),
                 ],

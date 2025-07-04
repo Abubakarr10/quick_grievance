@@ -21,11 +21,11 @@ class DuelText extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           AppTextWidget(title: firstText,
-            textColor: accentColor, fontWeight: FontWeight.w500,
+            color: accentColor, fontWeight: FontWeight.w500,
             fontSize: heightX*.016,
           ),
           AppTextWidget(title: secondText,
-            textColor: accentColor, fontWeight: FontWeight.w500,
+            color: accentColor, fontWeight: FontWeight.w500,
             decoration: TextDecoration.underline,
             fontSize: heightX*.016,
           ),

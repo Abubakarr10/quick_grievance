@@ -31,7 +31,7 @@ class ProfileScreen extends GetView<ProfileController> {
                   child: AppTextWidget(
                       title: 'Profile',
                       fontSize: heightX*.03,
-                      textColor: Colors.white,
+                      color: Colors.white,
                       fontWeight: FontWeight.w700),
                 ),
               ),
@@ -45,7 +45,7 @@ class ProfileScreen extends GetView<ProfileController> {
           ),
 
           IconTitleWidget(title: 'User account', onTap: () {
-            Get.toNamed(userAccountScreen);
+            Get.toNamed(userScreen);
           },),
           IconTitleWidget(title: 'Edit User account', onTap: () {
             Get.toNamed(editUserAccountScreen);

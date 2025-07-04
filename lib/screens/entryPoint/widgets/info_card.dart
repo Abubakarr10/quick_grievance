@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_grievance/conts/app_colors.dart';
+import 'package:quick_grievance/screens/app_widgets/widgets.dart';
 
 class InfoCard extends StatelessWidget {
   const InfoCard({
@@ -29,14 +30,16 @@ class InfoCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                  name,
-                  style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w700),
-                ),
-              Text(
-                  bio,
-                  style: const TextStyle(color: Colors.grey),
-                ),
+
+              AppTextWidget(title: name,
+              fontSize: 16,
+                color: pureWhite, fontWeight: FontWeight.w700,
+              ),
+
+              AppTextWidget(
+                fontSize: 12,
+                title: bio,color: midTextColor,
+              )
             ],
           ),
         ],

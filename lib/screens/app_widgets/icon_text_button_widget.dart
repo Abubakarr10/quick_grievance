@@ -32,7 +32,7 @@ class IconTextButtonWidget extends StatelessWidget {
               AppTextWidget(title: text,
                 fontWeight: FontWeight.w500,
                 fontSize: heightX*.018,
-                textColor: primaryColor,),
+                color: primaryColor,),
             ],
           )),
     );

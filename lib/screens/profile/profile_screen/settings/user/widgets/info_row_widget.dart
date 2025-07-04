@@ -22,12 +22,16 @@ class InfoRowWidget extends StatelessWidget {
             Icon(icon, color: secondaryColor,size: heightX*.028,),
             const SizedBox(width: 8),
             AppTextWidget(title: title,fontSize: heightX*.018,
-            fontWeight: FontWeight.bold, textColor: secondaryColor,
+            fontWeight: FontWeight.bold, color: secondaryColor,
             ),
           ],
         ),
 
-        AppTextWidget(title: info,fontSize: heightX*.018,)
+        SizedBox(
+            width: widthX*.45,
+            child: AppTextWidget(
+              textAlign: TextAlign.right,
+              title: info,fontSize: heightX*.018,))
       ],
     );
   }
