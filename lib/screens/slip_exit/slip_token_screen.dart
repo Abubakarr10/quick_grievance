@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,6 +19,7 @@ class SlipTokenScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SlipExitModel data = Get.arguments['slipData'];
+    final String isHistory = Get.arguments['isHistory'];
    // final dynamic id = Get.arguments['slipId'];
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
@@ -26,11 +28,15 @@ class SlipTokenScreen extends StatelessWidget {
         children: [
           FloatingActionButton(
             onPressed: (){
-              Get.offNamed(slipScreen);
+              if(isHistory != ''){
+                Get.offNamed(historyDetailScreen,arguments: isHistory);
+              }else{
+                Get.offNamed(slipScreen);
+              }
             },
             backgroundColor: accentColor,
             mini: true,
-            child: const Icon(Icons.close,color: secondaryColor,),
+            child:  const Icon(Icons.close,color: secondaryColor,),
           ),
         ],
       ),
@@ -114,7 +120,12 @@ class SlipTokenScreen extends StatelessWidget {
               child: CircleAvatar(
                 radius: heightX*.05,
                   backgroundColor: pureWhite,
-                  child: Icon(Icons.check_circle,size: heightX*.1,
+                  child: data.token == 'Rejected'?
+                  Icon(CupertinoIcons.xmark_circle_fill,size: heightX*.1,
+                    color: Colors.red,
+                  )
+                      :
+                  Icon(Icons.check_circle,size: heightX*.1,
                   color: Colors.green,
                   )),
             ),

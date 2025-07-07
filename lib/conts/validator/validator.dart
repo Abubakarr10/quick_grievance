@@ -15,16 +15,30 @@ String? emailValidator(String? value) {
     return 'Email is required';
   }
 
-  // Regular expression for validating email
+// Basic email format checks before regex
+  if (!value.contains('@')) {
+    return 'Email must contain "@" symbol';
+  }
+
+  final parts = value.split('@');
+  if (parts.length != 2 || parts[0].isEmpty || parts[1].isEmpty) {
+    return 'Email must be in format: name@example.com';
+  }
+
+  if (!parts[1].contains('.')) {
+    return 'Domain must contain "." (e.g. example.com)';
+  }
+
+// Final regex check for edge cases
   final RegExp emailRegExp = RegExp(
-    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$',
   );
 
   if (!emailRegExp.hasMatch(value)) {
-    return 'Enter a valid email address';
+    return 'Email format is invalid (e.g. name@example.com)';
   }
 
-  return null; // Valid
+  return null; // Valid email
 }
 
 String? passwordValidator(String? value) {

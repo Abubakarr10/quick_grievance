@@ -82,9 +82,17 @@ class UserScreen extends GetView<UserController> {
                                     foregroundImage: AssetImage(hosteliteIcon),
                                   ),
                                 ),
+
                                 SizedBox(height: heightX*.009),
-                                AppTextWidget(title: controller.user.value!.fullName,
-                                  fontSize: heightX*.028, fontWeight: FontWeight.bold,
+
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    AppTextWidget(title: controller.user.value!.fullName,
+                                      fontSize: heightX*.028, fontWeight: FontWeight.bold,
+                                    ),
+                                    const Icon(Icons.verified_user,color: Colors.blue,)
+                                  ],
                                 ),
 
                                 SizedBox(height: heightX*.005,),

@@ -5,8 +5,9 @@ import '../../app_widgets/widgets.dart';
 
 class DuelTextWidget extends StatelessWidget {
   final String title,value;
+  final double fontSize;
   const DuelTextWidget({
-    super.key, required this.title, required this.value,
+    super.key, required this.title, required this.value, this.fontSize = 0.018,
   });
 
 
@@ -19,7 +20,7 @@ class DuelTextWidget extends StatelessWidget {
           children: [
             AppTextWidget(title: title,
               fontWeight: FontWeight.w700,
-              fontSize: heightX*.018,),
+              fontSize: heightX*fontSize,),
             SizedBox(
               width: widthX*.4,
               child: Align(
@@ -27,7 +28,7 @@ class DuelTextWidget extends StatelessWidget {
                 child: AppTextWidget(title: value,
                   textAlign: TextAlign.right,
                   fontWeight: FontWeight.w500,
-                  fontSize: heightX*.018,),
+                  fontSize: heightX*fontSize,),
               ),
             ),
           ],

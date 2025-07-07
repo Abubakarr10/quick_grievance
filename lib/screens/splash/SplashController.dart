@@ -3,26 +3,39 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:quick_grievance/conts/routes/screen_names.dart';
+import 'package:quick_grievance/screens/profile/profile_screen/settings/user/UserController.dart';
 
 import '../../repository/share_preferences/sp_controller.dart';
 
 
-class SplashController extends GetxController{
+class SplashController extends GetxController {
+  final UserController controller = Get.put(UserController());
 
   @override
-  void onInit() async{
+  void onInit() {
     super.onInit();
-    bool isLoggedIn = await getLoginStatus();
-    bool isWardenLoggedIn = await getWardenLoginStatus();
-    Timer(const Duration(seconds: 3), () {
-      if(isLoggedIn == true){
-        Get.offNamed(entryPointScreen);
-      }else if(isWardenLoggedIn == true){
-        Get.offNamed(adminScreen);
-      }else{
-       Get.offNamed(onBoardingScreen);
-      }
-    });
+    initApp();
   }
 
+  Future<void> initApp() async {
+    final isLoggedIn = await getLoginStatus();
+    final isWardenLoggedIn = await getWardenLoginStatus();
+
+    await Future.delayed(const Duration(seconds: 3));
+
+    if (isLoggedIn) {
+      await controller.loadUserData(); // ensure user data is loaded
+      final user = controller.user.value;
+
+      if (user != null && user.isAuthorized == 'true') {
+        Get.offNamed(entryPointScreen);
+      } else {
+        Get.offNamed(unauthorizedScreen);
+      }
+    } else if (isWardenLoggedIn) {
+      Get.offNamed(adminScreen);
+    } else {
+      Get.offNamed(onBoardingScreen);
+    }
+  }
 }

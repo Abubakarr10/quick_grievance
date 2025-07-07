@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel{
   final String uid,email,fullName,password,regNo,phoneNo,roomNo,batch,departmentName,degree;
-  final bool isAuthorized;
+  final String isAuthorized;
 
   const UserModel(
       {
@@ -53,19 +53,20 @@ class UserModel{
     );
   }
 
+
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      uid: json['uid'],
-      fullName: json['full_name'],
-      email: json['email'],
-      password: json['password'],
-      regNo: json['regNo'],
-      phoneNo: json['phoneNo'],
-      roomNo: json['roomNo'],
-      batch: json['batch'],
-      departmentName: json['departmentName'],
-      isAuthorized: json['isAuthorized'],
-      degree: json['degree'],
+      uid: json['uid'] ?? '',
+      fullName: json['full_name'] ?? '',
+      email: json['email'] ?? '',
+      password: json['password'] ?? '',
+      regNo: json['reg_no'] ?? '',
+      phoneNo: json['phone_no'] ?? '',
+      roomNo: json['room_no'] ?? '',
+      batch: json['batch'] ?? '',
+      departmentName: json['department_name'] ?? '',
+      isAuthorized: json['isAuthorized'] ?? false,
+      degree: json['degree'] ?? '',
     );
   }
   }

@@ -8,12 +8,15 @@ import 'package:quick_grievance/screens/admin/complaint/complaint_detail_screen.
 import 'package:quick_grievance/screens/admin/mess/add_mess_screen.dart';
 import 'package:quick_grievance/screens/admin/mess/mess_detail_screen.dart';
 import 'package:quick_grievance/screens/auth/hostelite/signup/signup_screen.dart';
+import 'package:quick_grievance/screens/auth/unauthorized_user/unauthorized_user_screen.dart';
 import 'package:quick_grievance/screens/auth/warden/warden_join_screen.dart';
 import 'package:quick_grievance/screens/community/add_post/add_post_screen.dart';
 import 'package:quick_grievance/screens/community/community_screen.dart';
 import 'package:quick_grievance/screens/complain/complain_screen.dart';
 import 'package:quick_grievance/screens/entryPoint/entry_point_screen.dart';
+import 'package:quick_grievance/screens/history/history_detail_screen.dart';
 import 'package:quick_grievance/screens/history/history_screen.dart';
+import 'package:quick_grievance/screens/image_view/image_view_screen.dart';
 import 'package:quick_grievance/screens/mess/mess_screen.dart';
 import 'package:quick_grievance/screens/mess/vote/vote_screen.dart';
 import 'package:quick_grievance/screens/notification/notification_screen.dart';
@@ -25,6 +28,7 @@ import 'package:quick_grievance/screens/profile/profile_screen/settings/theme/th
 import 'package:quick_grievance/screens/slip_exit/slip_exit_screen.dart';
 import 'package:quick_grievance/screens/slip_exit/slip_token_screen.dart';
 import 'package:quick_grievance/screens/splash/splash_screen.dart';
+import 'package:quick_grievance/screens/track/track_screen.dart';
 
 import '../../screens/admin/admin_dashboard/admin_screen.dart';
 
@@ -45,6 +49,7 @@ final pages = [
   ///========================== Auth Routes ====================================
   GetPage(name: signUpScreen, page: () => const SignUpScreen()),
   GetPage(name: loginScreen, page: () => const LoginScreen()),
+  GetPage(name: unauthorizedScreen, page: () => const UnauthorizedUserScreen()),
 
   GetPage(name: wardenScreen, page: () => const WardenJoinScreen()),
 
@@ -62,12 +67,17 @@ final pages = [
   ///======================== Complain Routes =================================
   GetPage(name: complainScreen, page: () => const ComplainScreen()),
 
+  ///======================== Track Routes =================================
+  GetPage(name: trackScreen, page: () => const TrackScreen()),
+
+
   ///========================== Mess Routes ====================================
   GetPage(name: messScreen, page: () => const MessScreen()),
   GetPage(name: voteScreen, page: () => const VoteScreen()),
 
   ///========================== History Routes =================================
   GetPage(name: historyScreen, page: () => const HistoryScreen(backoff: false,)),
+  GetPage(name: historyDetailScreen, page: () => const HistoryDetailScreen()),
 
   ///========================== Notification Routes =================================
   GetPage(name: historyScreen, page: () => const NotificationScreen(backoff: false,)),
@@ -83,7 +93,10 @@ final pages = [
   GetPage(name: themeScreen, page: () => const ThemeScreen()),
   GetPage(name: logoutScreen, page: () => const LogoutScreen()),
 
-  ///========================== Admin Routes =================================
+  ///========================== Image Routes ===================================
+  GetPage(name: imageViewScreen, page: () => const ImageViewScreen()),
+
+  ///========================== Admin Routes ===================================
   GetPage(name: adminScreen, page: () => const AdminScreen()),
   GetPage(name: addMessScreen, page: () => const AddMessScreen()),
   GetPage(name: messDetailScreen, page: () => const MessDetailScreen()),

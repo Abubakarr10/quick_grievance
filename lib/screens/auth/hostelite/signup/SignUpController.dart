@@ -66,7 +66,7 @@ class SignUpController extends GetxController{
             roomNo: roomNoController.text.toString().trim(),
             departmentName: departmentName.value,
             batch: batchController.text.toString().trim(),
-            isAuthorized: false,
+            isAuthorized: 'false',
             degree: '',
           );
 
@@ -80,7 +80,7 @@ class SignUpController extends GetxController{
           );
 
 
-          Get.offAllNamed(entryPointScreen);
+          Get.offAllNamed(unauthorizedScreen);
 
         }
       } on FirebaseAuthException catch (error) {

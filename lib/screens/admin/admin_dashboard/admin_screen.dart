@@ -9,6 +9,7 @@ import 'package:quick_grievance/screens/admin/slip_exit/admin_slip_screen.dart';
 import 'package:quick_grievance/screens/app_widgets/widgets.dart';
 
 import '../../../conts/app_colors.dart';
+import '../approve_user/approve_user_screen.dart';
 import 'AdminController.dart';
 
 class AdminScreen extends GetView<AdminController> {
@@ -69,6 +70,7 @@ class AdminScreen extends GetView<AdminController> {
                       Icons.receipt_long,
                       Icons.report_problem,
                       Icons.restaurant_menu,
+                      Icons.supervised_user_circle,
                       Icons.settings
                     ][index]),
                     title: AppTextWidget(
@@ -92,16 +94,20 @@ class AdminScreen extends GetView<AdminController> {
           ],
         ),
       ),
-      body: Obx(() => IndexedStack(
-            index: controller.selectedIndex.value,
-            children: const [
-              DashboardScreen(),
-              AdminSlipScreen(),
-              AdminComplaintScreen(),
-              AdminMessScreen(),
-              SettingScreen(),
-            ],
-          )),
+      body: Obx((){
+        return IndexedStack(
+          index: controller.selectedIndex.value,
+          children: const [
+            DashboardScreen(),
+            AdminSlipScreen(),
+            AdminComplaintScreen(),
+            AdminMessScreen(),
+            ApproveUserScreen(),
+            SettingScreen(),
+          ],
+        );
+      }
+      ),
     );
   }
 }

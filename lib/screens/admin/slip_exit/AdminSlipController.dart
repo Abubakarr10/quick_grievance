@@ -42,6 +42,27 @@ class AdminSlipController extends GetxController {
           toDate: slipData.toDate);
 
       saveSlipExit(approveSlipData);
+    }else{
+
+      SlipExitModel rejectSlipData = SlipExitModel(
+          uid: slipData.uid,
+          fullName: slipData.fullName,
+          regNo: slipData.regNo,
+          phoneNo: slipData.phoneNo,
+          roomNo: slipData.roomNo,
+          departmentName: slipData.departmentName,
+          token: 'Rejected',
+          batch: slipData.batch,
+          guardianName: slipData.guardianName,
+          relation: slipData.relation,
+          guardianPhoneNo: slipData.guardianPhoneNo,
+          address: slipData.address,
+          destination: slipData.destination,
+          reason: slipData.reason,
+          fromDate: slipData.fromDate,
+          toDate: slipData.toDate);
+
+      saveRejectedSlipExit(rejectSlipData);
     }
 
 
@@ -51,13 +72,25 @@ class AdminSlipController extends GetxController {
           .doc(docId)
           .delete();
 
-      Get.snackbar(
-        "Request Accepted",
-        "The request has been approved and removed from the list.",
-        backgroundColor: primaryColor,
-        colorText: secondaryColor,
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      if(reject==false){
+        Get.snackbar(
+          "Request Accepted",
+          "The request has been approved and removed from the list.",
+          backgroundColor: primaryColor,
+          colorText: secondaryColor,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }else{
+        Get.snackbar(
+          "Request Rejected",
+          "The request has been rejected and removed from the list.",
+          backgroundColor: primaryColor,
+          colorText: secondaryColor,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+
+
     } catch (e) {
       Get.snackbar(
         "Error",
@@ -71,6 +104,7 @@ class AdminSlipController extends GetxController {
 
   // Firebase 🔥
   final CollectionReference userCollection = FirebaseFirestore.instance.collection('approve_slip_exit');
+  final CollectionReference userCollection2 = FirebaseFirestore.instance.collection('reject_slip_exit');
 
 
   // Save Slip Data in Approve Collection
@@ -78,6 +112,19 @@ class AdminSlipController extends GetxController {
     try {
 
           await userCollection.doc().set(slipExitData.toJson());
+
+    } catch (e) {
+      if (kDebugMode) {
+        print('Failed to submit slip exit: $e');
+      }
+    }
+  }
+
+  // Save Slip Data in Reject Collection
+  Future<void> saveRejectedSlipExit(SlipExitModel slipExitData) async {
+    try {
+
+      await userCollection2.doc().set(slipExitData.toJson());
 
     } catch (e) {
       if (kDebugMode) {

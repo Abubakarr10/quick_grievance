@@ -8,6 +8,7 @@ class DashboardCardWidget extends StatelessWidget {
   final IconData icon;
   final Color color;
   final double width;
+  final VoidCallback onTap;
 
   const DashboardCardWidget({
     super.key,
@@ -15,7 +16,7 @@ class DashboardCardWidget extends StatelessWidget {
     required this.value,
     required this.icon,
     required this.color,
-    required this.width,
+    required this.width, required this.onTap,
   });
 
   @override
@@ -24,24 +25,29 @@ class DashboardCardWidget extends StatelessWidget {
       width: width,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withAlpha(50),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withAlpha(100)),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppTextWidget(title: title, fontSize: heightX*.020,fontWeight: FontWeight.w600, color: color,),
-              const SizedBox(height: 6),
-              AppTextWidget(title: value, fontSize: heightX*.024,fontWeight: FontWeight.bold, color: color,)
-            ],
-          ),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppTextWidget(title: title, fontSize: heightX*.020,fontWeight: FontWeight.w600, color: color,),
+                const SizedBox(height: 6),
+                SizedBox(
+                    width: widthX*.5,
+                    child: AppTextWidget(title: value, fontSize: heightX*.028,fontWeight: FontWeight.bold, color: color,))
+              ],
+            ),
 
-          Icon(icon, size: heightX*.08, color: color),
-        ],
+            Icon(icon, size: heightX*.08, color: color),
+          ],
+        ),
       ),
     );
   }

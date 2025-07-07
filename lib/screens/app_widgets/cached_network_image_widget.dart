@@ -9,11 +9,13 @@ class CachedNetworkImageWidget extends StatelessWidget {
     required this.networkImage,
     required this.width,
     required this.height,
+    this.fit = BoxFit.cover,
   });
 
   final String networkImage;
   final double width;
   final double height;
+  final BoxFit fit;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class CachedNetworkImageWidget extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: imageProvider,
-            fit: BoxFit.cover,
+            fit: fit,
           ),
         ),
       ),

@@ -28,7 +28,7 @@ class MessDetailScreen extends GetView<VoteController> {
       appBar: AppBar(
         leading: InkWell(
             onTap: (){
-              Get.offNamed(adminScreen);
+              Get.offNamed(adminScreen,arguments: 3);
             },
             child: const Icon(Icons.arrow_back_ios_new,color: pureWhite,)),
         title: AppTextWidget(title: 'Detail Of Votes $voteBank',color: pureWhite,

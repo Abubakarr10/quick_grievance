@@ -1,6 +1,8 @@
 
 import 'package:get/get.dart';
 import 'package:quick_grievance/screens/admin/admin_dashboard/AdminController.dart';
+import 'package:quick_grievance/screens/admin/approve_user/ApproveController.dart';
+import 'package:quick_grievance/screens/admin/complaint/AdminComplainController.dart';
 import 'package:quick_grievance/screens/admin/mess/AddMessController.dart';
 import 'package:quick_grievance/screens/admin/setting/SettingController.dart';
 import 'package:quick_grievance/screens/auth/hostelite/login/LoginController.dart';
@@ -14,6 +16,7 @@ import 'package:quick_grievance/screens/mess/vote/VoteController.dart';
 import 'package:quick_grievance/screens/profile/profile_screen/ProfileController.dart';
 import 'package:quick_grievance/screens/slip_exit/SlipExitController.dart';
 import 'package:quick_grievance/screens/splash/SplashController.dart';
+import 'package:quick_grievance/screens/track/TrackController.dart';
 
 import '../../screens/admin/slip_exit/AdminSlipController.dart';
 import '../../screens/auth/hostelite/signup/SignUpController.dart';
@@ -38,6 +41,7 @@ class AllBindings implements Bindings{
     Get.lazyPut(()=> ComplainController());
     Get.lazyPut(()=> CommunityController());
     Get.lazyPut(()=> VoteController());
+    Get.lazyPut(()=> TrackController());
     // Admin Controllers
     Get.lazyPut(()=> AddPostController());
     Get.lazyPut(()=> AdminController());
@@ -45,6 +49,8 @@ class AllBindings implements Bindings{
     Get.lazyPut(()=> WardenJoinController());
     Get.lazyPut(()=> SettingController());
     Get.lazyPut(()=> AddMessController());
+    Get.lazyPut(()=> AdminComplainController());
+    Get.lazyPut(()=> ApproveUserController());
   }
 
 }

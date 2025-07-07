@@ -8,3 +8,4 @@ export 'display_image_widget.dart';
 export 'icon_text_button_widget.dart';
 export 'cached_network_image_widget.dart';
 export 'spin_kit_widget.dart ';
+export 'history_card_widget.dart';

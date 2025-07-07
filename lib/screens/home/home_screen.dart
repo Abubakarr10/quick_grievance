@@ -130,7 +130,10 @@ class HomeScreen extends GetView<HomeController> {
 
                         IconTextCardWidget(
                             title: 'Track', subtitle: 'complain status',
-                            icon: Icons.track_changes_outlined, onTap: () {  },),
+                            icon: Icons.track_changes_outlined,
+                          onTap: () {
+                              Get.offNamed(trackScreen);
+                          },),
 
                         const SizedBox(height: 60,),
                       ],

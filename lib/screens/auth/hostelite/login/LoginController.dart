@@ -60,12 +60,12 @@ class LoginController extends GetxController{
          // await Get.find<UserController>().loadUserData();
          // final user = Get.find<UserController>().currentUser.value;
 
-          Get.offAllNamed(entryPointScreen);
+          Get.offAllNamed(initialScreen);
 
           Get.snackbar(
               'Welcome Back!', 'Quick Grievance',
               icon: const Padding(
-                padding: EdgeInsets.only(right: 10),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Icon(
                   Icons.celebration,
                   size: 30,
