@@ -65,48 +65,6 @@ class SlipExitScreen extends GetView<SlipExitController> {
                         child: Column(
                           children: [
 
-                            // Emergency
-                            // Card(
-                            //   elevation: 15,
-                            //   shadowColor: secondaryColor,
-                            //   color: Colors.red,
-                            //   child: Padding(
-                            //     padding: const EdgeInsets.all(10),
-                            //     child: Column(
-                            //       children: [
-                            //
-                            //         AppTextWidget(title: 'Emergency',
-                            //           fontSize: heightX*.022,
-                            //           textColor: pureBlack,
-                            //           fontWeight: FontWeight.bold,
-                            //         ),
-                            //
-                            //         // CheckBox => By Self
-                            //         Obx(()=>
-                            //             CheckboxListTile(
-                            //               checkboxScaleFactor: 1.5,
-                            //               contentPadding: const EdgeInsets.all(0),
-                            //               checkColor: secondaryColor,
-                            //               activeColor: accentColor,
-                            //               value: controller.isBySelf.value,
-                            //               onChanged: (value){
-                            //                 controller.isBySelf.value = value ?? false;
-                            //               },
-                            //               title:  AppTextWidget(title: 'Emergency Case',fontWeight: FontWeight.bold,
-                            //                 fontSize: heightX*.018, textColor: secondaryColor,
-                            //               ),
-                            //             )),
-                            //       ],
-                            //     ),
-                            //   ),
-                            // ),
-                            //
-                            // SizedBox(height: heightX*.02,),
-
-                            // Guardian Information Box
-
-                            // Guardian Information Box
-
                             Card(
                               elevation: 15,
                               color: Colors.white,
@@ -378,32 +336,35 @@ class SlipExitScreen extends GetView<SlipExitController> {
 
                       SizedBox(height: heightX*.03,),
 
-                      ActionButtonWidget(label: 'Submit',
-                          onTap: (){
-                            SlipExitModel slipExitData = SlipExitModel(
-                                uid: controller.userAccountController.user.value!.uid,
-                                fullName: controller.userAccountController.user.value!.fullName,
-                                regNo: controller.userAccountController.user.value!.regNo,
-                                phoneNo: controller.userAccountController.user.value!.phoneNo,
-                                roomNo: controller.userAccountController.user.value!.roomNo,
-                                departmentName: controller.userAccountController.user.value!.departmentName,
-                                token: 'none',
-                                batch: controller.userAccountController.user.value!.batch,
-                                guardianName: controller.isBySelf.value? 'none' : controller.guardianNameController.text.trim(),
-                                relation: controller.isBySelf.value? 'none' : controller.relationController.text.trim(),
-                                guardianPhoneNo: controller.isBySelf.value? 'none' : controller.guardianPhoneNoController.text.trim(),
-                                address: controller.isBySelf.value? 'none' : controller.addressController.text.trim(),
-                                destination: controller.isBySelf.value? controller.destinationController.text.trim() : 'none',
-                                reason: controller.reasonController.text.trim(),
-                                fromDate: controller.fromDate.value,
-                                toDate: controller.toDate.value,
-                            );
+                      Obx(()=>
+                          ActionButtonWidget(label: 'Submit',
+                              isLoading: controller.isLoading.value,
+                              onTap: (){
+                                SlipExitModel slipExitData = SlipExitModel(
+                                  uid: controller.userAccountController.user.value!.uid,
+                                  fullName: controller.userAccountController.user.value!.fullName,
+                                  regNo: controller.userAccountController.user.value!.regNo,
+                                  phoneNo: controller.userAccountController.user.value!.phoneNo,
+                                  roomNo: controller.userAccountController.user.value!.roomNo,
+                                  departmentName: controller.userAccountController.user.value!.departmentName,
+                                  token: 'none',
+                                  batch: controller.userAccountController.user.value!.batch,
+                                  guardianName: controller.isBySelf.value? 'none' : controller.guardianNameController.text.trim(),
+                                  relation: controller.isBySelf.value? 'none' : controller.relationController.text.trim(),
+                                  guardianPhoneNo: controller.isBySelf.value? 'none' : controller.guardianPhoneNoController.text.trim(),
+                                  address: controller.isBySelf.value? 'none' : controller.addressController.text.trim(),
+                                  destination: controller.isBySelf.value? controller.destinationController.text.trim() : 'none',
+                                  reason: controller.reasonController.text.trim(),
+                                  fromDate: controller.fromDate.value,
+                                  toDate: controller.toDate.value,
+                                );
 
-                            controller.submitSlipExit(slipExitData);
+                                controller.submitSlipExit(slipExitData);
 
 
 
-                          })
+                              })
+                      )
 
                     ],
                   ),

@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../model/response_model.dart';
-import '../../services/config.dart';
+import '../../services/services/config.dart';
 
 
 class ComplainProvider extends GetConnect {

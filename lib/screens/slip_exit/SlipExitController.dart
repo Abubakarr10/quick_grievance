@@ -17,6 +17,7 @@ class SlipExitController extends GetxController{
   final UserController userAccountController = Get.put(UserController());
 
   final formKey = GlobalKey<FormState>();
+  RxBool isLoading = false.obs;
 
   RxString formattedDate = DateFormat('dd MMM yyyy hh:mm a').format(DateTime.now()).obs;
 
@@ -63,11 +64,15 @@ class SlipExitController extends GetxController{
   Future<void> submitSlipExit(SlipExitModel slipExitData) async {
     try {
 
+      isLoading.value = true;
+
       if(formKey.currentState!.validate()){
 
         if(isDateConfirm.value == true && fromDate.value != toDate.value){
 
           await userCollection.doc().set(slipExitData.toJson());
+
+          isLoading.value = false;
 
           Get.snackbar(
               ' Successfully!', ' Your Exit Slip is submitted to Warden Admin',
@@ -84,6 +89,8 @@ class SlipExitController extends GetxController{
 
           Get.offNamed(entryPointScreen);
         }else{
+
+          isLoading.value = false;
           Get.snackbar(
               ' Missing!', ' Please confirm your dates before submission',
               icon: const Padding(
@@ -104,6 +111,9 @@ class SlipExitController extends GetxController{
         }
 
       }else{
+
+        isLoading.value = false;
+
         Get.snackbar(
             ' Oops!', ' Please fill form.',
             icon: const Padding(
@@ -120,6 +130,7 @@ class SlipExitController extends GetxController{
       }
 
     } catch (e) {
+      isLoading.value = false;
       if (kDebugMode) {
         print('Failed to submit slip exit: $e');
       }
