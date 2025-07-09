@@ -138,17 +138,19 @@ class SlipScreen extends StatelessWidget {
                                           Get.offNamed(slipTokenScreen,arguments: {
                                             'slipData': slipData,
                                             'slipId': slipId,
+                                            'backTo': slipScreen
                                           });
                                         },
-                                        leading: const Icon(Icons.card_membership,color: secondaryColor,size: 30,),
+                                        leading: Icon(Icons.card_membership,color: secondaryColor,size: heightX*.03,),
                                         title: AppTextWidget(title: slipData.reason,fontSize: heightX*.020,fontWeight: FontWeight.bold,),
                                         subtitle: AppTextWidget(title: slipData.destination),
                                         trailing: Column(
                                           crossAxisAlignment: CrossAxisAlignment.end,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            AppTextWidget(title: slipData.fromDate),
-                                            AppTextWidget(title: slipData.toDate),
+                                            AppTextWidget(title: slipData.fromDate,fontSize: heightX*.012,),
+                                            AppTextWidget(title: slipData.toDate,fontSize: heightX*.012),
+                                            AppTextWidget(title: 'Token: ${slipData.token}',fontSize: heightX*.014),
                                           ],
                                         ),
                                       ),
@@ -156,6 +158,7 @@ class SlipScreen extends StatelessWidget {
                                   });
                             }),
                       )
+
                     ],
                   ),
                 ),

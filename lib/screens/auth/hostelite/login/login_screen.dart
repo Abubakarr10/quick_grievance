@@ -8,6 +8,7 @@ import 'package:quick_grievance/screens/auth/hostelite/login/LoginController.dar
 
 import '../../../../conts/app_height_width.dart';
 import '../../../../conts/routes/screen_names.dart';
+import '../../../../conts/validator/validator.dart';
 import '../widgets/widgets.dart';
 
 class LoginScreen extends GetView<LoginController> {
@@ -106,7 +107,10 @@ class LoginScreen extends GetView<LoginController> {
                                       keyType: TextInputType.name,
                                       mainColor: Colors.black.withAlpha(300),
                                       labelText: 'Email',
-                                      returnMessage: 'Enter correct email',
+                                      customValidator: true,
+                                      validator: (value){
+                                        return  emailValidator(value);
+                                      },
                                       borderRadius: 20,
                                       textColor: accentColor,
                                       showPrefixIcon: true,
@@ -124,7 +128,11 @@ class LoginScreen extends GetView<LoginController> {
                                           keyType: TextInputType.visiblePassword,
                                           mainColor: Colors.black.withAlpha(300),
                                           labelText: 'Password',
-                                          returnMessage: 'Enter Password',
+                                          customValidator: true,
+                                          validator: (value){
+                                            return emptyValidator(value,
+                                                'Enter Password');
+                                          },
                                           borderRadius: 20,
                                           showSuffixIcon: true,
                                           textColor: accentColor,
@@ -137,13 +145,16 @@ class LoginScreen extends GetView<LoginController> {
 
                                     Padding(
                                       padding: EdgeInsets.only(top: heightX*.02),
-                                      child: ActionButtonWidget(label: 'Login',
-                                        onTap: (){
-                                        controller.login();
-                                        },
-                                        height: heightX*.05,
-                                        width: widthX,
+                                      child: Obx(()=>
+                                          ActionButtonWidget(label: 'Login',
+                                            onTap: (){
+                                              controller.loginHandler();
+                                            },
+                                            isLoading: controller.loading.value,
+                                            height: heightX*.05,
+                                            width: widthX,
 
+                                          )
                                       ),
                                     )
                                   ],

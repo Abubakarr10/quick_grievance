@@ -69,12 +69,14 @@ class HomeScreen extends GetView<HomeController> {
                                       final userData = snapshot.data!.data() as Map<String, dynamic>;
                                       final fullName = userData['full_name'] ?? 'User';
 
-                                      return GradientTextWidget(
-                                        text: 'Salam! $fullName',
-                                        gradient: const LinearGradient(colors: [
-                                          accentColor,
-                                          primaryColor,
-                                        ]),
+                                      return FittedBox(
+                                        child: GradientTextWidget(
+                                          text: 'Salam! $fullName',
+                                          gradient: const LinearGradient(colors: [
+                                            accentColor,
+                                            primaryColor,
+                                          ]),
+                                        ),
                                       );
                                     },
                                   ),

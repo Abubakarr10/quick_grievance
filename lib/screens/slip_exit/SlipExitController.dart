@@ -75,7 +75,7 @@ class SlipExitController extends GetxController{
                 padding: EdgeInsets.all(10),
                 child: Icon(
                   Icons.done,
-                  size: 50,
+                  size: 30,
                   color: accentColor,
                 ),
               ),
@@ -90,7 +90,7 @@ class SlipExitController extends GetxController{
                 padding: EdgeInsets.all(10),
                 child: Icon(
                   Icons.date_range,
-                  size: 50,
+                  size: 30,
                   color: secondaryColor,
                 ),
               ),

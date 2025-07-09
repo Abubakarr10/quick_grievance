@@ -80,7 +80,7 @@ final pages = [
   GetPage(name: historyDetailScreen, page: () => const HistoryDetailScreen()),
 
   ///========================== Notification Routes =================================
-  GetPage(name: historyScreen, page: () => const NotificationScreen(backoff: false,)),
+  GetPage(name: notificationScreen, page: () => const NotificationScreen(backoff: false,)),
 
   ///========================== Community Routes =================================
   GetPage(name: communityScreen, page: () => const CommunityScreen(backoff: false,)),

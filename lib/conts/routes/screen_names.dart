@@ -9,6 +9,7 @@ const String unauthorizedScreen = '/unauthorized_screen';
 const String entryPointScreen = '/entry_point_screen';
 const String homeScreen = '/home_screen';
 const String historyScreen = '/history_screen';
+const String notificationScreen = '/notification_screen';
 const String historyDetailScreen = '/history_detail_screen';
 const String slipScreen = '/slip_screen';
 const String slipExitScreen = '/slip_exit_screen';

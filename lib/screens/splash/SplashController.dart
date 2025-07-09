@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:quick_grievance/conts/routes/screen_names.dart';
 import 'package:quick_grievance/screens/profile/profile_screen/settings/user/UserController.dart';
@@ -27,9 +28,17 @@ class SplashController extends GetxController {
       await controller.loadUserData(); // ensure user data is loaded
       final user = controller.user.value;
 
-      if (user != null && user.isAuthorized == 'true') {
-        Get.offNamed(entryPointScreen);
+      if (user != null) {
+        final authStatus = user.isAuthorized.toString();
+        if (kDebugMode) print('🟢 User Loaded: ${user.isAuthorized}');
+
+        if (authStatus == 'true') {
+          Get.offNamed(entryPointScreen);
+        } else {
+          Get.offNamed(unauthorizedScreen);
+        }
       } else {
+        if (kDebugMode) print('🔴 User is null after loadUserData');
         Get.offNamed(unauthorizedScreen);
       }
     } else if (isWardenLoggedIn) {
@@ -38,4 +47,6 @@ class SplashController extends GetxController {
       Get.offNamed(onBoardingScreen);
     }
   }
+
+
 }

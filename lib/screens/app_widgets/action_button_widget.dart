@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quick_grievance/screens/app_widgets/spin_kit_widget.dart';
 import 'package:quick_grievance/screens/app_widgets/widgets.dart';
 
 import '../../conts/app_colors.dart';
@@ -9,10 +10,12 @@ class ActionButtonWidget extends StatelessWidget {
   final VoidCallback onTap;
   final double height;
   final double width;
+  final bool isLoading;
   const ActionButtonWidget({
     super.key, required this.label, required this.onTap,
     this.height = 40,
     this.width = 300,
+    this.isLoading = false,
   });
 
   @override
@@ -31,10 +34,13 @@ class ActionButtonWidget extends StatelessWidget {
               blurRadius: 10, offset: Offset(0, heightX*.01),
             )],
         ),
-        child: AppTextWidget(title: label,
+        child: isLoading == false? AppTextWidget(title: label,
           fontSize: fontSizeX*.018,
           fontWeight: FontWeight.bold,
-          color: Colors.black,),
+          color: Colors.black,)
+        :
+        const SpinKitLoadingWidget()
+        ,
       ),
     );
   }

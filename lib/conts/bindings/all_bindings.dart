@@ -21,7 +21,9 @@ import 'package:quick_grievance/screens/track/TrackController.dart';
 import '../../screens/admin/slip_exit/AdminSlipController.dart';
 import '../../screens/auth/hostelite/signup/SignUpController.dart';
 import '../../screens/community/CommunityController.dart';
+import '../../screens/notification/NotificationController.dart';
 import '../../screens/profile/logout/LogoutController.dart';
+import '../../screens/profile/profile_screen/settings/edit_user_account/EditUserController.dart';
 import '../../screens/profile/profile_screen/settings/user/UserController.dart';
 
 class AllBindings implements Bindings{
@@ -30,6 +32,7 @@ class AllBindings implements Bindings{
   @override
   Future dependencies() async {
     Get.lazyPut(()=> UserController());
+    Get.lazyPut(()=> EditUserController());
     Get.lazyPut(()=> SplashController());
     Get.lazyPut(()=> SignUpController());
     Get.lazyPut(()=> LoginController());
@@ -42,6 +45,7 @@ class AllBindings implements Bindings{
     Get.lazyPut(()=> CommunityController());
     Get.lazyPut(()=> VoteController());
     Get.lazyPut(()=> TrackController());
+    Get.lazyPut(()=> NotificationController());
     // Admin Controllers
     Get.lazyPut(()=> AddPostController());
     Get.lazyPut(()=> AdminController());

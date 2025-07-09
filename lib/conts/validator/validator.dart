@@ -10,6 +10,22 @@ String? emptyValidator(value, returnMessage){
   return null;
 }
 
+String? nameValidator(String? value) {
+  if (value == null || value.trim().isEmpty) {
+    return 'Name is required';
+  }
+
+  // Only alphabets, first letter capital, no digits/special chars
+  final nameRegExp = RegExp(r'^[A-Z][a-zA-Z ]*$');
+
+  if (!nameRegExp.hasMatch(value.trim())) {
+    return 'Name must start with a capital letter and contain only letters';
+  }
+
+  return null;
+}
+
+
 String? emailValidator(String? value) {
   if (value == null || value.trim().isEmpty) {
     return 'Email is required';

@@ -44,7 +44,8 @@ Rx<Menu> selectedSideMenu = sidebarMenus.first.obs;
 
 void updateSelectedBtmNav(Menu menu) {
   if (selectedButtonNav.value != menu) {
-
+   // sidePageNo.value = 0;
+   // isSideMenuOpen.value = false;
       selectedButtonNav.value = menu;
 
   }

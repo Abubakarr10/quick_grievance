@@ -22,7 +22,10 @@ class HistoryDetailScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Get.offNamed(historyScreen);
+          Get.offNamed(entryPointScreen,arguments: {
+            'index': 3,
+            'isBackUse' : true
+          });
         },
         backgroundColor: accentColor,
         mini: true,
@@ -180,7 +183,7 @@ class HistoryDetailScreen extends StatelessWidget {
                                 Get.offNamed(slipTokenScreen,arguments: {
                                   'slipData': slipData,
                                   'slipId': slipId,
-                                  'isHistory' : arguments
+                                  'backTo' : arguments
                                 });
                               },
                               leading: const Icon(Icons.card_membership,color: secondaryColor,size: 30,),

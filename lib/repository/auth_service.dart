@@ -20,17 +20,12 @@ class AuthService{
     return null;
   }
 
-  Future<User?> loginUserWithEmailAndPassword(
-      String email,String password) async{
-    try{
-      final credential = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      return credential.user;
-    } catch (error){
-      if (kDebugMode) {
-        print(error.toString());
-      }
-    }
-    return null;
+  Future<User?> loginUserWithEmailAndPassword(String email, String password) async {
+    final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    return credential.user;
   }
 
   Future<void> logout()async{

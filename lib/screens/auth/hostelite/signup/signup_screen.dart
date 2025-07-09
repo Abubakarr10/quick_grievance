@@ -73,243 +73,258 @@ class SignUpScreen extends GetView<SignUpController> {
                   children: [
 
                     SingleChildScrollView(
-                      child: Container(
-                        height: heightX *.99,
-                        width: widthX,
-                        margin: EdgeInsets.symmetric(
-                          horizontal: widthX * .1, vertical: 60,
-                        ),
-                        decoration: BoxDecoration(
-                            color: secondaryColor.withAlpha(440),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
+                      child: Column(
+                        children: [
+                          Stack(
+                            children: [
 
-                            // ===== Main Content =====
+                              Card(
+                                color: secondaryColor.withAlpha(420),
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: widthX * .1, vertical: 60,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
 
-                            SizedBox(height: heightX*.08,),
+                                    // ===== Main Content =====
 
-                            AppTextWidget(title: 'Register as Hostelite',
-                              color: Colors.white, fontWeight: FontWeight.bold,
-                              fontSize: heightX*.024,
-                            ),
+                                    SizedBox(height: heightX*.08,),
 
-                            SizedBox(height: heightX*.02,),
-
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 15),
-                              child: Column(
-                                spacing: heightX*.01,
-                                children: [
-
-                                  Form(
-                                    key: controller.formKey,
-                                    child: Column(
-                                      spacing: heightX*.01,
-                                      children: [
-
-                                        // Full Name
-                                        AppTextFormFieldWidget(
-                                          ctrl: controller.fullNameController,
-                                          keyType: TextInputType.name,
-                                          mainColor: Colors.black.withAlpha(300),
-                                          labelText: 'Full Name',
-                                          returnMessage: 'Enter Full Name',
-                                          borderRadius: 20,
-                                          textColor: accentColor,
-                                          showPrefixIcon: true,
-                                          prefixIcon: Icons.person,
-                                          iconColor: accentColor,
-                                        ),
-
-                                        // Email
-                                        AppTextFormFieldWidget(
-                                          ctrl: controller.emailController,
-                                          keyType: TextInputType.emailAddress,
-                                          mainColor: Colors.black.withAlpha(300),
-                                          labelText: 'Email',
-                                          customValidator: true,
-                                          validator: (value){
-                                            return  emailValidator(value);
-                                          },
-                                          borderRadius: 20,
-                                          textColor: accentColor,
-                                          showPrefixIcon: true,
-                                          prefixIcon: Icons.email,
-                                          iconColor: accentColor,
-                                        ),
-
-                                        // Reg.no
-                                        AppTextFormFieldWidget(
-                                          ctrl: controller.regNoController,
-                                          keyType: TextInputType.text,
-                                          mainColor: Colors.black.withAlpha(300),
-                                          labelText: 'Reg.no',
-                                          customValidator: true,
-                                          validator: (value){
-                                            return  regNumberValidator(value);
-                                          },
-                                          borderRadius: 20,
-                                          textColor: accentColor,
-                                          showPrefixIcon: true,
-                                          prefixIcon: CupertinoIcons.number_circle_fill,
-                                          iconColor: accentColor,
-                                        ),
-
-                                        // Phone Number
-                                        AppTextFormFieldWidget(
-                                          ctrl: controller.phoneNoController,
-                                          keyType: TextInputType.phone,
-                                          mainColor: Colors.black.withAlpha(300),
-                                          labelText: 'Phone.no',
-                                          customValidator: true,
-                                          validator: (value){
-                                            if(value == null){
-                                              return emptyValidator(value,
-                                                  'Enter Phone.no');
-                                            }
-                                            else{
-                                              return phoneNumberValidator(value);
-                                            }
-                                          },
-                                          borderRadius: 20,
-                                          textColor: accentColor,
-                                          showPrefixIcon: true,
-                                          prefixIcon: CupertinoIcons.phone_fill,
-                                          iconColor: accentColor,
-                                        ),
-
-                                        // Room Number
-                                        AppTextFormFieldWidget(
-                                          ctrl: controller.roomNoController,
-                                          keyType: TextInputType.number,
-                                          mainColor: Colors.black.withAlpha(300),
-                                          labelText: 'Room.no',
-                                          customValidator: true,
-                                          validator: (value){
-                                            return roomNumberValidator(value);
-                                          },
-                                          borderRadius: 20,
-                                          textColor: accentColor,
-                                          showPrefixIcon: true,
-                                          prefixIcon: Icons.hotel_sharp,
-                                          iconColor: accentColor,
-                                        ),
-
-                                        // Batch Year
-                                        AppTextFormFieldWidget(
-                                          ctrl: controller.batchController,
-                                          keyType: TextInputType.text,
-                                          mainColor: Colors.black.withAlpha(300),
-                                          labelText: 'Batch Year (i.e 2021-25)',
-                                          customValidator: true,
-                                          validator: (value){
-                                            if(value == null){
-                                              return emptyValidator(value,
-                                                  'Enter Batch Year (i.e 2021-25');
-                                            }else{
-                                              return batchYearValidator(value);
-                                            }
-                                          },
-                                          borderRadius: 20,
-                                          textColor: accentColor,
-                                          showPrefixIcon: true,
-                                          prefixIcon: Icons.school,
-                                          iconColor: accentColor,
-                                        ),
-
-
-                                        // Department Name
-                                        DropdownButtonFFWidget(
-                                          onChanged: (value){
-                                            controller.departmentName.value = value;
-                                          }, listName: ntuDepartments,
-                                          icon: Icons.location_city_outlined,
-                                        ),
-
-
-
-                                        // Password
-                                        Obx(()=>
-                                            AppTextFormFieldWidget(
-                                              onTap: (){
-                                                controller.changeVisibility();
-                                              },
-                                              ctrl: controller.passwordController,
-                                              keyType: TextInputType.visiblePassword,
-                                              mainColor: Colors.black.withAlpha(300),
-                                              labelText: 'Password',
-                                              customValidator: true,
-                                              validator: (value){
-                                                if(value == null){
-                                                  return emptyValidator(value,
-                                                      'Please set your password');
-                                                }else{
-                                                  return passwordValidator(value);
-                                                }
-                                              },
-                                              borderRadius: 20,
-                                              showSuffixIcon: true,
-                                              textColor: accentColor,
-                                              showPrefixIcon: true,
-                                              prefixIcon: Icons.lock,
-                                              iconColor: accentColor,
-                                              visiblePassword: controller.passwordVisible.value,
-                                            )
-                                        ),
-                                      ],
+                                    AppTextWidget(title: 'Register as Hostelite',
+                                      color: Colors.white, fontWeight: FontWeight.bold,
+                                      fontSize: heightX*.024,
                                     ),
-                                  ),
 
-                                  Padding(
-                                    padding: EdgeInsets.only(top: heightX*.02),
-                                    child: ActionButtonWidget(label: 'SignUp',
-                                      onTap: (){
-                                        controller.signUp();
+                                    SizedBox(height: heightX*.02,),
+
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                                      child: Column(
+                                        spacing: heightX*.01,
+                                        children: [
+
+                                          Form(
+                                            key: controller.formKey,
+                                            child: Column(
+                                              spacing: heightX*.01,
+                                              children: [
+
+                                                // Full Name
+                                                AppTextFormFieldWidget(
+                                                  ctrl: controller.fullNameController,
+                                                  keyType: TextInputType.name,
+                                                  mainColor: Colors.black.withAlpha(300),
+                                                  labelText: 'Full Name',
+                                                  customValidator: true,
+                                                  validator: (value){
+                                                    return nameValidator(value);
+                                                  },
+                                                  borderRadius: 20,
+                                                  textColor: accentColor,
+                                                  showPrefixIcon: true,
+                                                  prefixIcon: Icons.person,
+                                                  iconColor: accentColor,
+                                                ),
+
+                                                // Email
+                                                AppTextFormFieldWidget(
+                                                  ctrl: controller.emailController,
+                                                  keyType: TextInputType.emailAddress,
+                                                  mainColor: Colors.black.withAlpha(300),
+                                                  labelText: 'Email',
+                                                  customValidator: true,
+                                                  validator: (value){
+                                                    return  emailValidator(value);
+                                                  },
+                                                  borderRadius: 20,
+                                                  textColor: accentColor,
+                                                  showPrefixIcon: true,
+                                                  prefixIcon: Icons.email,
+                                                  iconColor: accentColor,
+                                                ),
+
+                                                // Reg.no
+                                                AppTextFormFieldWidget(
+                                                  ctrl: controller.regNoController,
+                                                  keyType: TextInputType.text,
+                                                  mainColor: Colors.black.withAlpha(300),
+                                                  labelText: 'Reg.no',
+                                                  customValidator: true,
+                                                  validator: (value){
+                                                    return  regNumberValidator(value);
+                                                  },
+                                                  borderRadius: 20,
+                                                  textColor: accentColor,
+                                                  showPrefixIcon: true,
+                                                  prefixIcon: CupertinoIcons.number_circle_fill,
+                                                  iconColor: accentColor,
+                                                ),
+
+                                                // Phone Number
+                                                AppTextFormFieldWidget(
+                                                  ctrl: controller.phoneNoController,
+                                                  keyType: TextInputType.phone,
+                                                  mainColor: Colors.black.withAlpha(300),
+                                                  labelText: 'Phone.no',
+                                                  customValidator: true,
+                                                  validator: (value){
+                                                    if(value == null){
+                                                      return emptyValidator(value,
+                                                          'Enter Phone.no');
+                                                    }
+                                                    else{
+                                                      return phoneNumberValidator(value);
+                                                    }
+                                                  },
+                                                  borderRadius: 20,
+                                                  textColor: accentColor,
+                                                  showPrefixIcon: true,
+                                                  prefixIcon: CupertinoIcons.phone_fill,
+                                                  iconColor: accentColor,
+                                                ),
+
+                                                // Room Number
+                                                AppTextFormFieldWidget(
+                                                  ctrl: controller.roomNoController,
+                                                  keyType: TextInputType.number,
+                                                  mainColor: Colors.black.withAlpha(300),
+                                                  labelText: 'Room.no',
+                                                  customValidator: true,
+                                                  validator: (value){
+                                                    return roomNumberValidator(value);
+                                                  },
+                                                  borderRadius: 20,
+                                                  textColor: accentColor,
+                                                  showPrefixIcon: true,
+                                                  prefixIcon: Icons.hotel_sharp,
+                                                  iconColor: accentColor,
+                                                ),
+
+                                                // Batch Year
+                                                AppTextFormFieldWidget(
+                                                  ctrl: controller.batchController,
+                                                  keyType: TextInputType.text,
+                                                  mainColor: Colors.black.withAlpha(300),
+                                                  labelText: 'Batch Year (i.e 2021-25)',
+                                                  customValidator: true,
+                                                  validator: (value){
+                                                    if(value == null){
+                                                      return emptyValidator(value,
+                                                          'Enter Batch Year (i.e 2021-25');
+                                                    }else{
+                                                      return batchYearValidator(value);
+                                                    }
+                                                  },
+                                                  borderRadius: 20,
+                                                  textColor: accentColor,
+                                                  showPrefixIcon: true,
+                                                  prefixIcon: Icons.school,
+                                                  iconColor: accentColor,
+                                                ),
+
+
+                                                // Department Name
+                                                DropdownButtonFFWidget(
+                                                  onChanged: (value){
+                                                    controller.departmentName.value = value;
+                                                  }, listName: ntuDepartments,
+                                                  icon: Icons.location_city_outlined,
+                                                ),
+
+
+
+                                                // Password
+                                                Obx(()=>
+                                                    AppTextFormFieldWidget(
+                                                      onTap: (){
+                                                        controller.changeVisibility();
+                                                      },
+                                                      ctrl: controller.passwordController,
+                                                      keyType: TextInputType.visiblePassword,
+                                                      mainColor: Colors.black.withAlpha(300),
+                                                      labelText: 'Password',
+                                                      customValidator: true,
+                                                      validator: (value){
+                                                        if(value == null){
+                                                          return emptyValidator(value,
+                                                              'Please set your password');
+                                                        }else{
+                                                          return passwordValidator(value);
+                                                        }
+                                                      },
+                                                      borderRadius: 20,
+                                                      showSuffixIcon: true,
+                                                      textColor: accentColor,
+                                                      showPrefixIcon: true,
+                                                      prefixIcon: Icons.lock,
+                                                      iconColor: accentColor,
+                                                      visiblePassword: controller.passwordVisible.value,
+                                                    )
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+
+                                          Padding(
+                                            padding: EdgeInsets.only(top: heightX*.02),
+                                            child: Obx(()=>
+                                                ActionButtonWidget(label: 'SignUp',
+                                                  onTap: (){
+                                                    controller.signUp();
+                                                  },
+                                                  isLoading: controller.loading.value,
+                                                  height: heightX*.05,
+                                                  width: widthX,
+
+                                                )
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+
+                                    const DividerTextWidget(color: accentColor,),
+
+
+
+                                    DuelText(firstText: 'Already have an account?',
+                                      secondText: ' Login',
+                                      onTap: () {
+                                        Get.offNamed(loginScreen);
                                       },
-                                      height: heightX*.05,
-                                      width: widthX,
-
                                     ),
-                                  )
-                                ],
+
+                                    SizedBox(height: heightX*.1,),
+
+                                  ],
+                                ),
                               ),
-                            ),
 
-                            const DividerTextWidget(color: accentColor,),
-
-
-
-                            DuelText(firstText: 'Already have an account?',
-                              secondText: ' Login',
-                              onTap: () {
-                                Get.offNamed(loginScreen);
-                              },
-                            )
-
-
-                          ],
-                        ),
+                              Positioned(
+                                  child: Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(top: heightX*.012),
+                                      child: CircleAvatar(
+                                        radius: heightX*.06,
+                                        backgroundColor: secondaryColor,
+                                        child: CircleAvatar(
+                                          radius: heightX*.055,
+                                          backgroundColor: primaryColor,
+                                          foregroundImage: const AssetImage(hosteliteIcon),
+                                        ),
+                                      ),
+                                    ),
+                                  )),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-
-                    Positioned(
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: Padding(
-                            padding: EdgeInsets.only(top: heightX*.012),
-                            child: CircleAvatar(
-                              radius: heightX*.06,
-                              backgroundColor: secondaryColor,
-                              child: CircleAvatar(
-                                radius: heightX*.055,
-                                backgroundColor: primaryColor,
-                                foregroundImage: const AssetImage(hosteliteIcon),
-                              ),
-                            ),
-                          ),
-                        )),
                   ],
                 ),
               ),

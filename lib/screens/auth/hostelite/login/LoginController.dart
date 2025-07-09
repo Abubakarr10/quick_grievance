@@ -40,80 +40,100 @@ class LoginController extends GetxController{
     passwordVisible.value = !passwordVisible.value;
   }
 
-  void login()async{
 
-    final user = await authService.loginUserWithEmailAndPassword(
-        emailController.text.toString(),
-        passwordController.text.toString()
-    );
 
-    if(formKey.currentState!.validate()){
-      try{
+  Future<void> loginHandler() async {
+    final email = emailController.text.toString().toLowerCase().trim();
+    final password = passwordController.text.trim();
 
-        loading.value = true;
-
-        if(user != null) {
-
-          prefs.setString('email', emailController.value.text.toString());
-          await saveLoginStatus(true);
-
-         // await Get.find<UserController>().loadUserData();
-         // final user = Get.find<UserController>().currentUser.value;
-
-          Get.offAllNamed(initialScreen);
-
-          Get.snackbar(
-              'Welcome Back!', 'Quick Grievance',
-              icon: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Icon(
-                  Icons.celebration,
-                  size: 30,
-                  color: Colors.white,
-                ),
-              ),
-              colorText: Colors.white,
-              backgroundColor: secondaryColor
-          );
-
-        } else {
-          Get.snackbar(
-              'OOPS!', 'Something Went Wrong',
-              icon: const Padding(
-                padding: EdgeInsets.only(right: 10),
-                child: Icon(
-                  Icons.error,
-                  size: 50,
-                  color: Colors.white,
-                ),
-              ),
-              colorText: Colors.white,
-              backgroundColor: Colors.red
-          );
-          loading.value = false;
-        }
-
-      } on FirebaseAuthException catch(error){
-        Get.snackbar(
-            'OOPS!', 'Something Wrong. $error',
-            icon: const Padding(
-              padding: EdgeInsets.only(right: 10),
-              child: Icon(
-                Icons.error,
-                size: 50,
-                color: Colors.white,
-              ),
-            ),
-            backgroundColor: Colors.red
-        );
-
-        loading.value = false;
-
-      }
+    if (email.isEmpty || password.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Email and password are required',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
     }
 
+    // if (!formKey.currentState!.validate()) return;
+
+    try {
+      loading.value = true;
+
+      final user = await authService.loginUserWithEmailAndPassword(email, password);
+
+      if (user != null) {
+        await prefs.setString('email', email);
+        await saveLoginStatus(true);
+
+
+        Get.offAllNamed(initialScreen);
+
+        Get.snackbar(
+          'Welcome Back!',
+          'Quick Grievance',
+          icon: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Icon(Icons.celebration, size: 30, color: Colors.white),
+          ),
+          backgroundColor: secondaryColor,
+          colorText: Colors.white,
+        );
+
+      } else {
+        Get.snackbar(
+          'Oops!',
+          'Something went wrong during login.',
+          icon: const Padding(
+            padding: EdgeInsets.all(10),
+            child: Icon(Icons.error, size: 30, color: Colors.white),
+          ),
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+
+    } on FirebaseAuthException catch (e) {
+      String errorMessage = 'Login failed';
+      if (e.code == 'user-not-found') {
+        errorMessage = 'User not found';
+      } else if (e.code == 'wrong-password') {
+        errorMessage = 'Incorrect password';
+      } else if (e.code == 'invalid-email') {
+        errorMessage = 'Invalid email format';
+      }
+
+
+      Get.snackbar(
+        'Login Error',
+        errorMessage,
+        icon: const Padding(
+          padding: EdgeInsets.only(right: 10),
+          child: Icon(Icons.error, size: 30, color: Colors.white),
+        ),
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'An unexpected error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } finally {
+      loading.value = false;
+    }
   }
 
-
+@override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+  }
 
 }

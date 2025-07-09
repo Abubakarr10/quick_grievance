@@ -43,13 +43,16 @@ class UserController extends GetxController {
 
   Future<void> loadUserData() async {
     final uid = FirebaseAuth.instance.currentUser?.uid;
-    if (uid == null) return;
-
-    final snapshot = await FirebaseFirestore.instance.collection('users').doc(uid).get();
-    if (snapshot.exists) {
-      currentUser.value = UserModel.fromJson(snapshot.data()!);
+    if (uid != null) {
+      final doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      if (doc.exists) {
+        user.value = UserModel.fromFirestore(doc);
+      } else {
+        user.value = null;
+      }
     }
   }
+
 
   Future<void> fetchUserData(uid) async {
     try {

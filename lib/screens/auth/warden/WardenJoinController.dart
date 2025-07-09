@@ -37,92 +37,102 @@ class WardenJoinController extends GetxController{
     passwordVisible.value = !passwordVisible.value;
   }
 
-  void login()async{
+  Future<void> login() async {
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
 
-    final user = await authService.loginUserWithEmailAndPassword(
-        emailController.text.toString(),
-        passwordController.text.toString()
-    );
+    if (!formKey.currentState!.validate()) return;
 
-    if(formKey.currentState!.validate() && emailController.text.toString() == 'warden.admin@quick.com'){
-      try{
-
-        loading.value = true;
-
-        if(user != null) {
-
-          prefs.setString('email', emailController.value.text.toString());
-          await saveWardenLoginStatus(true);
-
-
-          Get.offAllNamed(adminScreen);
-
-          Get.snackbar(
-              'Welcome Warden!', 'Quick Grievance',
-              icon: const Padding(
-                padding: EdgeInsets.only(right: 10),
-                child: Icon(
-                  Icons.celebration,
-                  size: 30,
-                  color: Colors.white,
-                ),
-              ),
-              colorText: Colors.white,
-              backgroundColor: secondaryColor
-          );
-
-        } else {
-          Get.snackbar(
-              'OOPS!', 'Something Went Wrong',
-              icon: const Padding(
-                padding: EdgeInsets.only(right: 10),
-                child: Icon(
-                  Icons.error,
-                  size: 50,
-                  color: Colors.white,
-                ),
-              ),
-              colorText: Colors.white,
-              backgroundColor: Colors.red
-          );
-          loading.value = false;
-        }
-
-      } on FirebaseAuthException catch(error){
-        Get.snackbar(
-            'OOPS!', 'Something Wrong. $error',
-            icon: const Padding(
-              padding: EdgeInsets.only(right: 10),
-              child: Icon(
-                Icons.error,
-                size: 30,
-                color: Colors.white,
-              ),
-            ),
-            backgroundColor: Colors.red
-        );
-
-        loading.value = false;
-
-      }
-    }else{
+    // Only allow specific warden email
+    if (email != 'warden.admin@quick.com') {
       Get.snackbar(
-          'OOPS!', 'Only Warden (Admin) can login',
-          colorText: Colors.white,
-          icon: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Icon(
-              Icons.error,
-              size: 30,
-              color: Colors.white,
-            ),
-          ),
-          backgroundColor: Colors.red
+        'Unauthorized',
+        'Only Warden (Admin) can login',
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+        icon: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Icon(Icons.error, size: 30, color: Colors.white),
+        ),
       );
+      return;
     }
 
+    try {
+      loading.value = true;
+
+      final user = await authService.loginUserWithEmailAndPassword(email, password);
+
+      if (user != null) {
+        // Save email and login state
+        await prefs.setString('email', email);
+        await saveWardenLoginStatus(true);
+
+        // Navigate to admin screen
+        Get.offAllNamed(adminScreen);
+
+        Get.snackbar(
+          'Welcome Warden!',
+          'Quick Grievance',
+          colorText: Colors.white,
+          backgroundColor: secondaryColor,
+          icon: const Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: Icon(Icons.celebration, size: 30, color: Colors.white),
+          ),
+        );
+      } else {
+        Get.snackbar(
+          'Oops!',
+          'Something went wrong during login.',
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+          icon: const Padding(
+            padding: EdgeInsets.all(10),
+            child: Icon(Icons.error, size: 30, color: Colors.white),
+          ),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      String errorMessage = 'Login failed';
+      if (e.code == 'user-not-found') {
+        errorMessage = 'Warden account not found';
+      } else if (e.code == 'wrong-password') {
+        errorMessage = 'Incorrect password';
+      } else if (e.code == 'invalid-email') {
+        errorMessage = 'Invalid email format';
+      }
+
+      Get.snackbar(
+        'Login Error',
+        errorMessage,
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+        icon: const Padding(
+          padding: EdgeInsets.only(right: 10),
+          child: Icon(Icons.error, size: 30, color: Colors.white),
+        ),
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'An unexpected error occurred: $e',
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+    } finally {
+      loading.value = false;
+    }
   }
 
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+
+  }
 
 
 }

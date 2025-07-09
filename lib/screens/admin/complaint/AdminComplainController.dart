@@ -7,6 +7,7 @@ import 'package:quick_grievance/conts/app_colors.dart';
 import 'package:quick_grievance/conts/routes/screen_names.dart';
 import 'package:quick_grievance/screens/admin/complaint/admin_complaint_screen.dart';
 
+import '../../../conts/notification_menthod.dart';
 import '../../../model/complaint_model.dart';
 
 class AdminComplainController extends GetxController{
@@ -56,7 +57,7 @@ class AdminComplainController extends GetxController{
   ];
 
 
-  Future<void> updateComplaintStatus(docId) async {
+  Future<void> updateComplaintStatus(docId,ComplaintModel data) async {
     try {
       await FirebaseFirestore.instance
           .collection('complaint')
@@ -67,7 +68,19 @@ class AdminComplainController extends GetxController{
           colorText: secondaryColor,
           backgroundColor: accentColor,
           snackPosition: SnackPosition.BOTTOM);
+
+      await sendNotificationToUser(
+        title: 'Complaint Updated',
+        body: 'Your complaint status has been updated to: ${complainStatus.value}',
+        userId: data.uid,
+        type: 'complaint',
+        description: data.description,
+        typeId: docId,
+      );
+
+
       Get.offNamed(adminScreen);
+
     } catch (e) {
       Get.snackbar('Error', 'Failed to update status: $e',
           colorText: pureWhite,

@@ -138,13 +138,16 @@ class WardenJoinScreen extends GetView<WardenJoinController> {
 
                                 Padding(
                                   padding: EdgeInsets.only(top: heightX*.02),
-                                  child: ActionButtonWidget(label: 'Login',
-                                    onTap: (){
-                                      controller.login();
-                                    },
-                                    height: heightX*.05,
-                                    width: widthX,
+                                  child: Obx(()=>
+                                      ActionButtonWidget(label: 'Login',
+                                        isLoading: controller.loading.value,
+                                        onTap: (){
+                                          controller.login();
+                                        },
+                                        height: heightX*.05,
+                                        width: widthX,
 
+                                      )
                                   ),
                                 )
                               ],

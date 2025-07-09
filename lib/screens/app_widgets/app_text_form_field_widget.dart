@@ -87,10 +87,10 @@ class AppTextFormFieldWidget extends StatelessWidget {
       },
       decoration: InputDecoration(
           filled: true,
-          hintStyle: const TextStyle(
-            color: Colors.grey,
-            fontWeight: FontWeight.w600,
-          ),
+          // hintStyle: const TextStyle(
+          //   color: Colors.grey,
+          //   fontWeight: FontWeight.w600,
+          // ),
           counterText: '',
           fillColor: mainColor,
           focusColor: Colors.white,
@@ -104,8 +104,8 @@ class AppTextFormFieldWidget extends StatelessWidget {
           enabledBorder: noneBorder == true? InputBorder.none :
           OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius!),
-              borderSide:   const BorderSide(
-                  color: secondaryColor,
+              borderSide:   BorderSide(
+                  color: secondaryColor.withAlpha(50),
                 width: 2
               )
           ),

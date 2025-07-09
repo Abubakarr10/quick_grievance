@@ -3,22 +3,19 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../conts/app_colors.dart';
 
-class SpinKitWidget extends StatelessWidget {
+class SpinKitLoadingWidget extends StatelessWidget {
   final Color color;
   final double size;
-  const SpinKitWidget({
-    super.key, this.color = accentColor,
-    this.size = 60,
+  const SpinKitLoadingWidget({
+    super.key, this.color = secondaryColor,
+    this.size = 25,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SpinKitWaveSpinner(
+    return SpinKitThreeBounce(
       color: color,
-      waveColor: secondaryColor,
-      trackColor: primaryColor,
       size: size,
     );
   }
 }
-

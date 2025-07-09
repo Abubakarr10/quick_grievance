@@ -120,21 +120,6 @@ class ComplainController extends GetxController{
     croppedFile.value = null;
   }
 
-  // void settingProfileImage(){
-  //   if(fileX.value != null){
-  //     pickImage.value = fileX.value!.path.toString();
-  //     debugPrint('Setting Profile Image => File Image ha!');
-  //     if(croppedFile.value != null) {
-  //       pickImage.value = croppedFile.value!.path.toString();
-  //       debugPrint('Setting Profile Image => Cropped Image ha!');
-  //     }
-  //   }else{
-  //     pickImage.value = '';
-  //     debugPrint('Setting Profile Image => Default Image ha!');
-  //   }
-  // }
-
-
   // Firebase 🔥
   final CollectionReference userCollection = FirebaseFirestore.instance.collection('complaint');
 

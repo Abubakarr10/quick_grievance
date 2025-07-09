@@ -53,7 +53,7 @@ class AdminController extends GetxController {
   void listenToPendingSlips() {
     FirebaseFirestore.instance
         .collection('request_slip_exit')
-        .where('status', isEqualTo: 'Pending')
+        .where('status')
         .snapshots()
         .listen((snapshot) {
       pendingSlipsCount.value = snapshot.docs.length;

@@ -7,6 +7,8 @@ import 'package:quick_grievance/conts/app_colors.dart';
 import 'package:quick_grievance/model/slip_exit_model.dart';
 import 'dart:math';
 
+import '../../../conts/notification_menthod.dart';
+
 class AdminSlipController extends GetxController {
 
 // Generate Token
@@ -41,7 +43,17 @@ class AdminSlipController extends GetxController {
           fromDate: slipData.fromDate,
           toDate: slipData.toDate);
 
-      saveSlipExit(approveSlipData);
+      saveSlipExit(approveSlipData,docId);
+
+      await sendNotificationToUser(
+        title: 'Slip Approved',
+        body: 'Your exit slip has been approved.',
+        userId: slipData.uid,
+        type: 'Slip',
+        description: slipData.reason,
+        typeId: docId,
+      );
+
     }else{
 
       SlipExitModel rejectSlipData = SlipExitModel(
@@ -62,7 +74,18 @@ class AdminSlipController extends GetxController {
           fromDate: slipData.fromDate,
           toDate: slipData.toDate);
 
-      saveRejectedSlipExit(rejectSlipData);
+      saveRejectedSlipExit(rejectSlipData,docId);
+
+      await sendNotificationToUser(
+        title: 'Slip Rejected',
+        body: 'Your exit slip has been rejected.',
+        userId: slipData.uid,
+        type: 'Slip',
+        description: slipData.reason,
+        typeId: docId,
+      );
+
+
     }
 
 
@@ -108,10 +131,10 @@ class AdminSlipController extends GetxController {
 
 
   // Save Slip Data in Approve Collection
-  Future<void> saveSlipExit(SlipExitModel slipExitData) async {
+  Future<void> saveSlipExit(SlipExitModel slipExitData,docId) async {
     try {
 
-          await userCollection.doc().set(slipExitData.toJson());
+          await userCollection.doc(docId).set(slipExitData.toJson());
 
     } catch (e) {
       if (kDebugMode) {
@@ -121,10 +144,10 @@ class AdminSlipController extends GetxController {
   }
 
   // Save Slip Data in Reject Collection
-  Future<void> saveRejectedSlipExit(SlipExitModel slipExitData) async {
+  Future<void> saveRejectedSlipExit(SlipExitModel slipExitData,docId) async {
     try {
 
-      await userCollection2.doc().set(slipExitData.toJson());
+      await userCollection2.doc(docId).set(slipExitData.toJson());
 
     } catch (e) {
       if (kDebugMode) {

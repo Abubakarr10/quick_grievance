@@ -19,7 +19,7 @@ class SlipTokenScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SlipExitModel data = Get.arguments['slipData'];
-    final String isHistory = Get.arguments['isHistory'];
+    final String backTo = Get.arguments['backTo'];
    // final dynamic id = Get.arguments['slipId'];
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
@@ -28,9 +28,12 @@ class SlipTokenScreen extends StatelessWidget {
         children: [
           FloatingActionButton(
             onPressed: (){
-              if(isHistory != ''){
-                Get.offNamed(historyDetailScreen,arguments: isHistory);
-              }else{
+              if(backTo == 'Accepted Slips' || backTo == 'Rejected Slips' || backTo == 'Last Complaints'){
+                Get.offNamed(historyDetailScreen,arguments: backTo);
+              }else if(backTo == notificationScreen){
+                Get.offNamed(notificationScreen);
+              }
+              else{
                 Get.offNamed(slipScreen);
               }
             },

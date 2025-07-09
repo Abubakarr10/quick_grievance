@@ -58,7 +58,7 @@ class SignUpController extends GetxController{
 
           UserModel userModel = UserModel(
             uid: currentUser.uid,
-            email: emailController.text.toString().trim(),
+            email: emailController.text.toString().toLowerCase().trim(),
             fullName: fullNameController.text.toString().trim(),
             password: passwordController.text.toString().trim(),
             regNo: regNoController.text.toString(),

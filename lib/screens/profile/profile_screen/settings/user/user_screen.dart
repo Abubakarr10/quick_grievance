@@ -21,7 +21,6 @@ class UserScreen extends GetView<UserController> {
         onPressed: (){
           Get.offNamed(entryPointScreen,arguments: {
             'index': 4,
-            'isBackUse' : true
           });
         },
         backgroundColor: accentColor,
@@ -64,12 +63,12 @@ class UserScreen extends GetView<UserController> {
                       Center(
                         child: Card(
                           elevation: 6,
-                          margin: const EdgeInsets.all(16),
+                          margin: const EdgeInsets.all(10),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(20),
+                            padding: const EdgeInsets.all(15),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -116,12 +115,12 @@ class UserScreen extends GetView<UserController> {
                       Center(
                         child: Card(
                           elevation: 6,
-                          margin: const EdgeInsets.all(16),
+                          margin: const EdgeInsets.all(10),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(20),
+                            padding: const EdgeInsets.all(15),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [

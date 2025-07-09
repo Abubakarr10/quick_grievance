@@ -56,7 +56,7 @@ class ComplaintDetailScreen extends GetView<AdminComplainController> {
           child: ActionButtonWidget(
               label: controller.complainStatus.value == 'Rejected'? 'Rejected' : 'Submit',
               onTap: (){
-                controller.updateComplaintStatus(docId);
+                controller.updateComplaintStatus(docId,arguments);
               }),
 
         )),
